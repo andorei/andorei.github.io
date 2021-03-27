@@ -1,0 +1,108 @@
+html	{
+	height:100%;
+}
+
+body {
+	height:100%;
+	font-family: Tahoma,Verdana,Arial,sans-serif;
+	font-size: 0.9em;
+	padding: 0px;
+	margin: 0px;
+}
+
+div#container {
+	min-height: 100%;
+	border-right: thin solid teal;
+	border-left: thin solid teal;
+	background-color: white;
+	width: 800px;
+	margin: 0 auto;
+	padding: 0;
+	position: absolute;
+	left: 50px;
+}
+
+div#header {
+	/*background-image: url('/static/luckycoder.png');*/
+	background-color: teal;
+}
+
+div#site {
+	/*overflow: visible;*/
+	font-family: Courier New;
+	font-size: 74px;
+	font-weight: bold;
+	color: #dddddd;
+	text-align:center;
+	padding: 15px 5px 15px 5px;
+}
+
+div#site > a {
+	text-decoration: none;
+	color: #dddddd;
+}
+
+div#site > a:hover {
+	text-decoration: underline;
+}
+
+div#menu {
+	position: absolute;
+	left: 400px;
+	padding: 5px 5px 5px 5px;
+	/*overflow: visible;
+	clear: both;*/
+}
+
+div#center {
+	/*font-size: 12pt;*/
+	background-color: white;
+	overflow: hidden;
+	clear: both;
+	padding: 1em 5% 7em 5%;
+}
+
+div#footer {
+	color: #dddddd;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	text-indent: 35px;
+	/*background-image: url('/static/luckycoder.png');*/
+	background-color: teal;
+	height: 40px;
+	padding-top: 10px;
+}
+
+div#footer > a {
+	text-decoration: none;
+	color: #dddddd;
+}
+
+div#footer > a:hover {
+	text-decoration: underline;
+}
+
+h1 {
+	font-size: large;
+	font-weight: bold;
+	margin-top: 20px;
+	margin-bottom: 13px;
+}
+
+h2 {
+	font-size: medium;
+	margin-top: 25px;
+	margin-bottom: 20px;
+}
+
+a {
+	outline: none;
+	cursor: pointer;
+	color: #003399;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}

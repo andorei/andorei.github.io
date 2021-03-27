@@ -1,0 +1,959 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>9. Модули и файлы &mdash; Учимся с Python</title>
+    
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2nd Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="Учимся с Python" href="index.html" />
+    <link rel="next" title="10. Рекурсия и исключения" href="ch10.html" />
+    <link rel="prev" title="8. Списки" href="ch08.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             accesskey="I">словарь</a></li>
+        <li class="right" >
+          <a href="ch10.html" title="10. Рекурсия и исключения"
+             accesskey="N">следующий</a> |</li>
+        <li class="right" >
+          <a href="ch08.html" title="8. Списки"
+             accesskey="P">предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>9. Модули и файлы<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
+<div class="section" id="index-0">
+<span id="id2"></span><h2>9.1. Модули<a class="headerlink" href="#index-0" title="Ссылка на этот заголовок">¶</a></h2>
+<p><strong>Модуль</strong> - это файл, содержащий код на языке Python и предназначенный для использования другими программами на Python. В составе <strong>стандартной библиотеки</strong> есть много модулей. Два из них, <tt class="docutils literal"><span class="pre">doctest</span></tt> и <tt class="docutils literal"><span class="pre">string</span></tt>, уже нам знакомы.</p>
+</div>
+<div class="section" id="pydoc">
+<span id="index-1"></span><h2>9.2. pydoc<a class="headerlink" href="#pydoc" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Команда <strong>pydoc</strong> позволяет строить и просматривать документацию по библиотекам Python, установленным на вашем компьютере. В <strong>командной строке</strong> операционной системы введите:</p>
+<div class="highlight-python"><pre>$ pydoc -g</pre>
+</div>
+<p>Если вы работаете в Windows и в ответ на введенную команду получили сообщение о том, что файл не найден, попробуйте запустить <tt class="docutils literal"><span class="pre">pydoc</span></tt>, указав полный путь к нему. Скрипт <tt class="docutils literal"><span class="pre">pydoc</span></tt> находится в поддиректории <tt class="docutils literal"><span class="pre">lib</span></tt> директории, в которой установлен Python. Например, если Python установлен в C:\Python27, то полный путь к pydoc будет C:\Python27\lib\pydoc.py.</p>
+<p>Запустив pydoc с ключом -g вы увидите следующее:</p>
+<img alt="pydoc tk window" src="_images/ch9-1.png" />
+<p>(См. упражнение 2, если возникла ошибка.)</p>
+<p>Нажмите на кнопку &#8216;open browser&#8217; для открытия окна браузера с документацией, сгенерированной <tt class="docutils literal"><span class="pre">pydoc</span></tt>:</p>
+<img alt="Python: Index of Modules" src="_images/ch9-2.png" />
+<p>Вы видите перечень всех библиотек Python, которые интерпретатор Python нашел на вашем компьютере. Щелкнув мышкой по имени модуля, вы получите страницу с документацией для этого модуля. Например, щелчок по <tt class="docutils literal"><span class="pre">keyword</span></tt> открывает следующую страницу:</p>
+<img alt="Python: module keyword" src="_images/ch9-3.png" />
+<p>Документация для большинства модулей содержит три раздела, выделенных разными цветами:</p>
+<ul class="simple">
+<li><em>Классы</em> - розовым,</li>
+<li><em>Функции</em> - оранжевым,</li>
+<li><em>Данные</em> - зеленым.</li>
+</ul>
+<p>Классы мы обсудим в других главах, а пока будем использовать pydoc, чтобы смотреть функции и данные, содержащиеся в модулях.</p>
+<p>Модуль <tt class="docutils literal"><span class="pre">keyword</span></tt> содержит единственную функцию <tt class="docutils literal"><span class="pre">iskeyword</span></tt>, которая, как видно из ее имени, возвращает <tt class="docutils literal"><span class="pre">True</span></tt>, если переданная ей строка является ключевым словом:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">keyword</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">iskeyword</span><span class="p">(</span><span class="s">&#39;for&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">iskeyword</span><span class="p">(</span><span class="s">&#39;all&#39;</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Список <tt class="docutils literal"><span class="pre">kwlist</span></tt> содержит все ключевые слова Python:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">keyword</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">kwlist</span>
+<span class="go">[&#39;and&#39;, &#39;as&#39;, &#39;assert&#39;, &#39;break&#39;, &#39;class&#39;, &#39;continue&#39;, &#39;def&#39;, &#39;del&#39;, &#39;elif&#39;,</span>
+<span class="go">&#39;else&#39;, &#39;except&#39;, &#39;exec&#39;, &#39;finally&#39;, &#39;for&#39;, &#39;from&#39;, &#39;global&#39;, &#39;if&#39;, &#39;import&#39;,</span>
+<span class="go">&#39;in&#39;, &#39;is&#39;, &#39;lambda&#39;, &#39;not&#39;, &#39;or&#39;, &#39;pass&#39;, &#39;print&#39;, &#39;raise&#39;, &#39;return&#39;, &#39;try&#39;,</span>
+<span class="go">&#39;while&#39;, &#39;with&#39;, &#39;yield&#39;]</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Исследуйте с помощью <tt class="docutils literal"><span class="pre">pydoc</span></tt> библиотеки Python. Там столько настоящих сокровищ!</p>
+</div>
+<div class="section" id="index-2">
+<span id="id3"></span><h2>9.3. Создание модулей<a class="headerlink" href="#index-2" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Все, что нужно для создания модуля - это текстовый файл, имя которого имеет расширение <tt class="docutils literal"><span class="pre">.py</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#  seqtools.py</span>
+<span class="c">#</span>
+<span class="k">def</span> <span class="nf">remove_at</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">seq</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">seq</span><span class="p">[:</span><span class="n">pos</span><span class="p">]</span> <span class="o">+</span> <span class="n">seq</span><span class="p">[</span><span class="n">pos</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
+</pre></div>
+</div>
+<p>Этот модуль можно использовать как в скриптах, так и в интерактивном режиме Python. Для этого вначале нужно <em>импортировать</em> модуль. Есть два способа сделать это. Первый:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">seqtools</span> <span class="kn">import</span> <span class="n">remove_at</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="s">&quot;A string!&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">remove_at</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+<span class="go">&#39;A sting!&#39;</span>
+</pre></div>
+</div>
+<p>Второй:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">seqtools</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="s">&quot;A string!&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">seqtools</span><span class="o">.</span><span class="n">remove_at</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+<span class="go">&#39;A sting!&#39;</span>
+</pre></div>
+</div>
+<p>В первом примере <tt class="docutils literal"><span class="pre">remove_at</span></tt> вызывается точно так же, как и функции, которые мы вызывали раньше. Во втором примере, имени функции предшествуют имя модуля и точка.</p>
+<p>Заметьте, что ни в первом, ни во втором случае мы не указываем расширение файла <tt class="docutils literal"><span class="pre">.py</span></tt>, когда импортируем модуль. Python ожидает, что имена файлов модулей Python имеют расширение <tt class="docutils literal"><span class="pre">.py</span></tt>, так что оно не включается в <strong>предложение import</strong>.</p>
+<p>Использование модулей позволяет разбивать очень большие программы на относительно небольшие части, с которыми удобно работать. При этом в каждый модуль помещается код, имеющий тесные связи, а связи между модулями стараются свести к минимуму.</p>
+</div>
+<div class="section" id="index-3">
+<span id="id4"></span><h2>9.4. Пространства имен<a class="headerlink" href="#index-3" title="Ссылка на этот заголовок">¶</a></h2>
+<p><strong>Пространство имен</strong> представляет собой синтаксический контейнер, который позволяет использовать одно и то же имя в разных модулях или функциях (а также, как мы скоро увидим, в классах и методах).</p>
+<p>Каждый модуль определяет свое собственное пространство имен. Поэтому одно и то же имя можно использовать в разных модулях, не вызывая конфликта:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># module1.py</span>
+
+<span class="n">question</span> <span class="o">=</span> <span class="s">&quot;What is the meaning of life, the Universe, and everything?&quot;</span>
+<span class="n">answer</span> <span class="o">=</span> <span class="mi">42</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># module2.py</span>
+
+<span class="n">question</span> <span class="o">=</span> <span class="s">&quot;What is your quest?&quot;</span>
+<span class="n">answer</span> <span class="o">=</span> <span class="s">&quot;To seek the holy grail.&quot;</span>
+</pre></div>
+</div>
+<p>Можно импортировать оба модуля и поработать с <tt class="docutils literal"><span class="pre">question</span></tt> и <tt class="docutils literal"><span class="pre">answer</span></tt> в каждом из них:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">module1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">module2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">module1</span><span class="o">.</span><span class="n">question</span>
+<span class="go">What is the meaning of life, the Universe, and everything?</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">module2</span><span class="o">.</span><span class="n">question</span>
+<span class="go">What is your quest?</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">module1</span><span class="o">.</span><span class="n">answer</span>
+<span class="go">42</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">module2</span><span class="o">.</span><span class="n">answer</span>
+<span class="go">To seek the holy grail.</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Но если бы мы использовали предложения <tt class="docutils literal"><span class="pre">from</span> <span class="pre">module1</span> <span class="pre">import</span> <span class="pre">*</span></tt> и <tt class="docutils literal"><span class="pre">from</span> <span class="pre">module2</span> <span class="pre">import</span> <span class="pre">*</span></tt>, то получили бы <strong>конфликт имен</strong> и не смогли бы добраться до <tt class="docutils literal"><span class="pre">question</span></tt> и <tt class="docutils literal"><span class="pre">answer</span></tt> из модуля <tt class="docutils literal"><span class="pre">module1</span></tt>.</p>
+<p>Функции также определяют свои собственные пространства имен:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">f</span><span class="p">():</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">7</span>
+    <span class="k">print</span> <span class="s">&quot;printing n inside of f: </span><span class="si">%d</span><span class="s">&quot;</span>  <span class="o">%</span> <span class="n">n</span>
+
+<span class="k">def</span> <span class="nf">g</span><span class="p">():</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">42</span>
+    <span class="k">print</span> <span class="s">&quot;printing n inside of g: </span><span class="si">%d</span><span class="s">&quot;</span>  <span class="o">%</span> <span class="n">n</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">11</span>
+<span class="k">print</span> <span class="s">&quot;printing n before calling f: </span><span class="si">%d</span><span class="s">&quot;</span>  <span class="o">%</span> <span class="n">n</span>
+<span class="n">f</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&quot;printing n after calling f: </span><span class="si">%d</span><span class="s">&quot;</span>  <span class="o">%</span> <span class="n">n</span>
+<span class="n">g</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&quot;printing n after calling g: </span><span class="si">%d</span><span class="s">&quot;</span>  <span class="o">%</span> <span class="n">n</span>
+</pre></div>
+</div>
+<p>Эта программа выведет следующее:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">printing</span> <span class="n">n</span> <span class="n">before</span> <span class="n">calling</span> <span class="n">f</span><span class="p">:</span> <span class="mi">11</span>
+<span class="n">printing</span> <span class="n">n</span> <span class="n">inside</span> <span class="n">of</span> <span class="n">f</span><span class="p">:</span> <span class="mi">7</span>
+<span class="n">printing</span> <span class="n">n</span> <span class="n">after</span> <span class="n">calling</span> <span class="n">f</span><span class="p">:</span> <span class="mi">11</span>
+<span class="n">printing</span> <span class="n">n</span> <span class="n">inside</span> <span class="n">of</span> <span class="n">g</span><span class="p">:</span> <span class="mi">42</span>
+<span class="n">printing</span> <span class="n">n</span> <span class="n">after</span> <span class="n">calling</span> <span class="n">g</span><span class="p">:</span> <span class="mi">11</span>
+</pre></div>
+</div>
+<p>Три переменных <tt class="docutils literal"><span class="pre">n</span></tt> здесь не конфликтуют друг с другом, поскольку каждая находится в своем пространстве имен.</p>
+<p>Пространства имен позволяют нескольким программистам работать над одним проектом, избегая конфликтов имен.</p>
+</div>
+<div class="section" id="index-4">
+<span id="id5"></span><h2>9.5. Атрибуты и оператор точка<a class="headerlink" href="#index-4" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Переменные, определенные внутри модуля, называются <strong>атрибутами</strong> модуля. Для доступа к ним используется <strong>оператор точка</strong> <tt class="docutils literal"><span class="pre">.</span></tt>. Одноименные атрибуты <tt class="docutils literal"><span class="pre">question</span></tt> модулей <tt class="docutils literal"><span class="pre">module1</span></tt> и <tt class="docutils literal"><span class="pre">module2</span></tt> записываются как <tt class="docutils literal"><span class="pre">module1.question</span></tt> и <tt class="docutils literal"><span class="pre">module2.question</span></tt>.</p>
+<p>Модули содержат не только переменные, но и функции, и обращение к ним также записывается с помощью оператора точка. <tt class="docutils literal"><span class="pre">seqtools.remove_at</span></tt> указывает на функцию <tt class="docutils literal"><span class="pre">remove_at</span></tt> в модуле <tt class="docutils literal"><span class="pre">seqtools</span></tt>.</p>
+<p>Ранее мы познакомились с функцией <tt class="docutils literal"><span class="pre">find</span></tt> из модуля <tt class="docutils literal"><span class="pre">string</span></tt>. Модуль <tt class="docutils literal"><span class="pre">string</span></tt> содержит много других полезных функций:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">string</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">string</span><span class="o">.</span><span class="n">capitalize</span><span class="p">(</span><span class="s">&#39;maryland&#39;</span><span class="p">)</span>
+<span class="go">&#39;Maryland&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">string</span><span class="o">.</span><span class="n">capwords</span><span class="p">(</span><span class="s">&quot;what&#39;s all this, then, amen?&quot;</span><span class="p">)</span>
+<span class="go">&quot;What&#39;s All This, Then, Amen?&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">string</span><span class="o">.</span><span class="n">center</span><span class="p">(</span><span class="s">&#39;How to Center Text Using Python&#39;</span><span class="p">,</span> <span class="mi">70</span><span class="p">)</span>
+<span class="go">&#39;                   How to Center Text Using Python                    &#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">string</span><span class="o">.</span><span class="n">upper</span><span class="p">(</span><span class="s">&#39;angola&#39;</span><span class="p">)</span>
+<span class="go">&#39;ANGOLA&#39;</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Просмотрите документацию по другим функциям и переменным модуля <tt class="docutils literal"><span class="pre">string</span></tt> с помощью pydoc.</p>
+</div>
+<div class="section" id="index-5">
+<span id="id6"></span><h2>9.6. Строковые и списочные методы<a class="headerlink" href="#index-5" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Чем дальше развивался язык Python, тем больше функций из модуля <tt class="docutils literal"><span class="pre">string</span></tt> реализовывались как <strong>методы</strong> строковых объектов. Метод работает как функция, но вызывается немного по-другому:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="s">&#39;maryland&#39;</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span>
+<span class="go">&#39;Maryland&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s">&quot;what&#39;s all this, then, amen?&quot;</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
+<span class="go">&quot;What&#39;S All This, Then, Amen?&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s">&#39;How to Center Text Using Python&#39;</span><span class="o">.</span><span class="n">center</span><span class="p">(</span><span class="mi">70</span><span class="p">)</span>
+<span class="go">&#39;                   How to Center Text Using Python                    &#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s">&#39;angola&#39;</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+<span class="go">&#39;ANGOLA&#39;</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Строковые методы встроены в строковые объекты и вызываются с помощью точки и имени метода после имени объекта.</p>
+<p>В последующих главах мы научимся создавать наши собственные объекты с методами. А пока будем использовать методы встроенных объектов Python.</p>
+<p>Аналогично вызываются методы списочного объекта:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">mylist</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mylist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mylist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">27</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mylist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mylist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mylist</span>
+<span class="go">[5, 27, 3, 12]</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Метод <tt class="docutils literal"><span class="pre">append</span></tt> добавляет переданный ему аргумент в конец списка. Попробуем еще несколько списочных методов:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">mylist</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mylist</span>
+<span class="go">[5, 12, 27, 3, 12]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mylist</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mylist</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">11</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mylist</span>
+<span class="go">[5, 12, 27, 3, 12, 5, 9, 5, 11])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mylist</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+<span class="go">6</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mylist</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mylist</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mylist</span>
+<span class="go">[11, 5, 9, 5, 12, 3, 27, 12, 5]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mylist</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mylist</span>
+<span class="go">[3, 5, 5, 5, 9, 11, 12, 12, 27]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mylist</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mylist</span>
+<span class="go">[3, 5, 5, 5, 9, 11, 12, 27]</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Поэкспериментируйте с методами из этого примера, пока не почувствуете, что понимаете, как они работают.</p>
+</div>
+<div class="section" id="index-6">
+<span id="id7"></span><h2>9.7. Чтение и запись текстовых файлов<a class="headerlink" href="#index-6" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Во время выполнения программы ее данные хранятся в <em>оперативной памяти компьютера</em>. Оперативная память быстрая и недорогая, однако она <strong>непостоянна</strong>. Это значит, что после завершения программы или выключения компьютера данные исчезают. Чтобы данные не исчезали и были доступны в следующий раз, когда вы включите компьютер и запустите программу, нужно записать их на носитель данных с <strong>постоянной</strong> памятью, такой, как жесткий диск, флешка или CD-RW.</p>
+<p>Данные на носителе хранятся в <strong>файлах</strong> - именованных участках памяти носителя. Читая и записывая файлы, программы могут сохранять информацию между запусками.</p>
+<p>Работа с файлами похожа на работу с записной книжкой. Для того, чтобы воспользоваться записной книжкой, вам нужно ее открыть. Когда вы закончили, то закрываете ее. Пока записная книжка открыта, можно как писать в нее, так и читать, и вы всегда знаете, в каком месте записной книжки вы находитесь. Вы можете прочитать записную книжку от начала до конца в естественном порядке, или можете перепрыгивать со страницы на страницу.</p>
+<p>Все это применимо к файлам. Чтобы открыть файл, вы указываете его имя и то, хотите ли вы читать или писать.</p>
+<p>Открытие файла создает файловый объект. В следующем примере переменная <tt class="docutils literal"><span class="pre">myfile</span></tt> связывается с новым файловым объектом.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">myfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;test.dat&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">myfile</span>
+<span class="go">&lt;open file &#39;test.dat&#39;, mode &#39;w&#39; at 0x2aaaaab80cd8&gt;</span>
+</pre></div>
+</div>
+<p>Функция <tt class="docutils literal"><span class="pre">open</span></tt> принимает два аргумента. Первый - имя файла, второй - <strong>режим</strong> работы с файлом. Режим <tt class="docutils literal"><span class="pre">'w'</span></tt> (англ.: write - писать) означает, что файл открывается для записи.</p>
+<p>Если файла с именем <tt class="docutils literal"><span class="pre">test.dat</span></tt> не существует, он будет создан. Если такой файл уже есть, его содержимое будет заменено на то, что мы будем писать в него.</p>
+<p>Когда мы выводим файловый объект с помощью print, то видим имя файла и режим.</p>
+<p>Данные помещаются в файл с помощью метода <tt class="docutils literal"><span class="pre">write</span></tt> файлового объекта:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">myfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;Now is the time&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">myfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;to close the file&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Закрытие файла сообщает системе о том, что мы закончили писать в файл, и делает файл доступным для чтения:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">myfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Теперь мы можем снова открыть файл, на этот раз для чтения, и прочитать содержимое файла в строку. На этот раз, аргумент mode будет <tt class="docutils literal"><span class="pre">'r'</span></tt> (англ.: read - читать):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">myfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;test.dat&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Если мы попробуем открыть несуществующий файл, то получим ошибку:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">myfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;test.cat&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="go">IOError: [Errno 2] No such file or directory: &#39;test.cat&#39;</span>
+</pre></div>
+</div>
+<p>Для чтения из файла предназначен метод <tt class="docutils literal"><span class="pre">read</span></tt>. Вызванный без аргументов, он читает все содержимое файла и помещает его в один строковый объект:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">text</span> <span class="o">=</span> <span class="n">myfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">text</span>
+<span class="go">Now is the timeto close the file</span>
+</pre></div>
+</div>
+<p>Между &#8216;time&#8217; и &#8216;to&#8217; нет пробела, так как мы не записали пробел.</p>
+<p>Метод <tt class="docutils literal"><span class="pre">read</span></tt> может принимать аргумент, показывающий, сколько символов нужно прочитать из файла:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">myfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;test.dat&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">myfile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">Now i</span>
+</pre></div>
+</div>
+<p>Если в файле осталось меньше символов, чем задано для чтения, <tt class="docutils literal"><span class="pre">read</span></tt> прочитает все, что осталось. Когда будет достигнут конец файла, <tt class="docutils literal"><span class="pre">read</span></tt> вернет пустую строку:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">myfile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1000006</span><span class="p">)</span>
+<span class="go">s the timeto close the file</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">myfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Следующая функция копирует файл, прочитывая и записывая по 50 символов за раз. Ее первый параметр - имя оригинального файла, второй - имя нового файла:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">copy_file</span><span class="p">(</span><span class="n">oldfile</span><span class="p">,</span> <span class="n">newfile</span><span class="p">):</span>
+    <span class="n">infile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">oldfile</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+    <span class="n">outfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">newfile</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">text</span> <span class="o">==</span> <span class="s">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">infile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">outfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+<p>В этой функции в цикле читаются 50 символов из <tt class="docutils literal"><span class="pre">infile</span></tt> и записываются в <tt class="docutils literal"><span class="pre">outfile</span></tt> до тех пор, пока не будет достигнут конец файла <tt class="docutils literal"><span class="pre">infile</span></tt>. По достижении конца файла значением <tt class="docutils literal"><span class="pre">text</span></tt> будет пустая строка и выполнится <tt class="docutils literal"><span class="pre">break</span></tt>.</p>
+</div>
+<div class="section" id="index-7">
+<span id="id8"></span><h2>9.8. Текстовые файлы<a class="headerlink" href="#index-7" title="Ссылка на этот заголовок">¶</a></h2>
+<p><strong>Текстовый файл</strong> - это файл, содержащий только печатные и пробельные символы, организованные в строки, разделенные символом перевода строки. Поскольку Python был спроектирован специально для обработки текстовых файлов, он предоставляет отличные средства для такой работы.</p>
+<p>Создадим файл с тремя строками текста, разделенными переводом строки:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">outfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;test.dat&quot;</span><span class="p">,</span><span class="s">&quot;w&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;line one</span><span class="se">\n</span><span class="s">line two</span><span class="se">\n</span><span class="s">line three</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">outfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Метод <tt class="docutils literal"><span class="pre">readline</span></tt> читает все символы до символа перевода строки, включительно:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">infile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;test.dat&quot;</span><span class="p">,</span><span class="s">&quot;r&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">infile</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+<span class="go">line one</span>
+
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Метод <tt class="docutils literal"><span class="pre">readlines</span></tt> читает все оставшиеся строки из файла и помещает их в список строк:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">infile</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+<span class="go">[&#39;line two\012&#39;, &#39;line three\012&#39;]</span>
+</pre></div>
+</div>
+<p>В данном случае вывод делается в списочном формате, вот почему строковые значения заключены в кавычки и символы перевода строки представлены в виде управляющих последовательностей <tt class="docutils literal"><span class="pre">\\012</span></tt>.</p>
+<p>Если достигнут конец файла, то <tt class="docutils literal"><span class="pre">readline</span></tt> вернет пустую строку, а <tt class="docutils literal"><span class="pre">readlines</span></tt> - пустой список:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">infile</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">infile</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+<span class="go">[]</span>
+</pre></div>
+</div>
+<p>Приведем пример программы для обработки строк. Функция <tt class="docutils literal"><span class="pre">filter</span></tt> делает копию файла <tt class="docutils literal"><span class="pre">oldfile</span></tt>, исключая строки, которые начинаются с  <tt class="docutils literal"><span class="pre">#</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="n">oldfile</span><span class="p">,</span> <span class="n">newfile</span><span class="p">):</span>
+    <span class="n">infile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">oldfile</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+    <span class="n">outfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">newfile</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">text</span> <span class="o">==</span> <span class="s">&quot;&quot;</span><span class="p">:</span>
+           <span class="k">break</span>
+        <span class="k">if</span> <span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;#&#39;</span><span class="p">:</span>
+           <span class="k">continue</span>
+        <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">infile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">outfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+<p><strong>Предложение continue</strong> завершает текущую итерацию цикла, но цикл продолжает выполняться. Поток выполнения продолжится с заголовка цикла, то есть, будет проверено условие и далее выполнение продолжится в соответствии с результатом проверки.</p>
+<p>Таким образом, если <tt class="docutils literal"><span class="pre">text</span></tt> будет пустой строкой, то цикл завершится. Если первый символ <tt class="docutils literal"><span class="pre">text</span></tt> будет решетка, то выполнение перейдет к заголовку цикла. И только если оба эти условия не выполнятся, <tt class="docutils literal"><span class="pre">text</span></tt> будет записан в новый файл.</p>
+</div>
+<div class="section" id="index-8">
+<span id="id9"></span><h2>9.9. Каталоги<a class="headerlink" href="#index-8" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Многочисленные файлы для хранения в постоянной памяти организуются по правилам, известным как <strong>файловая система</strong>. Файловые системы имеют дело с файлами и <strong>каталогами</strong>. Последние могут содержать файлы и другие каталоги. (Иногда каталоги называют директориями.)</p>
+<p>Когда ваш скрипт создает новый файл, этот файл создается в текущем каталоге &#8212; в том, в котором вы находились, когда запустили скрипт. Также, когда скрипт открывает файл для чтения, Python ищет его в текущем каталоге.</p>
+<p>Если вы хотите открыть файл из другого каталога, вам придется указать <strong>путь</strong> к файлу, который содержит как имя каталога, так и имя файла:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">wordsfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;/usr/share/dict/words&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wordlist</span> <span class="o">=</span> <span class="n">wordsfile</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">wordlist</span><span class="p">[:</span><span class="mi">6</span><span class="p">]</span>
+<span class="go">[&#39;\n&#39;, &#39;A\n&#39;, &quot;A&#39;s\n&quot;, &#39;AOL\n&#39;, &quot;AOL&#39;s\n&quot;, &#39;Aachen\n&#39;]</span>
+</pre></div>
+</div>
+<p>В этом примере открывается файл <tt class="docutils literal"><span class="pre">words</span></tt>, находящийся в каталоге <tt class="docutils literal"><span class="pre">dict</span></tt>, находящемся в <tt class="docutils literal"><span class="pre">share</span></tt>, находящемся в <tt class="docutils literal"><span class="pre">usr</span></tt>, находящемся в каталоге верхнего уровня <tt class="docutils literal"><span class="pre">/</span></tt>. Затем программа читает строки файла в список с помощью <tt class="docutils literal"><span class="pre">readlines</span></tt>, и выводит первые 5 элементов списка.</p>
+<p>Нельзя использовать символ <tt class="docutils literal"><span class="pre">/</span></tt> как часть имени файла; он зарезервирован для разделения имен каталогов и файла.</p>
+<p>Файл <tt class="docutils literal"><span class="pre">/usr/share/dict/words</span></tt> существует в системах, основанных на Unix, и содержит список слов в алфавитном порядке.</p>
+</div>
+<div class="section" id="index-9">
+<span id="id10"></span><h2>9.10. Считаем буквы<a class="headerlink" href="#index-9" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Функция <tt class="docutils literal"><span class="pre">ord</span></tt> возвращает целочисленный код символа:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">ord</span><span class="p">(</span><span class="s">&#39;a&#39;</span><span class="p">)</span>
+<span class="go">97</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">ord</span><span class="p">(</span><span class="s">&#39;A&#39;</span><span class="p">)</span>
+<span class="go">65</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Этот пример объясняет, почему выражение <tt class="docutils literal"><span class="pre">'Apple'</span> <span class="pre">&lt;</span> <span class="pre">'apple'</span></tt> дает <tt class="docutils literal"><span class="pre">True</span></tt>.</p>
+<p>Функция <tt class="docutils literal"><span class="pre">chr</span></tt> противоположна функции <tt class="docutils literal"><span class="pre">ord</span></tt>. Она принимает целочисленный аргумент и возвращает его символьное представление:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">65</span><span class="p">,</span> <span class="mi">71</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="nb">chr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">A</span>
+<span class="go">B</span>
+<span class="go">C</span>
+<span class="go">D</span>
+<span class="go">E</span>
+<span class="go">F</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Следующая программа, <tt class="docutils literal"><span class="pre">countletters.py</span></tt>, подсчитывает, сколько раз встречается каждая буква в книге <a class="reference external" href="_static/alice_in_wonderland.txt">Алиса в стране чудес</a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#</span>
+<span class="c"># countletters.py</span>
+<span class="c">#</span>
+
+<span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">10</span><span class="p">:</span> <span class="k">return</span> <span class="s">&#39;LF&#39;</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">13</span><span class="p">:</span> <span class="k">return</span> <span class="s">&#39;CR&#39;</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">32</span><span class="p">:</span> <span class="k">return</span> <span class="s">&#39;SPACE&#39;</span>
+    <span class="k">return</span> <span class="nb">chr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+<span class="n">infile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;alice_in_wonderland.txt&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">infile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">counts</span> <span class="o">=</span> <span class="mi">128</span> <span class="o">*</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">text</span><span class="p">:</span>
+    <span class="n">counts</span><span class="p">[</span><span class="nb">ord</span><span class="p">(</span><span class="n">letter</span><span class="p">)]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="n">outfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;alice_counts.dat&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+<span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%-12s%s</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;Character&quot;</span><span class="p">,</span> <span class="s">&quot;Count&quot;</span><span class="p">))</span>
+<span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;=================</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">counts</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="n">counts</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+        <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%-12s%d</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">display</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">counts</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+
+<span class="n">outfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Запустите эту программу и посмотрите созданный ей файл с помощью текстового редактора. В упражнении ниже вам нужно будет проанализировать эту программу.</p>
+</div>
+<div class="section" id="sys-argv">
+<span id="index-10"></span><h2>9.11. Модуль <tt class="docutils literal"><span class="pre">sys</span></tt> и <tt class="docutils literal"><span class="pre">argv</span></tt><a class="headerlink" href="#sys-argv" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Модуль <tt class="docutils literal"><span class="pre">sys</span></tt> содержит функции и переменные для доступа к <em>среде</em>, в которой выполняется интерпретатор Python.</p>
+<p>Следующий пример показывает значения некоторых из этих переменных на компьютере c Linux:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">platform</span>
+<span class="go">&#39;linux2&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">path</span>
+<span class="go">[&#39;&#39;, &#39;/home/jelkner/lib/python&#39;, &#39;/usr/lib/python25.zip&#39;, &#39;/usr/lib/python2.5&#39;,</span>
+<span class="go">&#39;/usr/lib/python2.5/plat-linux2&#39;, &#39;/usr/lib/python2.5/lib-tk&#39;,</span>
+<span class="go">&#39;/usr/lib/python2.5/lib-dynload&#39;, &#39;/usr/local/lib/python2.5/site-packages&#39;,</span>
+<span class="go">&#39;/usr/lib/python2.5/site-packages&#39;, &#39;/usr/lib/python2.5/site-packages/Numeric&#39;,</span>
+<span class="go">&#39;/usr/lib/python2.5/site-packages/gst-0.10&#39;,</span>
+<span class="go">&#39;/var/lib/python-support/python2.5&#39;, &#39;/usr/lib/python2.5/site-packages/gtk-2.0&#39;,</span>
+<span class="go">&#39;/var/lib/python-support/python2.5/gtk-2.0&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">version</span>
+<span class="go">&#39;2.5.1 (r251:54863, Mar  7 2008, 04:10:12) \n[GCC 4.1.3 20070929 (prerelease)</span>
+<span class="go">(Ubuntu 4.1.2-16ubuntu2)]&#39;</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>На компьютере с Windows можем увидеть такую картину:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">platform</span>
+<span class="go">&#39;win32&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">path</span>
+<span class="go">[&#39;&#39;, &#39;C:\\WINDOWS\\system32\\python27.zip&#39;, &#39;C:\\Python27\\DLLs&#39;,</span>
+<span class="go">&#39;C:\\Python27\\lib&#39;, &#39;C:\\Python27\\lib\\plat-win&#39;, &#39;C:\\Python27\\lib\\lib-tk&#39;,</span>
+<span class="go">&#39;C:\\Python27&#39;, &#39;C:\\Python27\\lib\\site-packages&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">version</span>
+<span class="go">&#39;2.7.3 (default, Apr 10 2012, 23:31:26) [MSC v.1500 32 bit (Intel)]&#39;</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>На вашей машине результаты, конечно, будут отличаться.</p>
+<p>Переменная <tt class="docutils literal"><span class="pre">argv</span></tt> содержит список аргументов, считанных из <strong>командной строки</strong>, которой был запущен скрипт. <strong>Аргументы командной строки</strong> можно использовать для передачи информации в программу во время ее запуска.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#</span>
+<span class="c"># demo_argv.py</span>
+<span class="c">#</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">print</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span>
+</pre></div>
+</div>
+<p>Запуск этой программы в командной строке Unix демонстрирует, как работает <tt class="docutils literal"><span class="pre">sys.argv</span></tt>:</p>
+<div class="highlight-python"><pre>$ python demo_argv.py this and that 1 2 3
+['demo_argv.py', 'this', 'and', 'that', '1', '2', '3']
+$</pre>
+</div>
+<p><tt class="docutils literal"><span class="pre">argv</span></tt> есть список строковых объектов. Заметьте, что первый элемент списка - имя файла программы. Аргументы, разделенные пробелами в командной строке, попадают в список, как будто обработанные методом <tt class="docutils literal"><span class="pre">string.split</span></tt>. Если вы хотите передать аргумент, содержащий пробел, заключите аргумент в кавычки:</p>
+<div class="highlight-python"><pre>$ python demo_argv.py "this and" that "1 2" 3
+['demo_argv.py', 'this and', 'that', '1 2', '3']
+$</pre>
+</div>
+<p>Пользуясь <tt class="docutils literal"><span class="pre">argv</span></tt>, можно писать полезные программы, которые получают ввод прямо из командной строки. Например, вот программа, которая подсчитывает сумму последовательности чисел:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#</span>
+<span class="c"># sum.py</span>
+<span class="c">#</span>
+<span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">argv</span>
+
+<span class="n">nums</span> <span class="o">=</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+    <span class="n">nums</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="nb">sum</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>В этой программе мы воспользовались способом импорта <tt class="docutils literal"><span class="pre">from</span> <span class="pre">&lt;module&gt;</span> <span class="pre">import</span> <span class="pre">&lt;attribute&gt;</span></tt>, поэтому имя <tt class="docutils literal"><span class="pre">argv</span></tt> оказалось в пространстве имен программы.</p>
+<p>Теперь можно запускать программу в командной строке так:</p>
+<div class="highlight-python"><pre>$ python sum.py 3 4 5 11
+23
+$ python sum.py 3.5 5 11 100
+119.5</pre>
+</div>
+<p>В качестве упражнения вам полезно будет написать собственные программы, похожие на эту.</p>
+</div>
+<div class="section" id="id11">
+<h2>9.12. Глоссарий<a class="headerlink" href="#id11" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="glossary docutils">
+<dt id="term-argv">argv</dt>
+<dd>Переменная <tt class="docutils literal"><span class="pre">argv</span></tt> модуля <tt class="docutils literal"><span class="pre">sys</span></tt> во время выполнения программы хранит
+список аргументов командной строки, с помощью которой запущена программа.</dd>
+<dt id="term-continue">continue</dt>
+<dd>Предложение в теле цикла, которое завершает текущую итерацию цикла.
+Поток выполнения переходит к проверке условия цикла (в заголовке цикла),
+и далее выполнение продолжается согласно результату проверки этого
+условия.</dd>
+<dt id="term-import">import</dt>
+<dd><p class="first">Предложение, которое делает содержащиеся в модуле объекты доступными для
+использования в программе. Имеются две формы предложения import.</p>
+<p>Следующий пример для гипотетического модуля <tt class="docutils literal"><span class="pre">mymod</span></tt>, содержащего
+функции <tt class="docutils literal"><span class="pre">f1</span></tt> и <tt class="docutils literal"><span class="pre">f2</span></tt>, а также переменные <tt class="docutils literal"><span class="pre">v1</span></tt> и <tt class="docutils literal"><span class="pre">v2</span></tt>, иллюстрирует
+использование обеих форм:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">mymod</span>
+</pre></div>
+</div>
+<p>Это первая форма.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">mymod</span> <span class="kn">import</span> <span class="n">f1</span><span class="p">,</span> <span class="n">f2</span><span class="p">,</span> <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span>
+</pre></div>
+</div>
+<p class="last">Импорт перечисленных объектов.</p>
+</dd>
+<dt id="term-pydoc">pydoc</dt>
+<dd>Генератор документации Python.</dd>
+<dt id="term-">аргумент командной строки</dt>
+<dd>Значение, передаваемое в программу при ее запуске из командной строки.</dd>
+<dt id="term-5">атрибут</dt>
+<dd>Переменная или функция, определенная внутри модуля (или класса или
+объекта - как мы увидим далее). Атрибуты модуля доступны с помощью
+<strong>оператора точка</strong> <tt class="docutils literal"><span class="pre">.</span></tt>.</dd>
+<dt id="term-6">каталог</dt>
+<dd>Элемент файловой системы, иногда называемый директорией и даже папкой.
+Каталог может содержать файлы и другие каталоги, являющиеся его
+<em>подкаталогами</em>.</dd>
+<dt id="term-7">командная строка</dt>
+<dd>Строка, считываемая <a class="reference external" href="http://ru.wikipedia.org/wiki/%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81_%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D0%BD%D0%BE%D0%B9_%D1%81%D1%82%D1%80%D0%BE%D0%BA%D0%B8">интерфейсом командной строки</a>
+для выполнения <em>интерпретатором команд</em>.</dd>
+<dt id="term-8">конфликт имен</dt>
+<dd><p class="first">Ситуация, когда два или более объекта получают одинаковые имена в одном и
+том же пространстве имен. Использование</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">string</span>
+</pre></div>
+</div>
+<p>вместо</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">string</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<p class="last">предотвращает конфликты имен.</p>
+</dd>
+<dt id="term-9">метод</dt>
+<dd><p class="first">Атрибут функционального типа у класса или объекта. Методы вызываются для
+объекта с помощью оператора точка. Например:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="s">&quot;this is a string.&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+<span class="go">&#39;THIS IS A STRING.&#39;</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p class="last">В таком случае говорят, что метод <tt class="docutils literal"><span class="pre">upper</span></tt> вызван для строки <tt class="docutils literal"><span class="pre">s</span></tt>.
+<tt class="docutils literal"><span class="pre">s</span></tt> неявно является первым аргументом для <tt class="docutils literal"><span class="pre">upper</span></tt>.</p>
+</dd>
+<dt id="term-10">модуль</dt>
+<dd>Файл, содержащий предложения Python и предназначенный для использования
+другими программами Python. Содержимое модуля делается доступным в
+другой программе с помощью предложения <tt class="docutils literal"><span class="pre">import</span></tt>.</dd>
+<dt id="term-11">непостоянная память</dt>
+<dd>Память, которая нуждается в электропитании для того, чтобы сохранять
+состояние. Оперативная память компьютера является непостоянной. Данные,
+хранящиеся в оперативной памяти, теряются при выключении компьютера.</dd>
+<dt id="term-12">оператор точка</dt>
+<dd>Оператор точка <tt class="docutils literal"><span class="pre">.</span></tt> разрешает доступ к атрибутам модуля (или
+атрибутам класса или объекта - как мы увидим далее).</dd>
+<dt id="term-13">постоянная память</dt>
+<dd>Память, которая сохраняет состояние в отсутствии электропитания. Жесткие
+диски, флэшки, компакт диски &#8212; примеры устройств с постоянной памятью.</dd>
+<dt id="term-14">приглашение</dt>
+<dd>Текст, отображаемый <a class="reference external" href="http://ru.wikipedia.org/wiki/%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81_%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D0%BD%D0%BE%D0%B9_%D1%81%D1%82%D1%80%D0%BE%D0%BA%D0%B8">интерфейсом командной строки</a>,
+показывающий, что можно вводить команду.</dd>
+<dt id="term-15">пространство имен</dt>
+<dd>Синтаксический контейнер, предоставляющий контекст для имен, так, что
+одно и то же имя может использоваться в разных пространствах имен, не
+приводя к неоднозначности. В Python модулям, классам, функциям и методам
+соответствуют собственные пространства имен.</dd>
+<dt id="term-16">путь</dt>
+<dd>Последовательность имен каталогов и имя файла, задающая местонахождение
+файла в файловой системе. Например, путь <tt class="docutils literal"><span class="pre">/usr/share/dict/words</span></tt>
+задает файл <tt class="docutils literal"><span class="pre">words</span></tt>, находящийся в подкаталоге <tt class="docutils literal"><span class="pre">dict</span></tt> подкаталога
+<tt class="docutils literal"><span class="pre">share</span></tt> подкаталога <tt class="docutils literal"><span class="pre">usr</span></tt> каталога <tt class="docutils literal"><span class="pre">/</span></tt>.</dd>
+<dt id="term-17">разделитель</dt>
+<dd>Последовательность из одного и более символов, использующаяся для
+разделения частей текста.</dd>
+<dt id="term-18">режим</dt>
+<dd>Определенный способ работы компьютерной программы. Файлы в Python могут
+открываться в одном из трех режимов: читать (&#8216;r&#8217;), писать (&#8216;w&#8217;) и
+добавлять (&#8216;a&#8217;).</dd>
+<dt id="term-19">стандартная библиотека</dt>
+<dd>Библиотека &#8212; это коллекция программ, использующихся при разработке
+других программ. Стандартная библиотека языка программирования
+распространяется и устанавливается на компьютер вместе с языком
+программирования. Python предоставляет обширную стандартную библиотеку.</dd>
+<dt id="term-20">текстовый файл</dt>
+<dd>Файл, содержащий печатные и пробельные символы, которые организованы в
+строки, ограниченные символами новой строки.</dd>
+<dt id="term-21">файл</dt>
+<dd>Именованный участок памяти таких устройств, как жесткий диск, гибкий
+диск, флэшка или CD-ROM, который содержит последовательность символов.</dd>
+<dt id="term-22">файловая система</dt>
+<dd>Набор правил для организации хранения файлов и данных, в них содержащихся.</dd>
+</dl>
+</div>
+<div class="section" id="id12">
+<h2>9.13. Упражнения<a class="headerlink" href="#id12" title="Ссылка на этот заголовок">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Выполните следующее:</p>
+<ul>
+<li><p class="first">Запустите сервер pydoc командой <tt class="docutils literal"><span class="pre">pydoc</span> <span class="pre">-g</span></tt> в командной строке.</p>
+</li>
+<li><p class="first">Нажмите кнопку &#8216;open browser&#8217; в окошке pydoc.</p>
+</li>
+<li><p class="first">Найдите модуль <tt class="docutils literal"><span class="pre">calendar</span></tt> и щелкните мышкой на нем.</p>
+</li>
+<li><p class="first">Просматривая раздел <em>Functions</em>, попробуйте выполнить следующее в режиме
+интерпретатора Python:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">calendar</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">year</span> <span class="o">=</span> <span class="n">calendar</span><span class="o">.</span><span class="n">calendar</span><span class="p">(</span><span class="mi">2008</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">year</span>                      <span class="c"># What happens here?</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Поэкспериментируйте с <tt class="docutils literal"><span class="pre">calendar.isleap</span></tt>. Что ожидает эта функция в
+качестве аргумента? Что она возвращает в качестве результата? Какого типа
+эта функция?</p>
+<p>Повторите, что вы узнали из этого упражнения.</p>
+</li>
+</ul>
+</li>
+<li><p class="first">Если на вашем компьютере не установлен <tt class="docutils literal"><span class="pre">Tkinter</span></tt>, то <tt class="docutils literal"><span class="pre">pydoc</span> <span class="pre">-g</span></tt> вернет
+сообщение об ошибке, поскольку графическое окно рисуется с помощью
+<tt class="docutils literal"><span class="pre">Tkinter</span></tt>. Вместо этого, можно запустить web-сервер непосредственно:</p>
+<div class="highlight-python"><pre>$ pydoc -p 7464</pre>
+</div>
+<p>Эта команда запускает сервер pydoc с портом 7464. Теперь задайте в вашем
+браузере адрес:</p>
+<div class="highlight-python"><pre>http://localhost:7464</pre>
+</div>
+<p>и вы сможете просматривать документацию по библиотекам Python.</p>
+<p>Таким способом запустите <tt class="docutils literal"><span class="pre">pydoc</span></tt> и посмотрите
+документацию по модулю <tt class="docutils literal"><span class="pre">math</span></tt>.</p>
+<ol class="loweralpha simple">
+<li>Сколько функций в модуле <tt class="docutils literal"><span class="pre">math</span></tt>?</li>
+<li>Что делает <tt class="docutils literal"><span class="pre">math.ceil</span></tt>? А что делает <tt class="docutils literal"><span class="pre">math.floor</span></tt>? И <tt class="docutils literal"><span class="pre">floor</span></tt> и <tt class="docutils literal"><span class="pre">ceil</span></tt>
+принимают значение с плавающей точкой в качестве аргумента.</li>
+<li>Как можно вычислить то же самое значение, что возвращает <tt class="docutils literal"><span class="pre">math.sqrt</span></tt>, не
+используя модуль <tt class="docutils literal"><span class="pre">math</span></tt>?</li>
+<li>Какие две константы имеются в модуле <tt class="docutils literal"><span class="pre">math</span></tt>?</li>
+</ol>
+</li>
+<li><p class="first">Исследуйте модуль <tt class="docutils literal"><span class="pre">copy</span></tt> с помощью <tt class="docutils literal"><span class="pre">pydoc</span></tt>. Что делает <tt class="docutils literal"><span class="pre">deepcopy</span></tt>?
+В каких упражнениях из предыдущей главы <tt class="docutils literal"><span class="pre">deepcopy</span></tt> пришлась бы кстати?</p>
+</li>
+<li><p class="first">Создайте модуль <tt class="docutils literal"><span class="pre">mymodule1.py</span></tt>. Добавьте атрибуты <tt class="docutils literal"><span class="pre">myage</span></tt> с вашим
+возрастом и <tt class="docutils literal"><span class="pre">year</span></tt> с текущим годом. Создайте еще один модуль
+<tt class="docutils literal"><span class="pre">mymodule2.py</span></tt>. Добавьте атрибуты <tt class="docutils literal"><span class="pre">myage</span></tt>, равный 0, и <tt class="docutils literal"><span class="pre">year</span></tt> с годом
+вашего рождения. Теперь создайте файл <tt class="docutils literal"><span class="pre">namespace_test.py</span></tt>. Импортируйте в
+него оба модуля и напишите следующее предложение:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="p">(</span><span class="n">mymodule2</span><span class="o">.</span><span class="n">myage</span> <span class="o">-</span> <span class="n">mymodule1</span><span class="o">.</span><span class="n">myage</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="n">mymodule2</span><span class="o">.</span><span class="n">year</span> <span class="o">-</span> <span class="n">mymodule1</span><span class="o">.</span><span class="n">year</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>При выполнении <tt class="docutils literal"><span class="pre">namespace_test.py</span></tt> вы увидите <tt class="docutils literal"><span class="pre">True</span></tt> или <tt class="docutils literal"><span class="pre">False</span></tt>, в
+зависимости от того, был ли уже ваш день рождения в этом году.</p>
+</li>
+<li><p class="first">Добавьте следующее предложение к <tt class="docutils literal"><span class="pre">mymodule1.py</span></tt>, <tt class="docutils literal"><span class="pre">mymodule2.py</span></tt> и
+<tt class="docutils literal"><span class="pre">namespace_test.py</span></tt> из предыдущего упражнения:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="s">&quot;My name is </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">__name__</span>
+</pre></div>
+</div>
+<p>Выполните <tt class="docutils literal"><span class="pre">namespace_test.py</span></tt>. Что произошло? Почему? Теперь добавьте
+следующее в конец файла <tt class="docutils literal"><span class="pre">mymodule1.py</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;This won&#39;t run if I&#39;m imported.&quot;</span>
+</pre></div>
+</div>
+<p>Выполните <tt class="docutils literal"><span class="pre">mymodule1.py</span></tt> и <tt class="docutils literal"><span class="pre">namespace_test.py</span></tt> снова. В каком случае вы
+видите вывод нового предложения print?</p>
+</li>
+<li><p class="first">В режиме интерпретатора Python выполните:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">this</span>
+</pre></div>
+</div>
+<p>Что говорит Тим Петерс о пространствах имен?</p>
+</li>
+<li><p class="first">Используя <tt class="docutils literal"><span class="pre">pydoc</span></tt> найдите и исследуйте еще три функции из модуля
+<tt class="docutils literal"><span class="pre">string</span></tt>.</p>
+</li>
+<li><p class="first">Перепишите <tt class="docutils literal"><span class="pre">matrix_mult</span></tt> из предыдущей главы, воспользовавшись списочными
+методами.</p>
+</li>
+<li><p class="first">Функция <tt class="docutils literal"><span class="pre">dir</span></tt>, с которой мы уже встречались, выводит список
+<em>атрибутов</em> объекта, переданного ей в качестве аргумента. Другими словами,
+<tt class="docutils literal"><span class="pre">dir</span></tt> возвращает содержимое <em>пространства имен</em> своего аргумента. С помощью
+<tt class="docutils literal"><span class="pre">dir(str)</span></tt> и <tt class="docutils literal"><span class="pre">dir(list)</span></tt> найдите, по крайней мере, три метода, с которыми
+мы до сих пор не познакомились.</p>
+<p>Чтобы узнать побольше о
+заинтересовавшей вас функции, выведите ее документирующую строку.
+Например, для того, чтобы выяснить, как работает <tt class="docutils literal"><span class="pre">str.join</span></tt>, выполните
+<tt class="docutils literal"><span class="pre">print</span> <span class="pre">str.join.__doc__</span></tt>.</p>
+</li>
+<li><p class="first">Что получится, если выполнить следующие предложения в
+интерактивном режиме Python:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="s">&quot;If we took the bones out, it wouldn&#39;t be crunchy, would it?&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;o&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="s">&#39;0&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;o&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Убедитесь, что вам понятны полученные результаты. После этого
+напишите тело функции ниже, используя
+методы <tt class="docutils literal"><span class="pre">split</span></tt> и <tt class="docutils literal"><span class="pre">join</span></tt> объектов <tt class="docutils literal"><span class="pre">str</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">myreplace</span><span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Replace all occurances of old with new in the string s.</span>
+
+<span class="sd">      &gt;&gt;&gt; myreplace(&#39;,&#39;, &#39;;&#39;, &#39;this, that, and, some, other, thing&#39;)</span>
+<span class="sd">     &#39;this; that; and; some; other; thing&#39;</span>
+<span class="sd">     &gt;&gt;&gt; myreplace(&#39; &#39;, &#39;**&#39;, &#39;Words will now be separated by stars.&#39;)</span>
+<span class="sd">     &#39;Words**will**now**be**separated**by**stars.&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Все доктесты должны успешно пройти.</p>
+</li>
+<li><p class="first">Создайте модуль <tt class="docutils literal"><span class="pre">wordtools.py</span></tt> со следующим кодом в конце:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Объясните, почему и как этот код делает удобным как использование этого
+модуля, так и его тестирование. Каким будет значение <tt class="docutils literal"><span class="pre">__name__</span></tt>, когда
+<tt class="docutils literal"><span class="pre">wordtools.py</span></tt> импортирован в программу? Каким оно будет, если модуль
+запущен на выполнение напрямую? В каком случае выполняются доктесты?
+А теперь напишите тела каждой из следующих функций так, чтобы доктесты
+успешно проходили:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">cleanword</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; cleanword(&#39;what?&#39;)</span>
+<span class="sd">      &#39;what&#39;</span>
+<span class="sd">      &gt;&gt;&gt; cleanword(&#39;&quot;now!&quot;&#39;)</span>
+<span class="sd">      &#39;now&#39;</span>
+<span class="sd">      &gt;&gt;&gt; cleanword(&#39;?+=&quot;word!,@$()&quot;&#39;)</span>
+<span class="sd">      &#39;word&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">has_dashdash</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; has_dashdash(&#39;distance--but&#39;)</span>
+<span class="sd">      True</span>
+<span class="sd">      &gt;&gt;&gt; has_dashdash(&#39;several&#39;)</span>
+<span class="sd">      False</span>
+<span class="sd">      &gt;&gt;&gt; has_dashdash(&#39;critters&#39;)</span>
+<span class="sd">      False</span>
+<span class="sd">      &gt;&gt;&gt; has_dashdash(&#39;spoke--fancy&#39;)</span>
+<span class="sd">      True</span>
+<span class="sd">      &gt;&gt;&gt; has_dashdash(&#39;yo-yo&#39;)</span>
+<span class="sd">      False</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">extract_words</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; extract_words(&#39;Now is the time!  &quot;Now&quot;, is the time? Yes, now.&#39;)</span>
+<span class="sd">      [&#39;now&#39;, &#39;is&#39;, &#39;the&#39;, &#39;time&#39;, &#39;now&#39;, &#39;is&#39;, &#39;the&#39;, &#39;time&#39;, &#39;yes&#39;, &#39;now&#39;]</span>
+<span class="sd">      &gt;&gt;&gt; extract_words(&#39;she tried to curtsey as she spoke--fancy&#39;)</span>
+<span class="sd">      [&#39;she&#39;, &#39;tried&#39;, &#39;to&#39;, &#39;curtsey&#39;, &#39;as&#39;, &#39;she&#39;, &#39;spoke&#39;, &#39;fancy&#39;]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">wordcount</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">wordlist</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; wordcount(&#39;now&#39;, [&#39;now&#39;, &#39;is&#39;, &#39;time&#39;, &#39;is&#39;, &#39;now&#39;, &#39;is&#39;, &#39;is&#39;])</span>
+<span class="sd">      [&#39;now&#39;, 2]</span>
+<span class="sd">      &gt;&gt;&gt; wordcount(&#39;is&#39;, [&#39;now&#39;, &#39;is&#39;, &#39;time&#39;, &#39;is&#39;, &#39;now&#39;, &#39;is&#39;, &#39;the&#39;, &#39;is&#39;])</span>
+<span class="sd">      [&#39;is&#39;, 4]</span>
+<span class="sd">      &gt;&gt;&gt; wordcount(&#39;time&#39;, [&#39;now&#39;, &#39;is&#39;, &#39;time&#39;, &#39;is&#39;, &#39;now&#39;, &#39;is&#39;, &#39;is&#39;])</span>
+<span class="sd">      [&#39;time&#39;, 1]</span>
+<span class="sd">      &gt;&gt;&gt; wordcount(&#39;frog&#39;, [&#39;now&#39;, &#39;is&#39;, &#39;time&#39;, &#39;is&#39;, &#39;now&#39;, &#39;is&#39;, &#39;is&#39;])</span>
+<span class="sd">      [&#39;frog&#39;, 0]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">wordset</span><span class="p">(</span><span class="n">wordlist</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; wordset([&#39;now&#39;, &#39;is&#39;, &#39;time&#39;, &#39;is&#39;, &#39;now&#39;, &#39;is&#39;, &#39;is&#39;])</span>
+<span class="sd">      [&#39;is&#39;, &#39;now&#39;, &#39;time&#39;]</span>
+<span class="sd">      &gt;&gt;&gt; wordset([&#39;I&#39;, &#39;a&#39;, &#39;a&#39;, &#39;is&#39;, &#39;a&#39;, &#39;is&#39;, &#39;I&#39;, &#39;am&#39;])</span>
+<span class="sd">      [&#39;I&#39;, &#39;a&#39;, &#39;am&#39;, &#39;is&#39;]</span>
+<span class="sd">      &gt;&gt;&gt; wordset([&#39;or&#39;, &#39;a&#39;, &#39;am&#39;, &#39;is&#39;, &#39;are&#39;, &#39;be&#39;, &#39;but&#39;, &#39;am&#39;])</span>
+<span class="sd">      [&#39;a&#39;, &#39;am&#39;, &#39;are&#39;, &#39;be&#39;, &#39;but&#39;, &#39;is&#39;, &#39;or&#39;]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">longestword</span><span class="p">(</span><span class="n">wordset</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; longestword([&#39;a&#39;, &#39;apple&#39;, &#39;pear&#39;, &#39;grape&#39;])</span>
+<span class="sd">      5</span>
+<span class="sd">      &gt;&gt;&gt; longestword([&#39;a&#39;, &#39;am&#39;, &#39;I&#39;, &#39;be&#39;])</span>
+<span class="sd">      2</span>
+<span class="sd">      &gt;&gt;&gt; longestword([&#39;this&#39;, &#39;that&#39;, &#39;supercalifragilisticexpialidocious&#39;])</span>
+<span class="sd">      34</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Сохраните этот модуль так, чтобы вы могли использовать инструменты из него в
+ваших программах.</p>
+</li>
+<li><p class="first">Файл <a class="reference external" href="_static/unsorted_fruits.txt">unsorted_fruits.txt</a> содержит
+список 26 фруктов, причем названия их всех начинаются с разных букв алфавита.
+Напишите программу <tt class="docutils literal"><span class="pre">sort_fruits.py</span></tt>, которая читает список из
+<tt class="docutils literal"><span class="pre">unsorted_fruits.txt</span></tt> и записывает отсортированный список в файл
+<tt class="docutils literal"><span class="pre">sorted_fruits.txt</span></tt>.</p>
+</li>
+<li><p class="first">Ответьте на вопросы, касающиеся <tt class="docutils literal"><span class="pre">countletters.py</span></tt>:</p>
+<ol class="loweralpha">
+<li><p class="first">Подробно объясните, что делают три строки:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">infile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;alice_in_wonderland.txt&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">infile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Как вы думаете, что покажет <tt class="docutils literal"><span class="pre">type(text)</span></tt> после выполнения этих строк?</p>
+</li>
+<li><p class="first">Какой результат дает вычисление выражения <tt class="docutils literal"><span class="pre">128</span> <span class="pre">*</span> <span class="pre">[0]</span></tt>? Прочитайте об
+<a class="reference external" href="http://ru.wikipedia.org/wiki/ASCII">ASCII</a> в Википедии и объясните, в
+свете того, что вы узнаете, почему переменной <tt class="docutils literal"><span class="pre">counts</span></tt> присваивается
+<tt class="docutils literal"><span class="pre">128</span> <span class="pre">*</span> <span class="pre">[0]</span></tt>.</p>
+</li>
+<li><p class="first">Объясните, что следующий код</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">text</span><span class="p">:</span>
+    <span class="n">counts</span><span class="p">[</span><span class="nb">ord</span><span class="p">(</span><span class="n">letter</span><span class="p">)]</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>делает с <tt class="docutils literal"><span class="pre">counts</span></tt>?</p>
+</li>
+<li><p class="first">Объясните назначение функции <tt class="docutils literal"><span class="pre">display</span></tt>. Почему она проверяет значения
+<tt class="docutils literal"><span class="pre">10</span></tt>, <tt class="docutils literal"><span class="pre">13</span></tt> и <tt class="docutils literal"><span class="pre">32</span></tt>? Что особенного в этих значениях?</p>
+</li>
+<li><p class="first">Подробно объясните, что делают следующие строки:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">outfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;alice_counts.dat&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+<span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%-12s%s</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;Character&quot;</span><span class="p">,</span> <span class="s">&quot;Count&quot;</span><span class="p">))</span>
+<span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;=================</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Что будет в <tt class="docutils literal"><span class="pre">alice_counts.dat</span></tt>, когда они выполнятся?</p>
+</li>
+<li><p class="first">И, наконец, объясните, что делает фрагмент кода:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">counts</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="n">counts</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+        <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%-12s%d</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">display</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">counts</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+</pre></div>
+</div>
+<p>Каково назначение <tt class="docutils literal"><span class="pre">if</span> <span class="pre">counts[i]</span></tt>?</p>
+</li>
+</ol>
+</li>
+<li><p class="first">Напишите программу <tt class="docutils literal"><span class="pre">mean.py</span></tt>, которая берет последовательность чисел из
+командной строки и вычисляет их среднее арифметическое:</p>
+<div class="highlight-python"><pre>$ python mean.py 3 4
+3.5
+$ python mean.py 3 4 5
+4.0
+$ python mean.py 11 15 94.5 22
+35.625</pre>
+</div>
+<p>Запущенная с данными, приведенными выше, ваша программа должна дать такие же
+результаты.</p>
+</li>
+<li><p class="first">Напишите программу <tt class="docutils literal"><span class="pre">median.py</span></tt>, которая берет последовательность чисел из
+командной строки и возвращает их медиану:</p>
+<div class="highlight-python"><pre>$ python median.py 3 7 11
+7
+$ python median.py 19 85 121
+85
+$ python median.py 11 15 16 22
+15.5</pre>
+</div>
+<p>Запущенная с данными, приведенными выше, ваша программа должна дать такие же
+результаты.</p>
+</li>
+<li><p class="first">Измените программу <tt class="docutils literal"><span class="pre">countletters.py</span></tt> так, чтобы она принимала имя файла
+как аргумент командной строки. Как вы будете давать имя выходному файлу?</p>
+</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             >словарь</a></li>
+        <li class="right" >
+          <a href="ch10.html" title="10. Рекурсия и исключения"
+             >следующий</a> |</li>
+        <li class="right" >
+          <a href="ch08.html" title="8. Списки"
+             >предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="copyright.html">Copyright</a> 2009, 2012, Джеффри Элкнер, Аллен Б. Дауни, Крис Мейерс, Андрей Трофимов.
+      При создании использован <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

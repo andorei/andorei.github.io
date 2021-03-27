@@ -1,0 +1,325 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>18. Очереди &mdash; Учимся с Python</title>
+    
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2nd Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="Учимся с Python" href="index.html" />
+    <link rel="next" title="19. Деревья" href="ch19.html" />
+    <link rel="prev" title="17. Стеки" href="ch17.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             accesskey="I">словарь</a></li>
+        <li class="right" >
+          <a href="ch19.html" title="19. Деревья"
+             accesskey="N">следующий</a> |</li>
+        <li class="right" >
+          <a href="ch17.html" title="17. Стеки"
+             accesskey="P">предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>18. Очереди<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
+<div class="section" id="index-0">
+<span id="id2"></span><h2>18.1. Знакомьтесь: очередь<a class="headerlink" href="#index-0" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Эта глава рассказывает о двух абстрактных типах данных: <a class="reference external" href="http://ru.wikipedia.org/wiki/%D0%9E%D1%87%D0%B5%D1%80%D0%B5%D0%B4%D1%8C_(%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5)">очередь</a> и очередь с приоритетом. Все мы видели очередь клиентов, ожидающих обслуживания. Чаще всего, первый клиент в очереди будет обслужен следующим. Хотя бывают и исключения. В аэропортах, пассажиры рейсов, которые вскоре отправляются, иногда обслуживаются вне очереди. В супермаркете вежливый покупатель может пропустить другого, с одной-двумя покупками, перед собой.</p>
+<p>Правило, определяющее, кто будет обслужен следующим, называется <strong>политикой очереди</strong>. Простейшая политика очереди называется <strong>FIFO</strong>, от английского first in &#8212; first out, что означает: первым пришел &#8212; первым вышел. А наиболее обобщенной политикой является <strong>приоритетное обслуживание</strong>, при которой каждому клиенту назначается приоритет, и клиент с наивысшим приоритетом обслуживается первым, независимо от времени его прихода. Мы назвали такую политику обобщенной потому, что приоритет может назначаться, исходя из чего угодно: времени отправления рейсов, количества покупок у покупателя, важности конкретного клиента.</p>
+<p>Абстрактные типы данных очередь и очередь с приоритетом имеют один и тот же набор операций. Различие состоит в семантике операций; очередь использует политику FIFO; очередь с приоритетом, как следует из названия типа, использует политику приоритетного обслуживания.</p>
+</div>
+<div class="section" id="id3">
+<h2>18.2. Абстрактная очередь<a class="headerlink" href="#id3" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Абстрактный тип данных очередь имеет следующие операции:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">__init__</span></tt></dt>
+<dd>Создать новую пустую очередь.</dd>
+<dt><tt class="docutils literal"><span class="pre">insert</span></tt></dt>
+<dd>Добавить в очередь новый элемент.</dd>
+<dt><tt class="docutils literal"><span class="pre">remove</span></tt></dt>
+<dd>Удалить и вернуть элемент из очереди. Возвращаемый элемент &#8212; тот, который был добавлен первым.</dd>
+<dt><tt class="docutils literal"><span class="pre">is_empty</span></tt></dt>
+<dd>Проверить, пуста ли очередь.</dd>
+</dl>
+</div>
+<div class="section" id="index-1">
+<span id="id4"></span><h2>18.3. Связная очередь<a class="headerlink" href="#index-1" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Первая из реализаций очереди, которую мы рассмотрим, будет <strong>связная очередь</strong>, построенная из связанных объектов <tt class="docutils literal"><span class="pre">Node</span></tt>. Вот определение класса <tt class="docutils literal"><span class="pre">Queue</span></tt> (англ.: очередь):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Queue</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">is_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cargo</span><span class="p">):</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">cargo</span><span class="p">)</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="c"># if list is empty the new node goes first</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="n">node</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c"># find the last node in the list</span>
+            <span class="n">last</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span>
+            <span class="k">while</span> <span class="n">last</span><span class="o">.</span><span class="n">next</span><span class="p">:</span> <span class="n">last</span> <span class="o">=</span> <span class="n">last</span><span class="o">.</span><span class="n">next</span>
+            <span class="c"># append the new node</span>
+            <span class="n">last</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">node</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span>
+        <span class="n">cargo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">cargo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">next</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">cargo</span>
+</pre></div>
+</div>
+<p>Методы <tt class="docutils literal"><span class="pre">is_empty</span></tt> и <tt class="docutils literal"><span class="pre">remove</span></tt> достаточно просты и похожи на подобные методы класса <tt class="docutils literal"><span class="pre">LinkedList</span></tt>. Метод <tt class="docutils literal"><span class="pre">insert</span></tt> существенно новый и чуть более сложный.</p>
+<p>Нам нужно добавить новый элемент в конец списка. Если очередь пуста, мы просто присваиваем атрибуту <tt class="docutils literal"><span class="pre">head</span></tt> ссылку на новый узел.</p>
+<p>В противном случае, мы проходим по всему списку до последнего узла, и присоединяем новый узел в конец списка. Мы определяем, что достигли последнего узла, когда значением атрибута <tt class="docutils literal"><span class="pre">next</span></tt> является <tt class="docutils literal"><span class="pre">None</span></tt>.</p>
+<p>Для правильно построенного объекта <tt class="docutils literal"><span class="pre">Queue</span></tt> существуют два инварианта. Переменная <tt class="docutils literal"><span class="pre">length</span></tt> должна содержать количество узлов в очереди, и последний узел должен иметь атрибут <tt class="docutils literal"><span class="pre">next</span></tt> со значением <tt class="docutils literal"><span class="pre">None</span></tt>. Убедитесь, что метод <tt class="docutils literal"><span class="pre">insert</span></tt> сохраняет оба инварианта.</p>
+</div>
+<div class="section" id="index-2">
+<span id="id5"></span><h2>18.4. Показатели производительности<a class="headerlink" href="#index-2" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Обычно, когда мы вызываем метод, нас не заботят детали его реализации. Но есть одна вещь, которую нам хотелось бы знать &#8212; показатели производительности метода. Каково время выполнения метода, и как это время изменяется при изменении числа элементов в коллекции?</p>
+<p>Вначале посмотрим на метод <tt class="docutils literal"><span class="pre">remove</span></tt>. В этом методе нет ни циклов, ни вызовов функций, значит, время выполнения этого метода всегда одно и то же. Такие операции называются операциями с <strong>постоянным временем выполнения</strong>. В действительности, этот метод выполняется немного быстрее, когда список пуст, поскольку в этом случае выполняется только условное предложение; но эта разница незначительна.</p>
+<p>Поведение метода <tt class="docutils literal"><span class="pre">insert</span></tt> разительно отличается. В общем случае необходимо пройти весь список для того, чтобы найти последний элемент.</p>
+<p>Время прохода списка пропорционально длине списка. Поскольку время выполнения есть линейная функция от размера списка, такие операции называются операциями с <strong>линейным временем выполнения</strong>. По сравнению с операциями с постоянным временем выполнения, такие операции сильно проигрывают.</p>
+</div>
+<div class="section" id="id6">
+<h2>18.5. Улучшенная связная очередь<a class="headerlink" href="#id6" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Хочется иметь реализацию очереди, которая выполняла бы все операции за постоянное время. Один из способов добиться этого &#8212; изменить класс <tt class="docutils literal"><span class="pre">Queue</span></tt> так, чтобы он поддерживал ссылку как на первый, так и на последний узел в списке!</p>
+<p>Класс <tt class="docutils literal"><span class="pre">ImprovedQueue</span></tt> выглядит так:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ImprovedQueue</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">head</span>   <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last</span>   <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">is_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Все, что мы пока изменили в коде, &#8212; добавили атрибут <tt class="docutils literal"><span class="pre">last</span></tt>. Он используется в методах <tt class="docutils literal"><span class="pre">insert</span></tt> и <tt class="docutils literal"><span class="pre">remove</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ImprovedQueue</span><span class="p">:</span>
+    <span class="o">...</span>
+    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cargo</span><span class="p">):</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">cargo</span><span class="p">)</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c"># if list is empty, the new node is head and last</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">last</span> <span class="o">=</span> <span class="n">node</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c"># find the last node</span>
+            <span class="n">last</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">last</span>
+            <span class="c"># append the new node</span>
+            <span class="n">last</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">node</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last</span> <span class="o">=</span> <span class="n">node</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>Поскольку атрибут <tt class="docutils literal"><span class="pre">last</span></tt> указывает на последний узел, нам не нужно искать его. В результате, данный метод является методом с постоянным временем выполнения.</p>
+<p>За скорость, однако, нужно платить. Придется добавить условное предложение в <tt class="docutils literal"><span class="pre">remove</span></tt> для того, чтобы присваивать <tt class="docutils literal"><span class="pre">last</span></tt> значение <tt class="docutils literal"><span class="pre">None</span></tt> в случае, когда удален последний узел:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ImprovedQueue</span><span class="p">:</span>
+    <span class="o">...</span>
+    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span>
+        <span class="n">cargo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">cargo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">next</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span> <span class="n">cargo</span>
+</pre></div>
+</div>
+<p>Эта реализация очереди несколько сложнее, чем реализация <tt class="docutils literal"><span class="pre">Queue</span></tt>. Также стало сложнее убедиться в ее корректности. Но преимущество состоит в том, что теперь и <tt class="docutils literal"><span class="pre">insert</span></tt> и <tt class="docutils literal"><span class="pre">remove</span></tt> являются операциями с постоянным временем выполнения.</p>
+</div>
+<div class="section" id="id7">
+<h2>18.6. Очередь с приоритетом<a class="headerlink" href="#id7" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Абстрактный тип данных очередь с приоритетом имеет тот же интерфейс, что и очередь, но семантика отличается. Приведем интерфейс:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">__init__</span></tt></dt>
+<dd>Создать новую пустую очередь.</dd>
+<dt><tt class="docutils literal"><span class="pre">insert</span></tt></dt>
+<dd>Добавить в очередь новый элемент.</dd>
+<dt><tt class="docutils literal"><span class="pre">remove</span></tt></dt>
+<dd>Удалить и вернуть элемент из очереди. Возвращаемый элемент &#8212; тот, у которого наивысший приоритет.</dd>
+<dt><tt class="docutils literal"><span class="pre">is_empty</span></tt></dt>
+<dd>Проверить, пуста ли очередь.</dd>
+</dl>
+<p>Семантическое отличие состоит в том, что извлекаемый из очереди элемент не обязательно тот, который был добавлен в очередь первым. Это элемент, имеющий наивысший приоритет. Что такое приоритет, и как выполняется сравнение приоритетов, не определяется в интерфейсе. Мы также не станем определять этого в нашей реализации очереди с приоритетом! О приоритете будут &#8220;знать&#8221; только сами элементы, помещаемые в очередь.</p>
+<p>Например, если элементы в очереди имеют имена, они могут извлекаться из очереди в алфавитном порядке. Если элементы содержат очки, набранные при игре в боулинг, можно извлекать их в порядке от наибольшего значения к наименьшему. Если элементы, стоящие в очереди, можно сравнивать друг с другом, значит, можно найти среди них элемент с наивысшим приоритетом и извлечь его.</p>
+<p>Следующая реализация очереди с приоритетом хранит элементы очереди в списке Python.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">PriorityQueue</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">is_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">==</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Методы <tt class="docutils literal"><span class="pre">__init__</span></tt>, <tt class="docutils literal"><span class="pre">is_empty</span></tt> и <tt class="docutils literal"><span class="pre">insert</span></tt> используют операции над списком. Единственный интересный метод <tt class="docutils literal"><span class="pre">remove</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">PriorityQueue</span><span class="p">:</span>
+    <span class="o">...</span>
+    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">maxi</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">maxi</span><span class="p">]:</span> <span class="n">maxi</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">maxi</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">maxi</span><span class="p">:</span><span class="n">maxi</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">return</span> <span class="n">item</span>
+</pre></div>
+</div>
+<p>В начале каждой итерации <tt class="docutils literal"><span class="pre">maxi</span></tt> содержит индекс самого большого (с наивысшим приоритетом) элемента из рассмотренных до сих пор. Каждый раз в цикле программа сравнивает <tt class="docutils literal"><span class="pre">i</span></tt>-й элемент с элементом-чемпионом. Если <tt class="docutils literal"><span class="pre">i</span></tt>-й элемент оказывается больше, переменной <tt class="docutils literal"><span class="pre">maxi</span></tt> присваивается <tt class="docutils literal"><span class="pre">i</span></tt>.</p>
+<p>Когда цикл <tt class="docutils literal"><span class="pre">for</span></tt> завершается, <tt class="docutils literal"><span class="pre">maxi</span></tt> содержит индекс элемента с наивысшим приоритетом. Этот элемент удаляется из списка и возвращается.</p>
+<p>Протестируем нашу реализацию очереди с приоритетом:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span> <span class="n">PriorityQueue</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="ow">not</span> <span class="n">q</span><span class="o">.</span><span class="n">is_empty</span><span class="p">():</span> <span class="k">print</span> <span class="n">q</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
+<span class="go">14</span>
+<span class="go">13</span>
+<span class="go">12</span>
+<span class="go">11</span>
+</pre></div>
+</div>
+<p>Если очередь содержит числа или строки, они будут извлекаться в числовом или алфавитном порядке, от наибольшего к наименьшему. Python может найти наибольшее целое число или строку потому, что он сравнивает числа и строки при помощи встроенных операторов сравнения.</p>
+<p>Если же очередь содержит объекты пользовательских классов, то класс должен предоставить метод <tt class="docutils literal"><span class="pre">__cmp__</span></tt>. Когда метод <tt class="docutils literal"><span class="pre">remove</span></tt> использует оператор <tt class="docutils literal"><span class="pre">&gt;</span></tt> для сравнения двух элементов, Python вызывает <tt class="docutils literal"><span class="pre">__cmp__</span></tt> для одного элемента, передавая другой в качестве параметра. Если метод <tt class="docutils literal"><span class="pre">__cmp__</span></tt> работает корректно, очередь с приоритетом также будет работать корректно.</p>
+</div>
+<div class="section" id="golfer">
+<h2>18.7. Класс <tt class="docutils literal"><span class="pre">Golfer</span></tt><a class="headerlink" href="#golfer" title="Ссылка на этот заголовок">¶</a></h2>
+<p>В качестве примера объекта с необычным приоритетом, реализуем класс <tt class="docutils literal"><span class="pre">Golfer</span></tt> (англ.: игрок в гольф), который хранит имя игрока и набранные им очки. Как всегда, начнем с определения методов <tt class="docutils literal"><span class="pre">__init__</span></tt> и <tt class="docutils literal"><span class="pre">__str__</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Golfer</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">score</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="o">=</span> <span class="n">score</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;</span><span class="si">%-16s</span><span class="s">: </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">__str__</span></tt> использует оператор форматирования для того, чтобы расположить имена и очки игроков в виде аккуратных столбцов.</p>
+<p>Далее, определим метод <tt class="docutils literal"><span class="pre">__cmp__</span></tt>, в котором наименьшее число очков означает наивысший приоритет. Как всегда, <tt class="docutils literal"><span class="pre">__cmp__</span></tt> возвращает 1, если  <tt class="docutils literal"><span class="pre">self</span></tt> больше <tt class="docutils literal"><span class="pre">other</span></tt>, -1, если <tt class="docutils literal"><span class="pre">self</span></tt> меньше <tt class="docutils literal"><span class="pre">other</span></tt>, и 0 в случае их равенства.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Golfer</span><span class="p">:</span>
+    <span class="o">...</span>
+    <span class="k">def</span> <span class="nf">__cmp__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">score</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">score</span><span class="p">:</span> <span class="k">return</span>  <span class="mi">1</span>   <span class="c"># less is more</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">score</span> <span class="o">&gt;</span> <span class="n">other</span><span class="o">.</span><span class="n">score</span><span class="p">:</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">return</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>Теперь мы готовы протестировать работу очереди с приоритетом с классом <tt class="docutils literal"><span class="pre">Golfer</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tiger</span> <span class="o">=</span> <span class="n">Golfer</span><span class="p">(</span><span class="s">&quot;Tiger Woods&quot;</span><span class="p">,</span>    <span class="mi">61</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">phil</span>  <span class="o">=</span> <span class="n">Golfer</span><span class="p">(</span><span class="s">&quot;Phil Mickelson&quot;</span><span class="p">,</span> <span class="mi">72</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hal</span>   <span class="o">=</span> <span class="n">Golfer</span><span class="p">(</span><span class="s">&quot;Hal Sutton&quot;</span><span class="p">,</span>     <span class="mi">69</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pq</span> <span class="o">=</span> <span class="n">PriorityQueue</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pq</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">tiger</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pq</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">phil</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pq</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">hal</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="ow">not</span> <span class="n">pq</span><span class="o">.</span><span class="n">is_empty</span><span class="p">():</span> <span class="k">print</span> <span class="n">pq</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
+<span class="go">   Tiger Woods    : 61</span>
+<span class="go">   Hal Sutton     : 69</span>
+<span class="go">   Phil Mickelson : 72</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h2>18.8. Глоссарий<a class="headerlink" href="#id8" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="glossary docutils">
+<dt id="term-fifo">FIFO</dt>
+<dd>First In, First Out, или первым вошел &#8212; первым вышел, политика очереди,
+при которой элемент, первым добавленный в очередь, будет излечен первым.</dd>
+<dt id="term-">очередь</dt>
+<dd>Упорядоченный набор объектов, ожидающих обслуживания.</dd>
+<dt id="term-2">очередь с приоритетом</dt>
+<dd>Очередь, в которой которой каждый элемент имеет приоритет, зависящий от внешних
+факторов (то есть, независимый от самой очереди). Первым извлекается из очереди
+элемент с наивысшим приоритетом.</dd>
+<dt id="term-3">политика очереди</dt>
+<dd>Правило, определяющее, какой элемент очереди будет извлечен (обслужен) следующим.</dd>
+<dt id="term-4">программа с линейным временем выполнения</dt>
+<dd>Программа, время выполнения которой есть линейная функция от размера структуры данных.</dd>
+<dt id="term-5">программа с постоянным временем выполнения</dt>
+<dd>Программа, время выполнения которой не зависит от размера структуры данных.</dd>
+<dt id="term-6">связная очередь</dt>
+<dd>Реализация очереди с использованием связного списка.</dd>
+</dl>
+</div>
+<div class="section" id="id9">
+<h2>18.9. Упражнения<a class="headerlink" href="#id9" title="Ссылка на этот заголовок">¶</a></h2>
+<ol class="arabic simple">
+<li>Напишите реализацию очереди, используя список Python. Сравните производительность
+вашей реализации с реализацией <tt class="docutils literal"><span class="pre">ImprovedQueue</span></tt> для очередей различной длины.</li>
+<li>Напишите реализацию очереди с приоритетом, используя связный список. Поддерживайте
+список отсортированным, так, чтобы извлечение из списка было операцией с постоянным
+временем выполнения. Сравните производительность этой реализации с реализацией
+при помощи списка Python.</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             >словарь</a></li>
+        <li class="right" >
+          <a href="ch19.html" title="19. Деревья"
+             >следующий</a> |</li>
+        <li class="right" >
+          <a href="ch17.html" title="17. Стеки"
+             >предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="copyright.html">Copyright</a> 2009, 2012, Джеффри Элкнер, Аллен Б. Дауни, Крис Мейерс, Андрей Трофимов.
+      При создании использован <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

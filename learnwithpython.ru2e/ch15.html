@@ -1,0 +1,441 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>15. Наследование &mdash; Учимся с Python</title>
+    
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2nd Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="Учимся с Python" href="index.html" />
+    <link rel="next" title="16. Связные списки" href="ch16.html" />
+    <link rel="prev" title="14. Коллекции объектов" href="ch14.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             accesskey="I">словарь</a></li>
+        <li class="right" >
+          <a href="ch16.html" title="16. Связные списки"
+             accesskey="N">следующий</a> |</li>
+        <li class="right" >
+          <a href="ch14.html" title="14. Коллекции объектов"
+             accesskey="P">предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>15. Наследование<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
+<div class="section" id="index-0">
+<span id="id2"></span><h2>15.1. Наследование<a class="headerlink" href="#index-0" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Чаще всего с объектно-ориентированным подходом ассоциируется такое свойство языка программирования, как <strong>наследование</strong>. Наследование &#8212; это способ определения нового класса, являющегося измененной версией уже существующего класса.</p>
+<p>Наследование позволяет добавлять методы к классу без изменения существующего класса. Новый класс наследует методы существующего класса. Развивая метафору, существующий класс называют <strong>родительским</strong> классом, или суперклассом. А новый класс называют <strong>дочерним</strong> классом, или подклассом родительского класса.</p>
+<p>В этой главе мы продемонстрируем использование наследования при написании программы для карточной игры <em>Старая дева</em>. Одной из наших целей будет создание кода, который можно повторно использовать для написания других карточных игр.</p>
+</div>
+<div class="section" id="id3">
+<h2>15.2. Рука с картами<a class="headerlink" href="#id3" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Для написания карточной игры нужно уметь представлять руку с картами, то есть, набор карт, находящихся в руке одного игрока. Карточная рука похожа на колоду. Обе составлены из множества карт, и обе нуждаются в операциях по добавлению и удалению карт. Также будет не лишней возможность перетасовать колоду или руку.</p>
+<p>Однако карточная рука отличается от колоды. В зависимости от игры, в которую играют, может понадобиться выполнять для руки некоторые операции, не имеющие смысла для колоды. Например, при игре в <a class="reference external" href="http://ru.wikipedia.org/wiki/%D0%9F%D0%BE%D0%BA%D0%B5%D1%80">покер</a> может понадобиться классифицировать руку (стрейт, флэш, и так далее) или сравнить одну руку с другой. А в бридже понадобится подсчитать стоимость руки, чтобы правильно вести торговлю.</p>
+<p>Такая ситуация подталкивает нас к использованию наследования. Если класс <tt class="docutils literal"><span class="pre">Hand</span></tt> (англ.: рука) будет подклассом <tt class="docutils literal"><span class="pre">Deck</span></tt>, то он будет иметь все методы класса <tt class="docutils literal"><span class="pre">Deck</span></tt>, плюс новые методы, которые мы определим специально для него.</p>
+<p>В определении класса имя родительского класса помещают в скобки:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Hand</span><span class="p">(</span><span class="n">Deck</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>Это предложение означает, что новый класс <tt class="docutils literal"><span class="pre">Hand</span></tt> наследует от существующего класса <tt class="docutils literal"><span class="pre">Deck</span></tt>.</p>
+<p>Конструктор <tt class="docutils literal"><span class="pre">Hand</span></tt> инициализирует атрибуты руки, <tt class="docutils literal"><span class="pre">name</span></tt> и <tt class="docutils literal"><span class="pre">cards</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Hand</span><span class="p">(</span><span class="n">Deck</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">):</span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">cards</span> <span class="o">=</span> <span class="p">[]</span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+</pre></div>
+</div>
+<p>Строка <tt class="docutils literal"><span class="pre">name</span></tt> содержит имя руки, данное, возможно, по имени игрока. Параметр <tt class="docutils literal"><span class="pre">name</span></tt> опционален и имеет значение по умолчанию, пустую строку. Список карт в руке, <tt class="docutils literal"><span class="pre">cards</span></tt>, инициализируется пустым списком.</p>
+<p>Практически в каждой карточной игре требуется добавлять и убирать карты из руки. С удалением у нас все в порядке, поскольку класс <tt class="docutils literal"><span class="pre">Hand</span></tt> унаследовал метод <tt class="docutils literal"><span class="pre">remove</span></tt> класса <tt class="docutils literal"><span class="pre">Deck</span></tt>. Но нужно написать метод <tt class="docutils literal"><span class="pre">add</span></tt> (англ.: добавить) для добавления карты в руку:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Hand</span><span class="p">(</span><span class="n">Deck</span><span class="p">):</span>
+    <span class="o">...</span>
+
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">card</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cards</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">card</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>И вновь многоточие показывает, что мы опустили другие методы. Списочный метод <tt class="docutils literal"><span class="pre">append</span></tt> добавляет новую карту в конец списка карт.</p>
+</div>
+<div class="section" id="id4">
+<h2>15.3. Сдача карт<a class="headerlink" href="#id4" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Теперь, когда у нас есть класс <tt class="docutils literal"><span class="pre">Hand</span></tt>, нам нужно сдать карты из колоды в руки игроков. На первый взгляд неочевидно, должен ли новый метод быть помещен в класс <tt class="docutils literal"><span class="pre">Hand</span></tt> или класс <tt class="docutils literal"><span class="pre">Deck</span></tt>. Но поскольку этот метод оперирует с одной колодой и, вероятно, с несколькими руками, будет более естественным поместить его в <tt class="docutils literal"><span class="pre">Deck</span></tt>.</p>
+<p>Метод <tt class="docutils literal"><span class="pre">deal</span></tt> должен быть достаточно общим, так как в разных карточных играх разные требования. Может понадобиться сразу сдать всю колоду, или добавлять по одной карте в каждую руку.</p>
+<p>Метод <tt class="docutils literal"><span class="pre">deal</span></tt> имеет два параметра, список (или кортеж) рук и общее количество карт, которые необходимо сдать. Если карт в колоде недостаточно, метод сдает все имеющиеся, и на этом завершает свою работу:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Deck</span> <span class="p">:</span>
+    <span class="o">...</span>
+    <span class="k">def</span> <span class="nf">deal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hands</span><span class="p">,</span> <span class="n">num_cards</span><span class="o">=</span><span class="mi">999</span><span class="p">):</span>
+        <span class="n">num_hands</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">hands</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_cards</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_empty</span><span class="p">():</span> <span class="k">break</span>   <span class="c"># break if out of cards</span>
+            <span class="n">card</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>           <span class="c"># take the top card</span>
+            <span class="n">hand</span> <span class="o">=</span> <span class="n">hands</span><span class="p">[</span><span class="n">i</span> <span class="o">%</span> <span class="n">num_hands</span><span class="p">]</span> <span class="c"># whose turn is next?</span>
+            <span class="n">hand</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">card</span><span class="p">)</span>              <span class="c"># add the card to the hand</span>
+</pre></div>
+</div>
+<p>Параметр <tt class="docutils literal"><span class="pre">num_cards</span></tt> опционален, а его значение по умолчанию, большое число, гарантирует, что будут сданы все карты из колоды.</p>
+<p>Переменная цикла <tt class="docutils literal"><span class="pre">i</span></tt> поочередно приобретает значения от 0 до <tt class="docutils literal"><span class="pre">num_cards-1</span></tt>. В каждой итерации одна карта извлекается из колоды методом <tt class="docutils literal"><span class="pre">pop</span></tt>, который удаляет и возвращает последний элемент списка.</p>
+<p>Оператор взятия остатка от деления <tt class="docutils literal"><span class="pre">%</span></tt> позволяет нам сдавать карты по кругу, по одной карте в руку за один раз. Когда <tt class="docutils literal"><span class="pre">i</span></tt> становится равным количеству рук, выражение <tt class="docutils literal"><span class="pre">i</span> <span class="pre">%</span> <span class="pre">num_hands</span></tt> дает 0, и счет рук начинается сначала.</p>
+</div>
+<div class="section" id="id5">
+<h2>15.4. Вывод руки на печать<a class="headerlink" href="#id5" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Для вывода на печать карточной руки можно воспользоваться методами <tt class="docutils literal"><span class="pre">print_deck</span></tt> и <tt class="docutils literal"><span class="pre">__str__</span></tt>, унаследованными от класса <tt class="docutils literal"><span class="pre">Deck</span></tt>. Например:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">deck</span> <span class="o">=</span> <span class="n">Deck</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">deck</span><span class="o">.</span><span class="n">shuffle</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hand</span> <span class="o">=</span> <span class="n">Hand</span><span class="p">(</span><span class="s">&quot;frank&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">deck</span><span class="o">.</span><span class="n">deal</span><span class="p">([</span><span class="n">hand</span><span class="p">],</span> <span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">hand</span>
+<span class="go">Hand frank contains</span>
+<span class="go">2 of Spades</span>
+<span class="go"> 3 of Spades</span>
+<span class="go">  4 of Spades</span>
+<span class="go">   Ace of Hearts</span>
+<span class="go">    9 of Clubs</span>
+</pre></div>
+</div>
+<p>Не очень хорошая рука, но есть потенциал для стрейт флэша.</p>
+<p>Хотя пользоваться унаследованным методом довольно удобно, у объектов класса <tt class="docutils literal"><span class="pre">Hand</span></tt> есть кое-что еще, что хотелось бы вывести на печать. Это имя руки. Чтобы вывести его на печать, напишем свой метод <tt class="docutils literal"><span class="pre">__str__</span></tt> для класса <tt class="docutils literal"><span class="pre">Hand</span></tt>, который переопределит одноименный метод родительского класса:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Hand</span><span class="p">(</span><span class="n">Deck</span><span class="p">)</span>
+    <span class="o">...</span>
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="s">&quot;Hand &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_empty</span><span class="p">():</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="s">&quot; is empty</span><span class="se">\n</span><span class="s">&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="s">&quot; contains</span><span class="se">\n</span><span class="s">&quot;</span>
+        <span class="k">return</span> <span class="n">s</span> <span class="o">+</span> <span class="n">Deck</span><span class="o">.</span><span class="n">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Вначале переменной <tt class="docutils literal"><span class="pre">s</span></tt> присваивается строка с именем руки. Если рука пуста, то программа добавляет к строке слова <tt class="docutils literal"><span class="pre">is</span> <span class="pre">empty</span></tt> (англ.: пусто) и возвращает <tt class="docutils literal"><span class="pre">s</span></tt>.</p>
+<p>В противном случае, программа добавляет к строке слово <tt class="docutils literal"><span class="pre">contains</span></tt> (англ.: содержит) и строковое представление <tt class="docutils literal"><span class="pre">Deck</span></tt>, полученное путем вызова метода <tt class="docutils literal"><span class="pre">__str__</span></tt> класса <tt class="docutils literal"><span class="pre">Deck</span></tt> для объекта <tt class="docutils literal"><span class="pre">self</span></tt>.</p>
+<p>Возможно, вам кажется странным передача <tt class="docutils literal"><span class="pre">self</span></tt>, ссылки на текущий объект <tt class="docutils literal"><span class="pre">Hand</span></tt>, в метод класса <tt class="docutils literal"><span class="pre">Deck</span></tt>. Но вспомните, что <tt class="docutils literal"><span class="pre">Hand</span></tt> является подклассом и разновидностю <tt class="docutils literal"><span class="pre">Deck</span></tt>, иными словами, <tt class="docutils literal"><span class="pre">Hand</span></tt> есть <tt class="docutils literal"><span class="pre">Deck</span></tt>. Объекты <tt class="docutils literal"><span class="pre">Hand</span></tt> могут делать все, что могут делать объекты <tt class="docutils literal"><span class="pre">Deck</span></tt>, поэтому мы вправе передать объект <tt class="docutils literal"><span class="pre">Hand</span></tt> методу <tt class="docutils literal"><span class="pre">Deck</span></tt>.</p>
+<p>Вообще, всегда можно использовать экземпляр подкласса вместо экземпляра родительского класса.</p>
+</div>
+<div class="section" id="cardgame">
+<h2>15.5. Класс <tt class="docutils literal"><span class="pre">CardGame</span></tt><a class="headerlink" href="#cardgame" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Класс <tt class="docutils literal"><span class="pre">CardGame</span></tt> (англ.: карточная игра) берет на себя действия, общие для всех карточных игр, такие, как создание и тасование колоды:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">CardGame</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deck</span> <span class="o">=</span> <span class="n">Deck</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deck</span><span class="o">.</span><span class="n">shuffle</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Это первый случай, когда мы видим метод <tt class="docutils literal"><span class="pre">__init__</span></tt>, не просто инициализирующий атрибуты, а выполняющий нетривиальные действия.</p>
+<p>Чтобы реализовать конкретную карточную игру, можно унаследовать новый класс от <tt class="docutils literal"><span class="pre">CardGame</span></tt> и добавить операции, необходимые для реализуемой игры. В качестве примера, напишем симуляцию игры <em>Старая дева</em>.</p>
+<p>Цель игры &#8212; избавиться от всех карт в руке. Вы делаете это, сопоставляя карты по значению и цвету одновременно. Например, четверка треф соответствует четверке пик, поскольку обе масти черные. Валет червей соответствует валету бубен, так как масти обеих карт красные.</p>
+<p>В начале игры дама треф убирается из колоды, и, следовательно, дама пик не имеет пары. Пятьдесят одна оставшаяся карта сдается игрокам по кругу. После сдачи все игроки сбрасывают имеющиеся у каждого в руке парные карты.</p>
+<p>Когда в руках игроков пар больше нет, начинается игра. Игроки по очереди берут карту (рубашкой вверх) из руки ближайшего соседа слева, у которого есть карты, и добавляют в свою руку. Если пришедшая карта образует пару с имеющейся в руке, пара сбрасывается. В противном случае карта остается у игрока. В конце концов все возможные пары сбрасываются, и только пиковая дама (старая дева) остается в руке проигравшего.</p>
+<p>В нашей компьютерной симуляции компьютер играет за всех игроков. К сожалению, некоторые нюансы настоящей игры теряются. В настоящей игре игрок, у которого в руке старая дева, пускается на маленькие хитрости, чтобы его сосед вытянул именно эту карту, например, кладет ее ближе других к соседу, или, напротив, максимально скрывает другими своими картами. Компьютер же выбирает карту случайным образом.</p>
+</div>
+<div class="section" id="oldmaidhand">
+<h2>15.6. Класс <tt class="docutils literal"><span class="pre">OldMaidHand</span></tt><a class="headerlink" href="#oldmaidhand" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Рука для <em>Старой девы</em> должна уметь кое-что, помимо стандартных возможностей класса <tt class="docutils literal"><span class="pre">Hand</span></tt>. Определим новый класс, <tt class="docutils literal"><span class="pre">OldMaidHand</span></tt> (англ.: рука старой девы), подкласс класса <tt class="docutils literal"><span class="pre">Hand</span></tt>, и добавим метод <tt class="docutils literal"><span class="pre">remove_matches</span></tt> (англ.: удалить пары):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">OldMaidHand</span><span class="p">(</span><span class="n">Hand</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">remove_matches</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">original_cards</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cards</span><span class="p">[:]</span>
+        <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="n">original_cards</span><span class="p">:</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="n">Card</span><span class="p">(</span><span class="mi">3</span> <span class="o">-</span> <span class="n">card</span><span class="o">.</span><span class="n">suit</span><span class="p">,</span> <span class="n">card</span><span class="o">.</span><span class="n">rank</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">match</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cards</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cards</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">card</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cards</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">match</span><span class="p">)</span>
+                <span class="k">print</span> <span class="s">&quot;Hand </span><span class="si">%s</span><span class="s">: </span><span class="si">%s</span><span class="s"> matches </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">card</span><span class="p">,</span> <span class="n">match</span><span class="p">)</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">count</span>
+</pre></div>
+</div>
+<p>Вначале мы создаем копию списка карт, чтобы пройти по всем элементам списка-копии, при необходимости удаляя элементы из оригинального списка. Поскольку <tt class="docutils literal"><span class="pre">self.cards</span></tt> изменяется в теле цикла, не стоит использовать этот список с переменной цикла. Вы озадачите Python, если заставите его в цикле идти по списку, который изменяется.</p>
+<p>Для каждой карты в руке мы определяем парную ей карту и пробуем найти ее в списке. Парная карта имеет ту же величину и другую масть того же цвета, что и текущая карта. Выражение <tt class="docutils literal"><span class="pre">3</span> <span class="pre">-</span> <span class="pre">card.suit</span></tt> превращает трефы (масть 0) в пики (масть 3), а бубны (1) в черви (2). Проверьте сами, что другие преобразования тоже работают. Если парная карта находится в руке, обе карты удаляются.</p>
+<p>Следующий пример демонстрирует использование <tt class="docutils literal"><span class="pre">remove_matches</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">game</span> <span class="o">=</span> <span class="n">CardGame</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hand</span> <span class="o">=</span> <span class="n">OldMaidHand</span><span class="p">(</span><span class="s">&quot;frank&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">game</span><span class="o">.</span><span class="n">deck</span><span class="o">.</span><span class="n">deal</span><span class="p">([</span><span class="n">hand</span><span class="p">],</span> <span class="mi">13</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">hand</span>
+<span class="go">Hand frank contains</span>
+<span class="go">Ace of Spades</span>
+<span class="go"> 2 of Diamonds</span>
+<span class="go">  7 of Spades</span>
+<span class="go">   8 of Clubs</span>
+<span class="go">    6 of Hearts</span>
+<span class="go">     8 of Spades</span>
+<span class="go">      7 of Clubs</span>
+<span class="go">       Queen of Clubs</span>
+<span class="go">        7 of Diamonds</span>
+<span class="go">         5 of Clubs</span>
+<span class="go">          Jack of Diamonds</span>
+<span class="go">           10 of Diamonds</span>
+<span class="go">            10 of Hearts</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hand</span><span class="o">.</span><span class="n">remove_matches</span><span class="p">()</span>
+<span class="go">Hand frank: 7 of Spades matches 7 of Clubs</span>
+<span class="go">Hand frank: 8 of Spades matches 8 of Clubs</span>
+<span class="go">Hand frank: 10 of Diamonds matches 10 of Hearts</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">hand</span>
+<span class="go">Hand frank contains</span>
+<span class="go">Ace of Spades</span>
+<span class="go"> 2 of Diamonds</span>
+<span class="go">  6 of Hearts</span>
+<span class="go">   Queen of Clubs</span>
+<span class="go">    7 of Diamonds</span>
+<span class="go">     5 of Clubs</span>
+<span class="go">      Jack of Diamonds</span>
+</pre></div>
+</div>
+<p>Обратите внимание, что в классе <tt class="docutils literal"><span class="pre">OldMaidHand</span></tt> нет метода <tt class="docutils literal"><span class="pre">__init__</span></tt>. Он унаследован от <tt class="docutils literal"><span class="pre">Hand</span></tt>.</p>
+</div>
+<div class="section" id="oldmaidgame">
+<h2>15.7. Класс <tt class="docutils literal"><span class="pre">OldMaidGame</span></tt><a class="headerlink" href="#oldmaidgame" title="Ссылка на этот заголовок">¶</a></h2>
+<p>А теперь займемся собственно игрой. Класс <tt class="docutils literal"><span class="pre">OldMaidGame</span></tt>, подкласс класса <tt class="docutils literal"><span class="pre">CardGame</span></tt>, получит новый метод <tt class="docutils literal"><span class="pre">play</span></tt>, который принимает список игроков в качестве параметра.</p>
+<p>Поскольку метод <tt class="docutils literal"><span class="pre">__init__</span></tt> наследуется от <tt class="docutils literal"><span class="pre">CardGame</span></tt>, новый объект <tt class="docutils literal"><span class="pre">OldMaidGame</span></tt> будет содержать перетасованную колоду:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">OldMaidGame</span><span class="p">(</span><span class="n">CardGame</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">play</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
+        <span class="c"># remove Queen of Clubs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deck</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">Card</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">12</span><span class="p">))</span>
+
+        <span class="c"># make a hand for each player</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hands</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hands</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">OldMaidHand</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+
+        <span class="c"># deal the cards</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deck</span><span class="o">.</span><span class="n">deal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hands</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&quot;---------- Cards have been dealt&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">print_hands</span><span class="p">()</span>
+
+        <span class="c"># remove initial matches</span>
+        <span class="n">matches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_all_matches</span><span class="p">()</span>
+        <span class="k">print</span> <span class="s">&quot;---------- Matches discarded, play begins&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">print_hands</span><span class="p">()</span>
+
+        <span class="c"># play until all 50 cards are matched</span>
+        <span class="n">turn</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">num_hands</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hands</span><span class="p">)</span>
+        <span class="k">while</span> <span class="n">matches</span> <span class="o">&lt;</span> <span class="mi">25</span><span class="p">:</span>
+            <span class="n">matches</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">play_one_turn</span><span class="p">(</span><span class="n">turn</span><span class="p">)</span>
+            <span class="n">turn</span> <span class="o">=</span> <span class="p">(</span><span class="n">turn</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">num_hands</span>
+
+        <span class="k">print</span> <span class="s">&quot;---------- Game is Over&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">print_hands</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Напишите метод <tt class="docutils literal"><span class="pre">print_hands()</span></tt> самостоятельно в качестве упражнения.</p>
+<p>Некоторые части игры выделены в отдельные методы. Метод <tt class="docutils literal"><span class="pre">remove_all_matches</span></tt> обходит все руки и вызывает <tt class="docutils literal"><span class="pre">remove_matches</span></tt> для каждой:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">OldMaidGame</span><span class="p">(</span><span class="n">CardGame</span><span class="p">):</span>
+    <span class="o">...</span>
+    <span class="k">def</span> <span class="nf">remove_all_matches</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">hand</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hands</span><span class="p">:</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="n">hand</span><span class="o">.</span><span class="n">remove_matches</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">count</span>
+</pre></div>
+</div>
+<p>Переменная <tt class="docutils literal"><span class="pre">count</span></tt> &#8212; аккумулятор, который накапливает общее количество пар, сброшенных со всех рук.</p>
+<p>Когда общее количество сброшенных пар достигнет двадцати пяти, игроками будут сброшены пятьдесят карт. Это означает, что осталась одна карта и игра завершена.</p>
+<p>Переменная <tt class="docutils literal"><span class="pre">turn</span></tt> (англ.: очередность) следит за тем, какая рука играет. Вначале установленное в 0, значение переменной в каждой итерации увеличивается на 1. Когда значение достигает <tt class="docutils literal"><span class="pre">num_hands</span></tt>, операция взятия остатка от деления вновь устанавливает его в 0.</p>
+<p>Метод <tt class="docutils literal"><span class="pre">play_one_turn</span></tt> принимает параметр, показывающий, чья очередь играть, и возвращает количество совпадений (или сброшенных пар) в сыгравшей руке:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">OldMaidGame</span><span class="p">(</span><span class="n">CardGame</span><span class="p">):</span>
+    <span class="o">...</span>
+    <span class="k">def</span> <span class="nf">play_one_turn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hands</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">is_empty</span><span class="p">():</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="n">neighbor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_neighbor</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">picked_card</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hands</span><span class="p">[</span><span class="n">neighbor</span><span class="p">]</span><span class="o">.</span><span class="n">pop_card</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hands</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">picked_card</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&quot;Hand&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hands</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s">&quot;picked&quot;</span><span class="p">,</span> <span class="n">picked_card</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hands</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">remove_matches</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hands</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">shuffle</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">count</span>
+</pre></div>
+</div>
+<p>Если рука игрока пуста, то игрок находится вне игры; в этом случае метод ничего не делает и возвращает 0.</p>
+<p>В противном случае, метод находит ближайшего игрока слева, у которого есть карты, берет одну карту из его руки, добавляет ее в свою руку и проверяет свою руку на наличие пар. Перед завершением метода карты в руке тасуются, чтобы сделать выбор следующего игрока случайным.</p>
+<p>Метод <tt class="docutils literal"><span class="pre">find_neighbor</span></tt> (англ.: найти соседа) начинает с ближайшего соседа слева, и переходит к следующему до тех пор, пока не будет найден игрок с картами в руке:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">OldMaidGame</span><span class="p">(</span><span class="n">CardGame</span><span class="p">):</span>
+    <span class="o">...</span>
+    <span class="k">def</span> <span class="nf">find_neighbor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="n">num_hands</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hands</span><span class="p">)</span>
+        <span class="k">for</span> <span class="nb">next</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">num_hands</span><span class="p">):</span>
+            <span class="n">neighbor</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="nb">next</span><span class="p">)</span> <span class="o">%</span> <span class="n">num_hands</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">hands</span><span class="p">[</span><span class="n">neighbor</span><span class="p">]</span><span class="o">.</span><span class="n">is_empty</span><span class="p">():</span>
+                <span class="k">return</span> <span class="n">neighbor</span>
+</pre></div>
+</div>
+<p>Если <tt class="docutils literal"><span class="pre">find_neighbor</span></tt> когда-либо обойдет весь круг, не найдя карт в руках игроков, он вернет <tt class="docutils literal"><span class="pre">None</span></tt> и приведет к ошибке в вызывающей программе. Однако, мы можем доказать, что этого никогда не случится (во всяком случае, пока программа корректно обнаруживает завершение игры).</p>
+<p>Ниже приведены сообщения, выведенные в ходе симуляции сокращенной версии игры, в которой трем игрокам были сданы только 15 карт, от десятки и старше. С такой колодой игра завершается после сброса семи пар, а не двадцати пяти:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">cards</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">game</span> <span class="o">=</span> <span class="n">cards</span><span class="o">.</span><span class="n">OldMaidGame</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">game</span><span class="o">.</span><span class="n">play</span><span class="p">([</span><span class="s">&quot;Allen&quot;</span><span class="p">,</span><span class="s">&quot;Jeff&quot;</span><span class="p">,</span><span class="s">&quot;Chris&quot;</span><span class="p">])</span>
+<span class="go">---------- Cards have been dealt</span>
+<span class="go">Hand Allen contains</span>
+<span class="go">King of Hearts</span>
+<span class="go"> Jack of Clubs</span>
+<span class="go">  Queen of Spades</span>
+<span class="go">   King of Spades</span>
+<span class="go">    10 of Diamonds</span>
+
+<span class="go">Hand Jeff contains</span>
+<span class="go">Queen of Hearts</span>
+<span class="go"> Jack of Spades</span>
+<span class="go">  Jack of Hearts</span>
+<span class="go">   King of Diamonds</span>
+<span class="go">    Queen of Diamonds</span>
+
+<span class="go">Hand Chris contains</span>
+<span class="go">Jack of Diamonds</span>
+<span class="go"> King of Clubs</span>
+<span class="go">  10 of Spades</span>
+<span class="go">   10 of Hearts</span>
+<span class="go">    10 of Clubs</span>
+
+<span class="go">Hand Jeff: Queen of Hearts matches Queen of Diamonds</span>
+<span class="go">Hand Chris: 10 of Spades matches 10 of Clubs</span>
+<span class="go">---------- Matches discarded, play begins</span>
+<span class="go">Hand Allen contains</span>
+<span class="go">King of Hearts</span>
+<span class="go"> Jack of Clubs</span>
+<span class="go">  Queen of Spades</span>
+<span class="go">   King of Spades</span>
+<span class="go">    10 of Diamonds</span>
+
+<span class="go">Hand Jeff contains</span>
+<span class="go">Jack of Spades</span>
+<span class="go"> Jack of Hearts</span>
+<span class="go">  King of Diamonds</span>
+
+<span class="go">Hand Chris contains</span>
+<span class="go">Jack of Diamonds</span>
+<span class="go"> King of Clubs</span>
+<span class="go">  10 of Hearts</span>
+
+<span class="go">Hand Allen picked King of Diamonds</span>
+<span class="go">Hand Allen: King of Hearts matches King of Diamonds</span>
+<span class="go">Hand Jeff picked 10 of Hearts</span>
+<span class="go">Hand Chris picked Jack of Clubs</span>
+<span class="go">Hand Allen picked Jack of Hearts</span>
+<span class="go">Hand Jeff picked Jack of Diamonds</span>
+<span class="go">Hand Chris picked Queen of Spades</span>
+<span class="go">Hand Allen picked Jack of Diamonds</span>
+<span class="go">Hand Allen: Jack of Hearts matches Jack of Diamonds</span>
+<span class="go">Hand Jeff picked King of Clubs</span>
+<span class="go">Hand Chris picked King of Spades</span>
+<span class="go">Hand Allen picked 10 of Hearts</span>
+<span class="go">Hand Allen: 10 of Diamonds matches 10 of Hearts</span>
+<span class="go">Hand Jeff picked Queen of Spades</span>
+<span class="go">Hand Chris picked Jack of Spades</span>
+<span class="go">Hand Chris: Jack of Clubs matches Jack of Spades</span>
+<span class="go">Hand Jeff picked King of Spades</span>
+<span class="go">Hand Jeff: King of Clubs matches King of Spades</span>
+<span class="go">---------- Game is Over</span>
+<span class="go">Hand Allen is empty</span>
+
+<span class="go">Hand Jeff contains</span>
+<span class="go">Queen of Spades</span>
+
+<span class="go">Hand Chris is empty</span>
+</pre></div>
+</div>
+<p>Джефф проиграл.</p>
+</div>
+<div class="section" id="id6">
+<h2>15.8. Наследование<a class="headerlink" href="#id6" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Наследование &#8212; очень мощное и выразительное средство. Некоторые программы, не будь наследования, были бы чрезвычайно сложны, а использование наследования позволяет сделать их краткими и понятными. Кроме того, наследование способствует повторному использованию кода, поскольку подклассы используют уже написанный код родительских классов, и позволяют изменять их поведение, не изменяя сами родительские классы. А в некоторых случаях структура наследования повторяет структуру, присущую решаемой задаче, что делает работу над программой легче, а саму программу понятнее.</p>
+<p>С другой стороны, наследование может и затруднить понимание программы. При вызове метода не всегда ясно, где искать определение метода. Код родительских и дочерних классов может быть разбросан по нескольким модулям. Кроме того, многие вещи, которые можно сделать при помощи наследования, можно сделать и не прибегая к нему. Если задача естественным образом не решается с помощью наследования, то его использование может принести больше вреда, чем пользы.</p>
+</div>
+<div class="section" id="id7">
+<h2>15.9. Глоссарий<a class="headerlink" href="#id7" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="glossary docutils">
+<dt id="term-">дочерний класс</dt>
+<dd>Класс, наследующий методы и атрибуты родительского класса.</dd>
+<dt id="term-1">наследование</dt>
+<dd>Определение нового класса на основе ранее определенного класса, так что
+новый класс является его измененной версией.</dd>
+<dt id="term-2">подкласс</dt>
+<dd>То же, что дочерний класс.</dd>
+<dt id="term-3">родительский класс</dt>
+<dd>Класс, методы и атрибуты которого наследует дочерний класс.</dd>
+<dt id="term-4">суперкласс</dt>
+<dd>То же, что родительский класс.</dd>
+</dl>
+</div>
+<div class="section" id="id8">
+<h2>15.10. Упражнения<a class="headerlink" href="#id8" title="Ссылка на этот заголовок">¶</a></h2>
+<ol class="arabic simple">
+<li>Добавьте к классу <tt class="docutils literal"><span class="pre">OldMaidGame</span></tt> метод <tt class="docutils literal"><span class="pre">print_hands</span></tt>, который обходит
+список рук <tt class="docutils literal"><span class="pre">self.hands</span></tt> и выводит каждую руку на печать.</li>
+<li>В определении метода <tt class="docutils literal"><span class="pre">remove_matches</span></tt> для получения парной масти использовано
+выражение <tt class="docutils literal"><span class="pre">3</span> <span class="pre">-</span> <span class="pre">card.suit</span></tt>, смысл которого далеко не очевиден. Напишите метод
+<tt class="docutils literal"><span class="pre">matched_suit</span></tt> класса <tt class="docutils literal"><span class="pre">OldMaidHand</span></tt>, который принимает в качестве параметра
+карточную масть и возвращает парную ей, при этом логика его работы должна быть
+очевидной. Назовите сравнительные достоинства и недостатки нового метода и
+выражения <tt class="docutils literal"><span class="pre">3</span> <span class="pre">-</span> <span class="pre">card.suit</span></tt>.</li>
+<li>Определите классы <tt class="docutils literal"><span class="pre">Cat</span></tt> и <tt class="docutils literal"><span class="pre">Dog</span></tt>, дочерние для класса <tt class="docutils literal"><span class="pre">Pet</span></tt> из упражнения к главе 13.
+Классы должны иметь методы <tt class="docutils literal"><span class="pre">make_sound</span></tt>, которые выводят мяуканье &#8220;Meow!&#8221; и
+гавканье &#8220;Bark!&#8221;, соответственно. Создайте список с несколькими
+объектами <tt class="docutils literal"><span class="pre">Cat</span></tt> и <tt class="docutils literal"><span class="pre">Dog</span></tt>, и в цикле по всем элементам списка выведите
+их на печать и вызовите метод <tt class="docutils literal"><span class="pre">make_sound</span></tt> для каждого объекта.</li>
+<li>Определите метод <tt class="docutils literal"><span class="pre">make_sound</span></tt> в классе <tt class="docutils literal"><span class="pre">Pet</span></tt> так, чтобы он выводил значение
+нового атрибута <tt class="docutils literal"><span class="pre">sound</span></tt> этого класса. Инициализируйте атрибута <tt class="docutils literal"><span class="pre">sound</span></tt>
+пустой строкой. Удалите методы <tt class="docutils literal"><span class="pre">make_sound</span></tt> из классов <tt class="docutils literal"><span class="pre">Cat</span></tt> и <tt class="docutils literal"><span class="pre">Dog</span></tt>
+и инициализируйте в них атрибут <tt class="docutils literal"><span class="pre">sound</span></tt> значениями &#8220;Meow!&#8221; и &#8220;Bark!&#8221;,
+соответственно. Выполните код со списком и циклом из предыдущего упражнения.</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             >словарь</a></li>
+        <li class="right" >
+          <a href="ch16.html" title="16. Связные списки"
+             >следующий</a> |</li>
+        <li class="right" >
+          <a href="ch14.html" title="14. Коллекции объектов"
+             >предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="copyright.html">Copyright</a> 2009, 2012, Джеффри Элкнер, Аллен Б. Дауни, Крис Мейерс, Андрей Трофимов.
+      При создании использован <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

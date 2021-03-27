@@ -1,0 +1,644 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>5. Функции, возвращающие значения &mdash; Учимся с Python</title>
+    
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2nd Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="Учимся с Python" href="index.html" />
+    <link rel="next" title="6. Итерации" href="ch06.html" />
+    <link rel="prev" title="4. Условные предложения" href="ch04.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             accesskey="I">словарь</a></li>
+        <li class="right" >
+          <a href="ch06.html" title="6. Итерации"
+             accesskey="N">следующий</a> |</li>
+        <li class="right" >
+          <a href="ch04.html" title="4. Условные предложения"
+             accesskey="P">предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>5. Функции, возвращающие значения<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
+<span class="target" id="index-0"></span><div class="section" id="index-1">
+<span id="id2"></span><h2>5.1. Возвращаемые значения<a class="headerlink" href="#index-1" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Встроенные функции, которыми мы пользовались, такие как <tt class="docutils literal"><span class="pre">abs</span></tt>, <tt class="docutils literal"><span class="pre">pow</span></tt> и <tt class="docutils literal"><span class="pre">max</span></tt>, возвращают результат. Вызов каждой из этих функций производит значение, которое обычно присваивается переменной или используется в выражении.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">biggest</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">11</span><span class="p">)</span> <span class="o">+</span> <span class="mi">10</span>
+</pre></div>
+</div>
+<p>До сих пор ни одна из написанных нами функций не возвращала значения.</p>
+<p>В этой главе мы будем писать функции, возвращающие значения. Первый пример &#8212; функция <tt class="docutils literal"><span class="pre">area</span></tt> (англ.: площадь), возвращающая площадь круга с указанным радиусом:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">area</span><span class="p">(</span><span class="n">radius</span><span class="p">):</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="mf">3.14159</span> <span class="o">*</span> <span class="n">radius</span><span class="o">**</span><span class="mi">2</span>
+    <span class="k">return</span> <span class="n">temp</span>
+</pre></div>
+</div>
+<p>Мы уже встречали предложение <tt class="docutils literal"><span class="pre">return</span></tt>. Но в функции, возвращающей значение, предложение <tt class="docutils literal"><span class="pre">return</span></tt> включает выражение для <strong>возвращаемого значения</strong>. Выражение может быть сколь угодно сложным, поэтому функция может быть записана более кратко:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">area</span><span class="p">(</span><span class="n">radius</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mf">3.14159</span> <span class="o">*</span> <span class="n">radius</span><span class="o">**</span><span class="mi">2</span>
+</pre></div>
+</div>
+<p>Однако имейте в виду, что <strong>временные переменные</strong>, такие как <tt class="docutils literal"><span class="pre">temp</span></tt>, часто делают отладку проще.</p>
+<p>Функция может иметь несколько предложений return, по одному в каждой ветке условного выполнения. Мы уже видели встроенную функцию <tt class="docutils literal"><span class="pre">abs</span></tt>, а теперь напишем нашу собственную:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">absolute_value</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="o">-</span><span class="n">x</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">x</span>
+</pre></div>
+</div>
+<p>Поскольку предложения <tt class="docutils literal"><span class="pre">return</span></tt> здесь находятся в альтернативных ветках потока выполнения, будет выполнено только одно из них. Как только это произойдет, функция завершится; никакие последующие предложения выполняться не будут.</p>
+<p>В рассматриваемой функции можно опустить <tt class="docutils literal"><span class="pre">else</span></tt> и просто поместить второе предложение <tt class="docutils literal"><span class="pre">return</span></tt> после составного предложения <tt class="docutils literal"><span class="pre">if</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">absolute_value</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="o">-</span><span class="n">x</span>
+    <span class="k">return</span> <span class="n">x</span>
+</pre></div>
+</div>
+<p>Посмотрите внимательно на эту версию и убедитесь, что она работает так же, как и первая.</p>
+<p>Код, расположенный после предложения <tt class="docutils literal"><span class="pre">return</span></tt>, или в любом другом месте, которого никогда не сможет достичь поток выполнения, называется <strong>мертвым кодом</strong>.</p>
+<p>Стоит убедиться в том, что в возвращающей значение функции каждый из возможных путей выполнения содержит предложение <tt class="docutils literal"><span class="pre">return</span></tt>. В следующей версии функции <tt class="docutils literal"><span class="pre">absolute_value</span></tt> это не так:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">absolute_value</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="o">-</span><span class="n">x</span>
+    <span class="k">elif</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">x</span>
+</pre></div>
+</div>
+<p>Эта функция некорректна, поскольку, если <tt class="docutils literal"><span class="pre">x</span></tt> окажется равным 0, ни одно из условий не выполнится и функция закончится, не выполнив предложения <tt class="docutils literal"><span class="pre">return</span></tt>. В таком случае, возвращаемым значением будет специальное значение <tt class="docutils literal"><span class="pre">None</span></tt> (англ.: ничто):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">absolute_value</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">None</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">None</span></tt> является единственным значением типа <tt class="docutils literal"><span class="pre">NoneType</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+<span class="go">&lt;type &#39;NoneType&#39;&gt;</span>
+</pre></div>
+</div>
+<p>Все функции Python, если не возвращают некоторое значение явно, возвращают <tt class="docutils literal"><span class="pre">None</span></tt>.</p>
+</div>
+<div class="section" id="index-2">
+<span id="id3"></span><h2>5.2. Разработка программы<a class="headerlink" href="#index-2" title="Ссылка на этот заголовок">¶</a></h2>
+<p>К этому моменту вы уже должны уметь, посмотрев на функцию на языке Python, сказать, что она делает. Выполняя упражнения, вы написали несколько небольших функций. А когда вы начнете писать большие, то наверняка столкнетесь с трудностями, связанными с ошибками выполнения и семантическими ошибками.</p>
+<p>Для того, чтобы разрабатывать программы все возрастающей сложности, рассмотрим прием, называемый <strong>инкрементной разработкой</strong>. Цель инкрементной разработки &#8212; избежать длительной и мучительной отладки программы. Это становится возможным, если за один раз добавлять и тестировать небольшой объем кода.</p>
+<p>Предположим, вы хотите найти расстояние между двумя точками, заданными с помощью их координат (x<sub>1</sub>, y<sub>1</sub>) и (x<sub>2</sub>, y<sub>2</sub>). Согласно теореме Пифагора, расстояние составляет:</p>
+<img alt="Формула расстояния" src="_images/ch5-1.png" />
+<p>Первый шаг разработки &#8212; обдумать, как должна выглядеть функция <tt class="docutils literal"><span class="pre">distance</span></tt> на языке Python. Другими словами, что должно быть у функции на входе (параметры) и что &#8212; на выходе (возвращаемое значение)?</p>
+<p>В данном случае, на вход функции подаются две точки, которые можно представить четырьмя параметрами. А возвращаемое значение &#8212; расстояние, представленное числом с плавающей точкой.</p>
+<p>Теперь можно набросать эскиз функции:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">distance</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mf">0.0</span>
+</pre></div>
+</div>
+<p>Очевидно, что эта версия функции не вычисляет расстояние; она всегда возвращает ноль. Однако она синтаксически корректна, и она будет выполняться, а это значит, что ее можно протестировать. И только после этого усложнять.</p>
+<p>Чтобы протестировать эту функцию, вызовем её с тестовыми значениями:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">distance</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="go">0.0</span>
+</pre></div>
+</div>
+<p>Значения параметров подобраны так, чтобы горизонтальное расстояние равнялось 3, а вертикальное равнялось 4. Таким образом, результат должен быть равен 5 &#8212; гипотенуза прямоугольного треугольника со сторонами 3-4-5, изображенного на рисунке. При тестировании функции полезно заранее знать правильный ответ.</p>
+<img alt="Точки на координатной плоскости" src="_images/ch5-2.png" />
+<p>Убедившись, что функция синтаксически корректна, начнем добавлять строки кода. После каждого инкрементного изменения, мы будем вновь тестировать функцию. Если в какой-то момент возникнет ошибка, мы будем знать, где её искать &#8212; в последней добавленной строке.</p>
+<p>Первый шаг состоит в нахождении разностей x<sub>2</sub>- x<sub>1</sub>и y<sub>2</sub>- y<sub>1</sub>. Мы сохраним эти значения во временных переменных <tt class="docutils literal"><span class="pre">dx</span></tt> и <tt class="docutils literal"><span class="pre">dy</span></tt> и выведем их.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">distance</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">):</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="n">y2</span> <span class="o">-</span> <span class="n">y1</span>
+    <span class="k">print</span> <span class="s">&quot;dx is&quot;</span><span class="p">,</span> <span class="n">dx</span>
+    <span class="k">print</span> <span class="s">&quot;dy is&quot;</span><span class="p">,</span> <span class="n">dy</span>
+    <span class="k">return</span> <span class="mf">0.0</span>
+</pre></div>
+</div>
+<p>Функция должна вывести 3 и 4. Если так и произошло, то теперь мы знаем, что первый шаг вычислений выполняется правильно. Если нет, то нужно проверить всего несколько строк.</p>
+<p>Далее мы подсчитываем сумму квадратов <tt class="docutils literal"><span class="pre">dx</span></tt> и <tt class="docutils literal"><span class="pre">dy</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">distance</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">):</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="n">y2</span> <span class="o">-</span> <span class="n">y1</span>
+    <span class="n">dsquared</span> <span class="o">=</span> <span class="n">dx</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">dy</span><span class="o">**</span><span class="mi">2</span>
+    <span class="k">print</span> <span class="s">&quot;dsquared is: &quot;</span><span class="p">,</span> <span class="n">dsquared</span>
+    <span class="k">return</span> <span class="mf">0.0</span>
+</pre></div>
+</div>
+<p>Обратите внимание, что мы удалили предложения <tt class="docutils literal"><span class="pre">print</span></tt>, написанные на предыдущем шаге. Подобный код, используемый временно в ходе разработки, называется <strong>вспомогательным кодом</strong>, или отладочным. Он играет роль строительных лесов при &#8220;строительстве&#8221; программы, но сам не является частью окончательной версии программы.</p>
+<p>И вновь мы запустим программу и проверим её вывод. Должно получиться 25.</p>
+<p>Наконец, используя степень <tt class="docutils literal"><span class="pre">0.5</span></tt> для нахождения квадратного корня, мы вычислим и вернем результат:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">distance</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">):</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="n">y2</span> <span class="o">-</span> <span class="n">y1</span>
+    <span class="n">dsquared</span> <span class="o">=</span> <span class="n">dx</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">dy</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">dsquared</span><span class="o">**</span><span class="mf">0.5</span>
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+<p>Если эта версия работает правильно, значит, программа готова. В противном случае, чтобы внести ясность, попробуйте вывести значение <tt class="docutils literal"><span class="pre">result</span></tt> перед предложением return.</p>
+<p>Пока вы делаете первые шаги в программировании, добавляйте в вашу программу по строчке или две за один раз. Набравшись опыта, вы начнете писать и отлаживать более крупные участки кода. Инкрементная разработка позволит вам сэкономить время на отладке и сделает вашу работу эффективнее.</p>
+<p>Придерживайтесь следующих правил:</p>
+<ol class="arabic simple">
+<li>Начните с работающей программы и делайте небольшие инкрементные изменения.
+В каждый момент, когда вы столкнетесь с ошибкой, вы будете знать, где она.</li>
+<li>Используйте временные переменные для сохранения промежуточных результатов,
+так чтобы их можно было вывести и проверить.</li>
+<li>Если программа работает, то можно удалить вспомогательный код и собрать
+отдельные предложения в составные выражения. Однако это не должно сделать
+программу трудной для чтения!</li>
+</ol>
+</div>
+<div class="section" id="index-3">
+<span id="id4"></span><h2>5.3. Композиция<a class="headerlink" href="#index-3" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Как вы уже знаете, можно вызывать одну функцию из другой. Этот прием называется <strong>композиция</strong>.</p>
+<p>Напишем функцию, которая принимает в качестве входных параметров две точки, центр окружности и точку на периметре, и расчитывает площадь круга.</p>
+<p>Пусть координаты центральной точки хранятся в переменных <tt class="docutils literal"><span class="pre">xc</span></tt> и <tt class="docutils literal"><span class="pre">yc</span></tt>, а координаты точки на периметре окружности &#8212; в переменных <tt class="docutils literal"><span class="pre">xp</span></tt> и <tt class="docutils literal"><span class="pre">yp</span></tt>. Первым шагом будет нахождение радиуса окружности, равного расстоянию между этими двумя точками. Для этого воспользуемся функцией <tt class="docutils literal"><span class="pre">distance</span></tt>, которая делает именно то, что нам нужно:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">radius</span> <span class="o">=</span> <span class="n">distance</span><span class="p">(</span><span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">,</span> <span class="n">xp</span><span class="p">,</span> <span class="n">yp</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Второй шаг &#8212; найти площадь круга данного радиуса и вернуть её. И снова мы воспользуемся одной из ранее написанных функций:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">result</span> <span class="o">=</span> <span class="n">area</span><span class="p">(</span><span class="n">radius</span><span class="p">)</span>
+<span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+<p>Оформив этот код в виде функции, получаем:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">area2</span><span class="p">(</span><span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">,</span> <span class="n">xp</span><span class="p">,</span> <span class="n">yp</span><span class="p">):</span>
+    <span class="n">radius</span> <span class="o">=</span> <span class="n">distance</span><span class="p">(</span><span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">,</span> <span class="n">xp</span><span class="p">,</span> <span class="n">yp</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">area</span><span class="p">(</span><span class="n">radius</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+<p>Мы назвали эту функцию <tt class="docutils literal"><span class="pre">area2</span></tt>, чтобы отличать её от написанной ранее функции <tt class="docutils literal"><span class="pre">area</span></tt>. Внутри некоторого модуля может быть только одна функция с данным именем.</p>
+<p>Временные переменные <tt class="docutils literal"><span class="pre">radius</span></tt> и <tt class="docutils literal"><span class="pre">result</span></tt> полезны для разработки и отладки, но, как только получена работающая программа, можно сделать ее более компактной, комбинируя предложения и вызовы функций:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">area2</span><span class="p">(</span><span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">,</span> <span class="n">xp</span><span class="p">,</span> <span class="n">yp</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">area</span><span class="p">(</span><span class="n">distance</span><span class="p">(</span><span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">,</span> <span class="n">xp</span><span class="p">,</span> <span class="n">yp</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="index-4">
+<span id="id5"></span><h2>5.4. Логические функции<a class="headerlink" href="#index-4" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Функции могут возвращать логические значения и использоваться в условных предложениях для проверки условий. Часто оказывается удобным спрятать сложные проверки внутри функции. Например:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">is_divisible</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="n">y</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">False</span>
+</pre></div>
+</div>
+<p>Имя этой функции <tt class="docutils literal"><span class="pre">is_divisible</span></tt>. Принято давать <strong>логическим функциям</strong> имена, выглядящие как вопрос, предполагающий один из двух возможных ответов: да или нет. Функция <tt class="docutils literal"><span class="pre">is_divisible</span></tt> возвращает либо <tt class="docutils literal"><span class="pre">True</span></tt> либо <tt class="docutils literal"><span class="pre">False</span></tt>, тем самым показывая, делится или не делится <tt class="docutils literal"><span class="pre">x</span></tt> на <tt class="docutils literal"><span class="pre">y</span></tt>.</p>
+<p>Можно сделать эту функцию более компактной, воспользовавшись тем, что условие предложения <tt class="docutils literal"><span class="pre">if</span></tt> само по себе является логическим выражением. Мы можем  непосредственно вернуть значение этого выражения, вовсе исключив предложение <tt class="docutils literal"><span class="pre">if</span></tt> из программы:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">is_divisible</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">%</span> <span class="n">y</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>А вот новая функция в действии:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">is_divisible</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_divisible</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Логические функции часто используются в условных предложениях:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">is_divisible</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;x is divisible by y&quot;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;x is not divisible by y&quot;</span>
+</pre></div>
+</div>
+<p>У вас может появиться соблазн написать:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">is_divisible</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
+</pre></div>
+</div>
+<p>Но дополнительное сравнение здесь лишнее.</p>
+</div>
+<div class="section" id="function">
+<span id="index-5"></span><h2>5.5. Тип <tt class="docutils literal"><span class="pre">function</span></tt><a class="headerlink" href="#function" title="Ссылка на этот заголовок">¶</a></h2>
+<p>В Python <tt class="docutils literal"><span class="pre">function</span></tt> (англ.: функция) также является типом, как и уже известные нам <tt class="docutils literal"><span class="pre">int</span></tt>, <tt class="docutils literal"><span class="pre">float</span></tt>, <tt class="docutils literal"><span class="pre">str</span></tt>, <tt class="docutils literal"><span class="pre">bool</span></tt> и <tt class="docutils literal"><span class="pre">NoneType</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">func</span><span class="p">():</span>
+<span class="gp">... </span>   <span class="k">return</span> <span class="s">&quot;function func was called...&quot;</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+<span class="go">&lt;type &#39;function&#39;&gt;</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Точно так же, как значения других типов, функции могут быть переданы другим функциям в качестве аргументов:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">3</span><span class="o">*</span><span class="n">n</span> <span class="o">-</span> <span class="mi">6</span>
+
+<span class="k">def</span> <span class="nf">g</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">5</span><span class="o">*</span><span class="n">n</span> <span class="o">+</span> <span class="mi">2</span>
+
+<span class="k">def</span> <span class="nf">h</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span> <span class="o">+</span> <span class="mi">17</span>
+
+<span class="k">def</span> <span class="nf">doto</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">doto</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">doto</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">doto</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Функция <tt class="docutils literal"><span class="pre">doto</span></tt> вызывается три раза. В каждом вызове аргументом для <tt class="docutils literal"><span class="pre">value</span></tt> является 7, а для <tt class="docutils literal"><span class="pre">func</span></tt> &#8212; функции <tt class="docutils literal"><span class="pre">f</span></tt>, <tt class="docutils literal"><span class="pre">g</span></tt> и <tt class="docutils literal"><span class="pre">h</span></tt>, по очереди. Этот скрипт выводит:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">15</span>
+<span class="mi">37</span>
+<span class="mi">3</span>
+</pre></div>
+</div>
+<p>Этот пример, конечно, надуманный. Но позднее мы встретимся с ситуациями, когда передача функции в качестве аргумента другой функции очень полезна.</p>
+</div>
+<div class="section" id="id6">
+<h2>5.6. Оформление программ<a class="headerlink" href="#id6" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Читабельность программ очень важна для программистов, поскольку на практике читать и изменять программы приходится гораздо чаще, чем писать новые. Все примеры кода в этой книге соответствуют <em>Python Enhancement Proposal 8</em>
+(<a class="reference external" href="http://www.python.org/dev/peps/pep-0008">PEP 8</a>). Это руководство по стилю программирования, разработанное сообществом программистов Python.</p>
+<p>Чем сложнее становятся программы, тем большую роль начинает играть стиль программирования. Нескольких важных правил полезно придерживаться с самого начала:</p>
+<ul class="simple">
+<li>используйте 4 пробела для отступа,</li>
+<li>помещайте предложения import в начало файла,</li>
+<li>отделяйте определения функций двумя пустыми строчками,</li>
+<li>размещайте определения функций все вместе,</li>
+<li>размещайте предложения верхнего уровня, включая вызовы функций, все вместе
+в конце скрипта.</li>
+</ul>
+</div>
+<div class="section" id="index-6">
+<span id="id7"></span><h2>5.7. Строки в тройных кавычках<a class="headerlink" href="#index-6" title="Ссылка на этот заголовок">¶</a></h2>
+<p>В дополнение к строкам, заключенным в одинарные и двойные кавычки, с которыми мы впервые встретились в разделе <a class="reference internal" href="ch02.html#values-n-types"><em>Значения и типы</em></a> главы 2, в Python также имеются <em>строки в тройных кавычках</em>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="s">&quot;&quot;&quot;This is a triple quoted string using 3 double quotes.&quot;&quot;&quot;</span><span class="p">)</span>
+<span class="go">&lt;type &#39;str&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="s">&#39;&#39;&#39;This triple quoted strings uses 3 single quotes.&#39;&#39;&#39;</span><span class="p">)</span>
+<span class="go">&lt;type &#39;str&#39;&gt;</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Строки в тройных кавычках могут содержать внутри как одинарные, так и двойные кавычки:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&#39;&#39;&#39;&quot;Oh no&quot;, she exclaimed, &quot;Ben&#39;s bike is broken!&quot;&#39;&#39;&#39;</span>
+<span class="go">&quot;Oh no&quot;, she exclaimed, &quot;Ben&#39;s bike is broken!&quot;</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Кроме того, строковые значения, заключенные в тройные кавычки, могут распространяться на несколько строк:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">message</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;This message will</span>
+<span class="gp">... </span><span class="s">span several</span>
+<span class="gp">... </span><span class="s">lines.&quot;&quot;&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">message</span>
+<span class="go">This message will</span>
+<span class="go">span several</span>
+<span class="go">lines.</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="doctest">
+<span id="index-7"></span><h2>5.8. Модульное тестирование с помощью <tt class="docutils literal"><span class="pre">doctest</span></tt><a class="headerlink" href="#doctest" title="Ссылка на этот заголовок">¶</a></h2>
+<p>В последнее время широкую известность получило автоматическое <strong>модульное тестирование</strong> (англ.: unit testing) &#8212; очень полезная практика разработки программ. Модульное тестирование позволяет убедиться, что отдельные части кода, такие как функции, работают правильно.</p>
+<p>Русскоязычный термин <em>модульное тестирование</em> не связан с понятием <em>модуль</em> языка Python, а подразумевает тестирование отдельных частей кода, написанных на любом языке программирования, то есть, модулей как элементов программы в самом общем смысле.</p>
+<p>Автоматическое тестирование означает, что однажды написанные модульные тесты могут многократно автоматически выполняться, причем результат их выполнения автоматически оценивается как успешный либо неуспешный. Благодаря этому становится возможным, внеся изменения в функцию, быстро проверить, по-прежнему ли функция работает корректно.</p>
+<p>В Python имеется встроенный модуль <tt class="docutils literal"><span class="pre">doctest</span></tt>, который облегчает создание и выполнение модульных тестов. Модульные тесты, заключенные в тройные кавычки, можно писать, начиная с <em>первой строки</em> тела функции или скрипта. Они включают предложения Python для выполнения и вывод, ожидаемый как результат выполнения предложения.</p>
+<p>Модуль <tt class="docutils literal"><span class="pre">doctest</span></tt> автоматически выполняет предложения, начинающиеся с <tt class="docutils literal"><span class="pre">&gt;&gt;&gt;</span></tt>, и сравнивает следующую строку с тем, что вывел интерпретатор.</p>
+<p>Чтобы посмотреть, как это работает, поместите следующее в скрипт с именем <tt class="docutils literal"><span class="pre">myfunctions.py</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">is_divisible_by_2_or_5</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; is_divisible_by_2_or_5(8)</span>
+<span class="sd">      True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Последние три строки заставляют <tt class="docutils literal"><span class="pre">doctest</span></tt> выполняться. Помещайте их в конец файла, если файл содержит доктесты. Вы узнаете, как это работает, когда мы будем обсуждать модули.</p>
+<p>Запустив скрипт на выполнение, получим следующее:</p>
+<div class="highlight-python"><pre>$ python myfunctions.py
+**********************************************************************
+File "myfunctions.py", line 3, in __main__.is_divisible_by_2_or_5
+Failed example:
+    is_divisible_by_2_or_5(8)
+Expected:
+    True
+Got nothing
+**********************************************************************
+1 items had failures:
+   1 of   1 in __main__.is_divisible_by_2_or_5
+***Test Failed*** 1 failures.
+$</pre>
+</div>
+<p>Это пример <em>неуспешного теста</em>. Тест ожидает, что вызов <tt class="docutils literal"><span class="pre">is_divisible_by_2_or_5(8)</span></tt> даст результат <tt class="docutils literal"><span class="pre">True</span></tt>. Поскольку вызов <tt class="docutils literal"><span class="pre">is_divisible_by_2_or_5</span></tt> не вернул ничего, тест считается неуспешным, и doctest сообщает, что ожидалось значение <tt class="docutils literal"><span class="pre">True</span></tt>, но не было получено ничего.</p>
+<p>Заставим этот тест выполняться, возвращая <tt class="docutils literal"><span class="pre">True</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">is_divisible_by_2_or_5</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; is_divisible_by_2_or_5(8)</span>
+<span class="sd">      True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">True</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Если теперь запустить скрипт, он не выведет ничего. Это значит, что тест прошел успешно. Еще раз обратите внимание, что строка с тестом должна быть помещена сразу после заголовка в определении функции.</p>
+<p>Чтобы увидеть более подробный отчет о выполнении теста, запустите скрипт с опцией <tt class="docutils literal"><span class="pre">-v</span></tt>:</p>
+<div class="highlight-python"><pre>$ python myfunctions.py -v
+Trying:
+    is_divisible_by_2_or_5(8)
+Expecting:
+    True
+ok
+1 items had no tests:
+    __main__
+1 items passed all tests:
+   1 tests in __main__.is_divisible_by_2_or_5
+1 tests in 2 items.
+1 passed and 0 failed.
+Test passed.
+$</pre>
+</div>
+<p>Хотя тест проходит, наш набор тестов явно неадекватен, так как функция <tt class="docutils literal"><span class="pre">is_divisible_by_2_or_5</span></tt> возвращает <tt class="docutils literal"><span class="pre">True</span></tt> независимо от переданных ей аргументов. Но вот окончательная версия набора тестов и корректного кода:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">is_divisible_by_2_or_5</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; is_divisible_by_2_or_5(8)</span>
+<span class="sd">      True</span>
+<span class="sd">      &gt;&gt;&gt; is_divisible_by_2_or_5(7)</span>
+<span class="sd">      False</span>
+<span class="sd">      &gt;&gt;&gt; is_divisible_by_2_or_5(5)</span>
+<span class="sd">      True</span>
+<span class="sd">      &gt;&gt;&gt; is_divisible_by_2_or_5(9)</span>
+<span class="sd">      False</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">0</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Теперь запустите скрипт с опцией <tt class="docutils literal"><span class="pre">-v</span></tt> и посмотрите, что получится.</p>
+</div>
+<div class="section" id="id8">
+<h2>5.9. Глоссарий<a class="headerlink" href="#id8" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="glossary docutils">
+<dt id="term-none">None</dt>
+<dd>Специальное значение Python, возвращаемое функцией, в которой либо нет
+предложения return, либо предложение return без аргумента. <tt class="docutils literal"><span class="pre">None</span></tt> &#8212;
+единственное значение типа <tt class="docutils literal"><span class="pre">NoneType</span></tt>.</dd>
+<dt id="term-">возвращаемое значение</dt>
+<dd>Значение, возвращаемое функцией. Вызывающий код получает это значение как
+результат вызова функции.</dd>
+<dt id="term-2">временная переменная</dt>
+<dd>Переменная, используемая для хранения промежуточного результата
+вычислений.</dd>
+<dt id="term-3">вспомогательный код</dt>
+<dd>Код, полезный для отладки программы в ходе ее разработки, но
+не включаемый в окончательную версию программы.</dd>
+<dt id="term-4">инкрементная разработка</dt>
+<dd>Процесс разработки программы, нацеленный на то, чтобы избежать длительной
+отладки, за счет добавления и тестирования только небольших кусков кода
+за один раз.</dd>
+<dt id="term-5">композиция функций</dt>
+<dd>Вызов одной функции в теле другой, или использование возвращаемого
+функцией значения в качестве аргумента при вызове другой функции.</dd>
+<dt id="term-6">логическая функция</dt>
+<dd>Функция, возвращающая логическое значение.</dd>
+<dt id="term-7">мертвый код</dt>
+<dd>Часть программы, которая не может быть выполнена ни при каких
+обстоятельствах, часто из-за того, что располагается после предложения
+<tt class="docutils literal"><span class="pre">return</span></tt>.</dd>
+<dt id="term-8">модульное тестирование</dt>
+<dd>Практика программирования, нацеленная на проверку того, что отдельные
+части программы работают корректно. В Python имеется встроенный
+модуль <tt class="docutils literal"><span class="pre">doctest</span></tt> для автоматического выполнения модульных тестов.</dd>
+</dl>
+</div>
+<div class="section" id="id9">
+<h2>5.10. Упражнения<a class="headerlink" href="#id9" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Все упражнения, приведенные ниже, добавляйте в файл <tt class="docutils literal"><span class="pre">ch05.py</span></tt>, в конце которого поместите следующие строки:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Выполнив каждое из упражнений, запускайте скрипт, чтобы убедиться, что доктест для только что написанной функции проходит.</p>
+<ol class="arabic">
+<li><p class="first">Напишите функцию <tt class="docutils literal"><span class="pre">compare</span></tt>, которая возвращает <tt class="docutils literal"><span class="pre">1</span></tt>, если <tt class="docutils literal"><span class="pre">a</span> <span class="pre">&gt;</span> <span class="pre">b</span></tt>, <tt class="docutils literal"><span class="pre">0</span></tt>,
+если <tt class="docutils literal"><span class="pre">a</span> <span class="pre">==</span> <span class="pre">b</span></tt> и <tt class="docutils literal"><span class="pre">-1</span></tt>, если <tt class="docutils literal"><span class="pre">a</span> <span class="pre">&lt;</span> <span class="pre">b</span></tt>. Поместите тело функции после следующих
+доктестов и убедитесь, что они успешно проходят.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">compare</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; compare(5, 4)</span>
+<span class="sd">      1</span>
+<span class="sd">      &gt;&gt;&gt; compare(7, 7)</span>
+<span class="sd">      0</span>
+<span class="sd">      &gt;&gt;&gt; compare(2, 3)</span>
+<span class="sd">      -1</span>
+<span class="sd">      &gt;&gt;&gt; compare(42, 1)</span>
+<span class="sd">      1</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Воспользуйтесь процессом инкрементной разработки чтобы написать функцию
+<tt class="docutils literal"><span class="pre">hypotenuse</span></tt>, которая возвращает длину гипотенузы прямоугольного треугольника,
+если даны длины двух катетов. Убедитесь, что следующие доктесты проходят:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">hypotenuse</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; hypotenuse(3, 4)</span>
+<span class="sd">      5.0</span>
+<span class="sd">      &gt;&gt;&gt; hypotenuse(12, 5)</span>
+<span class="sd">      13.0</span>
+<span class="sd">      &gt;&gt;&gt; hypotenuse(7, 24)</span>
+<span class="sd">      25.0</span>
+<span class="sd">      &gt;&gt;&gt; hypotenuse(9, 12)</span>
+<span class="sd">      15.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Напишите функцию <tt class="docutils literal"><span class="pre">slope(x1,</span> <span class="pre">y1,</span> <span class="pre">x2,</span> <span class="pre">y2)</span></tt> (англ.: наклон), которая возвращает
+наклон прямой, проходящей через точки (x1, y1) и (x2, y2). Под наклоном здесь
+имеется в виду отношение проекции отрезка прямой на ось y к проекции этого же
+отрезка на ось x. (Чем больше это отношение, тем круче наклон прямой.) Убедитесь,
+что ваша реализация <tt class="docutils literal"><span class="pre">slope</span></tt> проходит следующие тесты:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">slope</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; slope(5, 3, 4, 2)</span>
+<span class="sd">      1.0</span>
+<span class="sd">      &gt;&gt;&gt; slope(1, 2, 3, 2)</span>
+<span class="sd">      0.0</span>
+<span class="sd">      &gt;&gt;&gt; slope(1, 2, 3, 3)</span>
+<span class="sd">      0.5</span>
+<span class="sd">      &gt;&gt;&gt; slope(2, 4, 1, 2)</span>
+<span class="sd">      2.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Используйте <tt class="docutils literal"><span class="pre">slope</span></tt> в новой функции <tt class="docutils literal"><span class="pre">intercept(x1,</span> <span class="pre">y1,</span> <span class="pre">x2,</span> <span class="pre">y2)</span></tt> (англ.:
+отсекать, отделять), которая возвращает координату y точки пересечения
+прямой с осью y. Прямая задана точками <tt class="docutils literal"><span class="pre">(x1,</span> <span class="pre">y1)</span></tt> и <tt class="docutils literal"><span class="pre">(x2,</span> <span class="pre">y2)</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">intercept</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; intercept(1, 6, 3, 12)</span>
+<span class="sd">      3.0</span>
+<span class="sd">      &gt;&gt;&gt; intercept(6, 1, 1, 6)</span>
+<span class="sd">      7.0</span>
+<span class="sd">      &gt;&gt;&gt; intercept(4, 6, 12, 8)</span>
+<span class="sd">      5.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Функция <tt class="docutils literal"><span class="pre">intercept</span></tt> должна пройти приведенные доктесты.</p>
+</li>
+<li><p class="first">Напишите функцию <tt class="docutils literal"><span class="pre">is_even(n)</span></tt> (англ.: четный), которая принимает целое
+число в качестве аргумента и возвращает <tt class="docutils literal"><span class="pre">True</span></tt>, если аргумент является
+<strong>четным</strong>, и <tt class="docutils literal"><span class="pre">False</span></tt>, если аргумент <strong>нечетный</strong>. Начните создание
+функции с написания доктестов для нее.</p>
+</li>
+<li><p class="first">Теперь напишите функцию <tt class="docutils literal"><span class="pre">is_odd(n)</span></tt> (англ.: нечетный), возвращающую <tt class="docutils literal"><span class="pre">True</span></tt>,
+когда <tt class="docutils literal"><span class="pre">n</span></tt> нечетное число, и <tt class="docutils literal"><span class="pre">False</span></tt> в противном случае. Начните создание
+функции с написания доктестов для нее.</p>
+<p>Измените функцию так, чтобы она использовала вызов <tt class="docutils literal"><span class="pre">is_even</span></tt> для
+определения того, является ли ее аргумент нечетным.</p>
+</li>
+<li><p class="first">Напишите тело функции <tt class="docutils literal"><span class="pre">is_factor</span></tt> (англ.: множитель) так, чтобы доктесты проходили:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">is_factor</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; is_factor(3, 12)</span>
+<span class="sd">      True</span>
+<span class="sd">      &gt;&gt;&gt; is_factor(5, 12)</span>
+<span class="sd">      False</span>
+<span class="sd">      &gt;&gt;&gt; is_factor(7, 14)</span>
+<span class="sd">      True</span>
+<span class="sd">      &gt;&gt;&gt; is_factor(2, 14)</span>
+<span class="sd">      True</span>
+<span class="sd">      &gt;&gt;&gt; is_factor(7, 15)</span>
+<span class="sd">      False</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Напишите тело функции <tt class="docutils literal"><span class="pre">is_multiple</span></tt> (англ.: кратное число) так, чтобы
+доктесты проходили. Можно ли использовать <tt class="docutils literal"><span class="pre">is_factor</span></tt> в функции <tt class="docutils literal"><span class="pre">is_multiple</span></tt>?</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">is_multiple</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; is_multiple(12, 3)</span>
+<span class="sd">      True</span>
+<span class="sd">      &gt;&gt;&gt; is_multiple(12, 4)</span>
+<span class="sd">      True</span>
+<span class="sd">      &gt;&gt;&gt; is_multiple(12, 5)</span>
+<span class="sd">      False</span>
+<span class="sd">      &gt;&gt;&gt; is_multiple(12, 6)</span>
+<span class="sd">      True</span>
+<span class="sd">      &gt;&gt;&gt; is_multiple(12, 7)</span>
+<span class="sd">      False</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Напишите тело функции <tt class="docutils literal"><span class="pre">f2c</span></tt>, возвращающей округленное целое число градусов
+Цельсия для температуры, указанной в <a class="reference external" href="http://ru.wikipedia.org/wiki/%D0%93%D1%80%D0%B0%D0%B4%D1%83%D1%81_%D0%A4%D0%B0%D1%80%D0%B5%D0%BD%D0%B3%D0%B5%D0%B9%D1%82%D0%B0">градусах Фаренгейта</a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">f2c</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; f2c(212)</span>
+<span class="sd">      100</span>
+<span class="sd">      &gt;&gt;&gt; f2c(32)</span>
+<span class="sd">      0</span>
+<span class="sd">      &gt;&gt;&gt; f2c(-40)</span>
+<span class="sd">      -40</span>
+<span class="sd">      &gt;&gt;&gt; f2c(36)</span>
+<span class="sd">      2</span>
+<span class="sd">      &gt;&gt;&gt; f2c(37)</span>
+<span class="sd">      3</span>
+<span class="sd">      &gt;&gt;&gt; f2c(38)</span>
+<span class="sd">      3</span>
+<span class="sd">      &gt;&gt;&gt; f2c(39)</span>
+<span class="sd">      4</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Подсказка: можно
+воспользоваться встроенной функцией <tt class="docutils literal"><span class="pre">round</span></tt> (англ.: округлить). Попробуйте
+напечатать <tt class="docutils literal"><span class="pre">round.__doc__</span></tt> в интерактивном режиме Python и
+поэкспериментируйте с <tt class="docutils literal"><span class="pre">round</span></tt>, чтобы разобраться, что эта функция делает.</p>
+</li>
+<li><p class="first">А теперь напишите тело функции <tt class="docutils literal"><span class="pre">c2f</span></tt> для преобразования градусов Цельсия в
+градусы Фаренгейта.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">c2f</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; c2f(0)</span>
+<span class="sd">      32</span>
+<span class="sd">      &gt;&gt;&gt; c2f(100)</span>
+<span class="sd">      212</span>
+<span class="sd">      &gt;&gt;&gt; c2f(-40)</span>
+<span class="sd">      -40</span>
+<span class="sd">      &gt;&gt;&gt; c2f(12)</span>
+<span class="sd">      54</span>
+<span class="sd">      &gt;&gt;&gt; c2f(18)</span>
+<span class="sd">      64</span>
+<span class="sd">      &gt;&gt;&gt; c2f(-48)</span>
+<span class="sd">      -54</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             >словарь</a></li>
+        <li class="right" >
+          <a href="ch06.html" title="6. Итерации"
+             >следующий</a> |</li>
+        <li class="right" >
+          <a href="ch04.html" title="4. Условные предложения"
+             >предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="copyright.html">Copyright</a> 2009, 2012, Джеффри Элкнер, Аллен Б. Дауни, Крис Мейерс, Андрей Трофимов.
+      При создании использован <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

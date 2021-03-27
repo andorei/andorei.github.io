@@ -1,0 +1,580 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>2. Переменные, выражения и предложения &mdash; Учимся с Python</title>
+    
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2nd Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="Учимся с Python" href="index.html" />
+    <link rel="next" title="3. Функции" href="ch03.html" />
+    <link rel="prev" title="1. Путь программирования" href="ch01.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             accesskey="I">словарь</a></li>
+        <li class="right" >
+          <a href="ch03.html" title="3. Функции"
+             accesskey="N">следующий</a> |</li>
+        <li class="right" >
+          <a href="ch01.html" title="1. Путь программирования"
+             accesskey="P">предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>2. Переменные, выражения и предложения<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
+<div class="section" id="values-n-types">
+<span id="index-0"></span><span id="id2"></span><h2>2.1. Значения и типы<a class="headerlink" href="#values-n-types" title="Ссылка на этот заголовок">¶</a></h2>
+<p><strong>Значение</strong> &#8212; это одна из фундаментальных вещей, которыми манипулирует программа. Значения, которые мы уже видели в главе 1:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">2</span></tt> (результат сложения <tt class="docutils literal"><span class="pre">1</span> <span class="pre">+</span> <span class="pre">1</span></tt>) и</li>
+<li><tt class="docutils literal"><span class="pre">&quot;Hello,</span> <span class="pre">World!&quot;</span></tt>.</li>
+</ul>
+<p>Эти значения относятся к разным <strong>типам</strong>: <tt class="docutils literal"><span class="pre">2</span></tt> &#8212;  <em>целое число</em>, а <tt class="docutils literal"><span class="pre">&quot;Hello,</span> <span class="pre">World!&quot;</span></tt> &#8212; <em>строка</em>, представляющая собой последовательность символов. Строковые значения можно опознать по кавычкам, в которые они заключаются.</p>
+<p>Предложение print работает не только со строками, но и с целыми числами.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="mi">4</span>
+<span class="go">4</span>
+</pre></div>
+</div>
+<p>Если вы не уверены, какого типа то или иное значение, интерпретатор может подсказать вам.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="s">&quot;Hello, World!&quot;</span><span class="p">)</span>
+<span class="go">&lt;type &#39;str&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="mi">17</span><span class="p">)</span>
+<span class="go">&lt;type &#39;int&#39;&gt;</span>
+</pre></div>
+</div>
+<p>Строки (англ.: string) принадлежат типу <strong>str</strong>, а целые числа (англ.: integer) &#8212; типу <strong>int</strong>.</p>
+<p>Не столь очевидно, что числа, имеющие целую и дробную части, относятся к типу <strong>float</strong> (англ.: плавать). Название типа данных объясняется тем, что такие числа в компьютере представляются в <em>формате с плавающей точкой</em>.</p>
+<p>В России при записи чисел, имеющих целую и дробную части, принято отделять целую часть от дробной при помощи запятой, например: <tt class="docutils literal"><span class="pre">3,2</span></tt>. Тогда как во многих других странах, а также в языках программирования (и Python не является исключением), целую часть числа от дробной отделяют при помощи точки. В таких случаях точку называют десятичной точкой.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="mf">3.2</span><span class="p">)</span>
+<span class="go">&lt;type &#39;float&#39;&gt;</span>
+</pre></div>
+</div>
+<p>Что касается запятой, то она является допустимым символом в Python, но используется для других целей. Хотя <tt class="docutils literal"><span class="pre">3,2</span></tt> &#8212; неверная запись числа, это допустимая конструкция Python. Если попробовать вывести значение <tt class="docutils literal"><span class="pre">3,2</span></tt>, то получим:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="mi">3</span><span class="p">,</span><span class="mi">2</span>
+<span class="go">3 2</span>
+</pre></div>
+</div>
+<p>Python интерпретирует <tt class="docutils literal"><span class="pre">3,2</span></tt> как список из двух элементов: <tt class="docutils literal"><span class="pre">3</span></tt> и <tt class="docutils literal"><span class="pre">2</span></tt>. Поэтому не пользуйтесь запятыми для записи чисел с целой и дробной частью!</p>
+<p>А что можно сказать о таких значениях, как <tt class="docutils literal"><span class="pre">&quot;17&quot;</span></tt> и <tt class="docutils literal"><span class="pre">&quot;3.2&quot;</span></tt>? Они выглядят как числа, но они заключены в кавычки, как строки.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="s">&quot;17&quot;</span><span class="p">)</span>
+<span class="go">&lt;type &#39;str&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="s">&quot;3.2&quot;</span><span class="p">)</span>
+<span class="go">&lt;type &#39;str&#39;&gt;</span>
+</pre></div>
+</div>
+<p>Это строки.</p>
+<p>Строки в Python могут заключаться в одиночные (&#8216;) или в двойные кавычки (&#8221;):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="s">&#39;This is a string.&#39;</span><span class="p">)</span>
+<span class="go">&lt;type &#39;str&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="s">&quot;And so is this.&quot;</span><span class="p">)</span>
+<span class="go">&lt;type &#39;str&#39;&gt;</span>
+</pre></div>
+</div>
+<p>Строки, заключенные в двойные кавычки, могут содержать внутри одинарные кавычки, как в <tt class="docutils literal"><span class="pre">&quot;Say</span> <span class="pre">'Hello'&quot;</span></tt>, а строки, заключенные в одинарные кавычки, могут содержать двойные кавычки, как в <tt class="docutils literal"><span class="pre">'Say</span> <span class="pre">&quot;Hi&quot;'</span></tt>.</p>
+</div>
+<div class="section" id="index-1">
+<span id="id3"></span><h2>2.2. Переменные<a class="headerlink" href="#index-1" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Одна из сильнейших возможностей языков программирования &#8212; возможность работать с <strong>переменными</strong>. Переменная представляет собой имя, которое ссылается на значение.</p>
+<p><strong>Предложение присваивания</strong> создает новые переменные и присваивает им значения:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">message</span> <span class="o">=</span> <span class="s">&quot;Say &#39;Hello&#39;&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n</span> <span class="o">=</span> <span class="mi">17</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pi</span> <span class="o">=</span> <span class="mf">3.14159</span>
+</pre></div>
+</div>
+<p>В этом примере три предложения присваивания. Первое присваивает строку <tt class="docutils literal"><span class="pre">&quot;Say</span> <span class="pre">'Hello'&quot;</span></tt> новой переменной с именем <tt class="docutils literal"><span class="pre">message</span></tt>. Второе присваивает целое значение <tt class="docutils literal"><span class="pre">17</span></tt> переменной <tt class="docutils literal"><span class="pre">n</span></tt>, а третье присваивает число с плавающей точкой <tt class="docutils literal"><span class="pre">3.14159</span></tt> переменной <tt class="docutils literal"><span class="pre">pi</span></tt>.</p>
+<p><strong>Оператор присваивания</strong> <tt class="docutils literal"><span class="pre">=</span></tt> не следует путать со знаком равенства, хотя он и обозначается тем же самым символом. Оператор присваивания связывает <em>имя</em>, стоящее слева от него, со <em>значением</em>, находящимся справа от него. Вот почему вы получите ошибку, если введете:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="mi">17</span> <span class="o">=</span> <span class="n">n</span>
+</pre></div>
+</div>
+<p>Можно изобразить переменные в виде имен со стрелками, указывающими на значения. Следующий рисунок показывает результат выполнения предложений присваивания, приведенных выше:</p>
+<img alt="Имена и значения переменных" src="_images/ch2-1.png" />
+<p>Предложение print также работает с переменными.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">message</span>
+<span class="go">Say &#39;Hello&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">n</span>
+<span class="go">17</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">pi</span>
+<span class="go">3.14159</span>
+</pre></div>
+</div>
+<p>В каждом случае результатом выполнения предложения print является вывод значения переменной. Переменные также имеют типы, и интерпретатор сообщит нам о них:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+<span class="go">&lt;type &#39;str&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="go">&lt;type &#39;int&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">pi</span><span class="p">)</span>
+<span class="go">&lt;type &#39;float&#39;&gt;</span>
+</pre></div>
+</div>
+<p>Тип переменной в Python есть тип присвоенного ей значения.</p>
+<blockquote>
+<div>Замечание: Для работы со строковыми значениями на русском языке, или любом другом
+языке, в котором используются символы, отличные от латинских, нужно познакомиться с
+тем, что такое <em>кодировка</em> и кое-чему дополнительно научиться. Подробности можно
+найти в <a class="reference external" href="app_a_russian.html">Приложении A. Как научить Python русскому языку</a>.</div></blockquote>
+</div>
+<div class="section" id="index-2">
+<span id="id4"></span><h2>2.3. Имена переменных и ключевые слова<a class="headerlink" href="#index-2" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Программисты обычно выбирают значимые имена для своих переменных; имя описывает, для чего именно используется переменная.</p>
+<p><strong>Имена переменных</strong> могут быть произвольной длины. Они могут содержать буквы и цифры, но обязаны начинаться с буквы. Хотя допустимо использовать буквы верхнего регистра, по существующему соглашению они не используются. Если вы захотите их использовать, помните, что регистр имеет значение. <tt class="docutils literal"><span class="pre">Bruce</span></tt> и <tt class="docutils literal"><span class="pre">bruce</span></tt> &#8212; это две разные переменные.</p>
+<p>В имени можно использовать символ подчеркивания (<tt class="docutils literal"><span class="pre">_</span></tt>). Он часто используется в именах, состоящих из нескольких слов, таких, как <tt class="docutils literal"><span class="pre">my_name</span></tt> или <tt class="docutils literal"><span class="pre">price_of_tea_in_china</span></tt>.</p>
+<p>Если дать переменной недопустимое имя, это приведет к синтаксической ошибке:</p>
+<div class="highlight-python"><pre>&gt;&gt;&gt; 76trombones = "big parade"
+SyntaxError: invalid syntax
+&gt;&gt;&gt; more$ = 1000000
+SyntaxError: invalid syntax
+&gt;&gt;&gt; class = "Computer Science 101"
+SyntaxError: invalid syntax</pre>
+</div>
+<p>Имя <tt class="docutils literal"><span class="pre">76trombones</span></tt> недопустимо потому, что начинается не с буквы. Имя <tt class="docutils literal"><span class="pre">more$</span></tt> неправильно потому, что содержит недопустимый символ доллара. А что не так с <tt class="docutils literal"><span class="pre">class</span></tt>?</p>
+<p>Слово <tt class="docutils literal"><span class="pre">class</span></tt> является одним из <strong>ключевых слов</strong> Python. Ключевые слова определяют правила и структуру языка, и не могут использоваться как имена переменных.</p>
+<p>В языке Python 31 ключевое слово:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>and</td>
+<td>as</td>
+<td>assert</td>
+<td>break</td>
+<td>class</td>
+<td>continue</td>
+</tr>
+<tr class="row-even"><td>def</td>
+<td>del</td>
+<td>elif</td>
+<td>else</td>
+<td>except</td>
+<td>exec</td>
+</tr>
+<tr class="row-odd"><td>finally</td>
+<td>for</td>
+<td>from</td>
+<td>global</td>
+<td>if</td>
+<td>import</td>
+</tr>
+<tr class="row-even"><td>in</td>
+<td>is</td>
+<td>lambda</td>
+<td>not</td>
+<td>or</td>
+<td>pass</td>
+</tr>
+<tr class="row-odd"><td>print</td>
+<td>raise</td>
+<td>return</td>
+<td>try</td>
+<td>while</td>
+<td>with</td>
+</tr>
+<tr class="row-even"><td>yield</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p>Можете держать этот список под рукой. Если интерпретатор пожалуется на одно из имен ваших переменных и вы не будете знать, почему, проверьте, нет ли его в этом списке.</p>
+</div>
+<div class="section" id="index-3">
+<span id="id5"></span><h2>2.4. Предложения<a class="headerlink" href="#index-3" title="Ссылка на этот заголовок">¶</a></h2>
+<p><strong>Предложение</strong> &#8212; это инструкция, которую интерпретатор Python может выполнить. До сих пор мы видели два вида предложений: print и присваивание.</p>
+<p>Если ввести предложение в строке с приглашением, Python выполнит его и отобразит результат, если таковой имеется. Результатом выполнения предложения print является выведенное значение. Предложение присваивания не производит результата.</p>
+<p>Скрипт обычно содержит последовательность предложений. Если имеется более одного предложения, результаты появляются по мере выполнения предложений.</p>
+<p>Например, скрипт</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="mi">1</span>
+<span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="k">print</span> <span class="n">x</span>
+</pre></div>
+</div>
+<p>выводит</p>
+<blockquote>
+<div>1
+2</div></blockquote>
+<p>Обратите внимание, что предложение присваивания ничего не выводит.</p>
+</div>
+<div class="section" id="index-4">
+<span id="id6"></span><h2>2.5. Вычисление выражений<a class="headerlink" href="#index-4" title="Ссылка на этот заголовок">¶</a></h2>
+<p><strong>Выражение</strong> есть комбинация значений, переменных и операторов. Если вы введете выражение в строке с приглашением, интерпретатор <strong>вычислит</strong> его и отобразит результат:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+<p><em>Вычисление выражения</em> производит значение, вот почему выражения могут появляться в правой части предложения присваивания. Введенное значение само по себе является простым выражением, так же, как и имя переменной.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="mi">17</span>
+<span class="go">17</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+<p>Обратите внимание, что вычисление выражения и отображение результата &#8212; не то же самое, что печать значения выражения.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">message</span> <span class="o">=</span> <span class="s">&quot;Say &#39;Hello&#39;&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">message</span>
+<span class="go">&quot;Say &#39;Hello&#39;&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">message</span>
+<span class="go">Say &#39;Hello&#39;</span>
+</pre></div>
+</div>
+<p>Когда Python в интерактивном режиме отображает значение выражения, он использует тот же формат, который используется для ввода значения. В случае строк это означает, что кавычки также выводятся. А предложение print печатает значение выражения, которым в данном случае является содержание строки (без кавычек).</p>
+<p>В скрипте выражение само по себе является допустимым предложением, но оно ничего не делает. Скрипт</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">17</span>
+<span class="mf">3.2</span>
+<span class="s">&quot;Hello, World!&quot;</span>
+<span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>не выводит совсем ничего. Как изменить этот скрипт для того, чтобы отобразить значения всех четырех выражений?</p>
+<span class="target" id="index-5"></span></div>
+<div class="section" id="index-6">
+<span id="id7"></span><h2>2.6. Операторы и операнды<a class="headerlink" href="#index-6" title="Ссылка на этот заголовок">¶</a></h2>
+<p><strong>Операторы</strong> &#8212; это специальные символы, обозначающие операции, например, такие, как сложение и умножение. Значения, с которыми работает оператор, называются <strong>операндами</strong>.</p>
+<p>Вот несколько допустимых выражений Python, смысл которых более или менее ясен:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">20</span> <span class="o">+</span> <span class="mi">32</span>
+<span class="n">hour</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="n">hour</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="n">minute</span>
+<span class="n">minute</span> <span class="o">/</span> <span class="mi">60</span>
+<span class="mi">5</span> <span class="o">**</span> <span class="mi">2</span>
+<span class="p">(</span><span class="mi">5</span> <span class="o">+</span> <span class="mi">9</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">15</span> <span class="o">-</span> <span class="mi">7</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Символы <tt class="docutils literal"><span class="pre">+</span></tt>, <tt class="docutils literal"><span class="pre">-</span></tt> и <tt class="docutils literal"><span class="pre">/</span></tt>, а также использование скобок для группировки операций, означают в Python то же, что и в математике. Звездочка <tt class="docutils literal"><span class="pre">*</span></tt> обозначает умножение, а две звездочки подряд <tt class="docutils literal"><span class="pre">**</span></tt> обозначают возведение в степень. Пробелы вокруг операторов не обязательны, однако они облегчают чтение выражений.</p>
+<p>Когда на месте операнда оказывается имя переменной, оно заменяется значением переменной, прежде чем выполняется операция.</p>
+<p>Сложение, вычитание, умножение и возведение в степень ведут себя так, как вы и ожидаете, но вас может удивить деление. Следующая операция дает неожиданный результат:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">minute</span> <span class="o">=</span> <span class="mi">59</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">minute</span> <span class="o">/</span> <span class="mi">60</span>
+<span class="go">0</span>
+</pre></div>
+</div>
+<p>Значением <tt class="docutils literal"><span class="pre">minute</span></tt> является 59, а 59, деленное на 60, дает 0.98333, а не 0. Полученный результат объясняется тем, что Python выполняет <strong>целочисленное деление</strong>.</p>
+<p>Когда оба операнда целые, результат также должен быть целым. По существующему соглашению, результат целочисленного деления всегда округляется <em>в меньшую сторону</em>, даже когда большее целочисленное значение совсем рядом.</p>
+<p>Поскольку нельзя получить дробный результат, пользуясь операцией <tt class="docutils literal"><span class="pre">/</span></tt>, то вычислим проценты:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">minute</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">/</span> <span class="mi">60</span>
+<span class="go">98</span>
+</pre></div>
+</div>
+<p>Вновь результат округлен в меньшую сторону, но, по крайней мере, теперь он приблизительно правильный.</p>
+<p>Альтернативой является деление чисел с плавающей точкой. В <a class="reference external" href="ch04.html">главе 4</a> мы увидим, как преобразовывать целые числа в числа с плавающей точкой.</p>
+</div>
+<div class="section" id="index-7">
+<span id="id8"></span><h2>2.7. Порядок выполнения операций<a class="headerlink" href="#index-7" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Когда в выражении имеется более одного оператора, порядок вычислений зависит от <strong>приоритета операций</strong>. Python использует для математических вычислений тот же приоритет операций, что используется в математике:</p>
+<ol class="arabic simple">
+<li>Скобки имеют наивысший приоритет. Поскольку
+выражение в скобках вычисляется первым, то <tt class="docutils literal"><span class="pre">2</span> <span class="pre">*</span> <span class="pre">(3</span> <span class="pre">-</span> <span class="pre">1)</span></tt> дает 4, а
+<tt class="docutils literal"><span class="pre">(1</span> <span class="pre">+</span> <span class="pre">1)</span> <span class="pre">**</span> <span class="pre">(5</span> <span class="pre">-</span> <span class="pre">2)</span></tt> дает 8. Можно использовать скобки и для того, чтобы сделать
+выражения легче для чтения, например, <tt class="docutils literal"><span class="pre">(minute</span> <span class="pre">*</span> <span class="pre">100)</span> <span class="pre">/</span> <span class="pre">60</span></tt>, хотя
+на результат это никак не влияет.</li>
+<li>Возведение в степень имеет следующий приоритет после скобок, так что <tt class="docutils literal"><span class="pre">2</span> <span class="pre">**</span> <span class="pre">1</span> <span class="pre">+</span> <span class="pre">1</span></tt>
+дает 3, а не 4, и <tt class="docutils literal"><span class="pre">3</span> <span class="pre">*</span> <span class="pre">1</span> <span class="pre">**</span> <span class="pre">3</span></tt> дает 3, а не 27.</li>
+<li>Умножение и деление имеют одинаковый приоритет, более высокий, чем сложение
+и вычитание, приоритет которых также одинаковый. Так, <tt class="docutils literal"><span class="pre">2</span> <span class="pre">*</span> <span class="pre">3</span> <span class="pre">-</span> <span class="pre">1</span></tt> дает 5, а не
+4, и <tt class="docutils literal"><span class="pre">2</span> <span class="pre">/</span> <span class="pre">3</span> <span class="pre">-</span> <span class="pre">1</span></tt> даст -1, а не 1 (помните о целочисленном делении, 2 / 3 = 0).</li>
+<li>Операторы с одинаковым приоритетом вычисляются слева направо. Так, в
+выражении <tt class="docutils literal"><span class="pre">minute</span> <span class="pre">*</span> <span class="pre">100</span> <span class="pre">/</span> <span class="pre">60</span></tt> сначала выполняется умножение, что дает 5900 / 60,
+которое, в свою очередь, дает 98. Если бы операции выполнялись справа налево,
+результат бы был <tt class="docutils literal"><span class="pre">59</span> <span class="pre">*</span> <span class="pre">1</span></tt>, что дает 59, и в целом неверно.</li>
+</ol>
+</div>
+<div class="section" id="index-8">
+<span id="id9"></span><h2>2.8. Операции над строками<a class="headerlink" href="#index-8" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Нельзя выполнять математические операции над строками, даже если строки выглядят как числа. Следующие выражения недопустимы (предполагаем, что <tt class="docutils literal"><span class="pre">message</span></tt> имеет тип <tt class="docutils literal"><span class="pre">str</span></tt>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">message</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="s">&quot;Hello&quot;</span> <span class="o">/</span> <span class="mi">123</span>
+<span class="n">message</span> <span class="o">*</span> <span class="s">&quot;Hello&quot;</span>
+<span class="s">&quot;15&quot;</span> <span class="o">+</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p>Интересно, что оператор <tt class="docutils literal"><span class="pre">+</span></tt> все же работает со строками, хотя и делает не то, чего можно было бы ожидать. Для строк оператор <tt class="docutils literal"><span class="pre">+</span></tt> выполняет  <strong>конкатенацию</strong>, то есть соединение двух операндов вместе. Например:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fruit</span> <span class="o">=</span> <span class="s">&quot;banana&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">baked_good</span> <span class="o">=</span> <span class="s">&quot; nut bread&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">fruit</span> <span class="o">+</span> <span class="n">baked_good</span>
+<span class="go">banana nut bread</span>
+</pre></div>
+</div>
+<p>Пробел перед словом <tt class="docutils literal"><span class="pre">nut</span></tt> является частью строки, присваиваемой переменной <tt class="docutils literal"><span class="pre">baked_good</span></tt>, и необходим для того, чтобы между словами <tt class="docutils literal"><span class="pre">banana</span></tt> и <tt class="docutils literal"><span class="pre">nut</span></tt> в выводе программы оказался пробел.</p>
+<p>Оператор <tt class="docutils literal"><span class="pre">*</span></tt> также работает со строками. Он выполняет повторение строки. Например, <tt class="docutils literal"><span class="pre">'Fun'</span> <span class="pre">*</span> <span class="pre">3</span></tt> дает <tt class="docutils literal"><span class="pre">'FunFunFun'</span></tt>. Один из операндов обязан быть строкой, другой &#8212; целым числом.</p>
+<p>С одной стороны, такая интерпретация символов <tt class="docutils literal"><span class="pre">+</span></tt> и <tt class="docutils literal"><span class="pre">*</span></tt> имеет смысл по аналогии со сложением и умножением. Так же, как <tt class="docutils literal"><span class="pre">4</span> <span class="pre">*</span> <span class="pre">3</span></tt> эквивалентно <tt class="docutils literal"><span class="pre">4</span> <span class="pre">+</span> <span class="pre">4</span> <span class="pre">+</span> <span class="pre">4</span></tt>, мы ожидаем, что <tt class="docutils literal"><span class="pre">&quot;Fun&quot;</span> <span class="pre">*</span> <span class="pre">3</span></tt> будет эквивалентно <tt class="docutils literal"><span class="pre">&quot;Fun&quot;</span> <span class="pre">+</span> <span class="pre">&quot;Fun&quot;</span> <span class="pre">+</span> <span class="pre">&quot;Fun&quot;</span></tt>, и так оно и есть. С другой стороны, есть существенный момент, который отличает конкатенацию и повторение строк от сложения и умножения чисел. Можете сами отыскать свойство, которым обладают сложение и умножение чисел, но не обладают конкатенация и повторение строк?</p>
+</div>
+<div class="section" id="input">
+<span id="index-9"></span><span id="id10"></span><h2>2.9. Ввод<a class="headerlink" href="#input" title="Ссылка на этот заголовок">¶</a></h2>
+<p>В Python есть две встроенные функции для получения ввода с клавиатуры:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">n</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&quot;Please enter your name: &quot;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">n</span>
+<span class="n">n</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s">&quot;Enter a numerical expression: &quot;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">n</span>
+</pre></div>
+</div>
+<p>Пример выполнения этого скрипта может выглядеть так:</p>
+<div class="highlight-python"><pre>$ python tryinput.py
+Please enter your name: Arthur, King of the Britons
+Arthur, King of the Britons
+Enter a numerical expression: 7 * 3
+21</pre>
+</div>
+<p>Каждая из этих функций позволяет внутри скобок указать <em>приглашение</em> для пользователя.</p>
+</div>
+<div class="section" id="index-10">
+<span id="id11"></span><h2>2.10. Композиция<a class="headerlink" href="#index-10" title="Ссылка на этот заголовок">¶</a></h2>
+<p>До сих пор мы рассматривали элементы программ &#8212; переменные, выражения и предложения &#8212; по отдельности, не затрагивая вопроса о том, как их комбинировать.</p>
+<p>Одним из полезнейших свойств языков программирования является возможность брать маленькие строительные блоки и комбинировать их, или, другими словами, создавать из них <strong>композиции</strong>. Например, мы знаем как складывать числа и знаем, как выводить на экран. Оказывается, мы можем сделать обе эти вещи сразу:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span> <span class="k">print</span> <span class="mi">17</span> <span class="o">+</span> <span class="mi">3</span>
+<span class="go">20</span>
+</pre></div>
+</div>
+<p>В действительности, сложение должно быть выполнено до вывода, так что действия, на самом деле, выполняются не одновременно. Важно то, что любое выражение, включающее числа, строки и переменные, может использоваться в предложении print:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="s">&quot;Number of minutes since midnight: &quot;</span><span class="p">,</span> <span class="n">hour</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="n">minute</span>
+</pre></div>
+</div>
+<p>Можно также поместить произвольные выражения в правую часть предложения присваивания:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">percentage</span> <span class="o">=</span> <span class="p">(</span><span class="n">minute</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span> <span class="o">/</span> <span class="mi">60</span>
+</pre></div>
+</div>
+<p>Как видите, композиция позволяет записывать сложные вычисления кратко и выразительно.</p>
+<blockquote>
+<div>Предупреждение: Существуют ограничения на то, где можно использовать
+определенные выражения. Например, левая часть предложения присваивания
+должна быть именем <em>переменной</em>, а не выражением. Поэтому следующее
+предложение неверно: <tt class="docutils literal"><span class="pre">minute</span> <span class="pre">+</span> <span class="pre">1</span> <span class="pre">=</span> <span class="pre">hour</span></tt>.</div></blockquote>
+</div>
+<div class="section" id="index-11">
+<span id="id12"></span><h2>2.11. Комментарии<a class="headerlink" href="#index-11" title="Ссылка на этот заголовок">¶</a></h2>
+<p>По мере того, как программы становятся больше и сложнее, они становятся труднее для чтения. Формальные языки <em>плотные</em> в том смысле, что небольшой фрагмент текста может нести много смысла, и, посмотрев на часть кода, бывает непросто понять, что именно этот код делает и почему.</p>
+<p>Поэтому хорошей идеей является добавление к вашим программам заметок, которые бы на естественном языке объясняли, что делает программа. Такие заметки называются <strong>комментариями</strong>, и помечаются символом <tt class="docutils literal"><span class="pre">#</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># calculate elapsed hour percent</span>
+<span class="n">percentage</span> <span class="o">=</span> <span class="p">(</span><span class="n">minute</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span> <span class="o">/</span> <span class="mi">60</span>
+</pre></div>
+</div>
+<p>В этом случае комментарий занимает целую строку. Можно также поместить комментарий в конец строки, содержащей предложение Python:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">percentage</span> <span class="o">=</span> <span class="p">(</span><span class="n">minute</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span> <span class="o">/</span> <span class="mi">60</span>     <span class="c"># integer division!</span>
+</pre></div>
+</div>
+<p>Все, что следует за символом <tt class="docutils literal"><span class="pre">#</span></tt> до конца строки, игнорируется интерпретатором Python и не оказывает никакого действия на выполнение программы. Комментарии предназначены для самого программиста, или для тех программистов, которые будут читать этот код в будущем. В последнем примере комментарий напоминает читателю программы о том, что при вычислении выражения выполняется целочисленное деление.</p>
+<blockquote>
+<div>Замечание: Для того, чтобы писать комментарии в скриптах на русском языке, необходимо
+специально позаботиться о кодировке, используемой для хранения текста вашей
+программы на Python. Подробности можно найти в
+<a class="reference external" href="app_a_russian.html">Приложении A. Как научить Python русскому языку</a>.</div></blockquote>
+</div>
+<div class="section" id="id13">
+<h2>2.12. Глоссарий<a class="headerlink" href="#id13" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="glossary docutils">
+<dt id="term-int">int</dt>
+<dd>Тип данных Python, представляющий положительные и отрицательные целые
+числа.</dd>
+<dt id="term-float">float</dt>
+<dd>Тип данных Python, представляющий <em>числа с плавающей точкой</em>. Числа с
+плавающей точкой имеют внутреннее представление, состоящее из двух
+частей: <em>мантиссы</em> и <em>степени</em>. При выводе в стандартном формате, они
+выглядят как десятичные числа с целой и дробной частями. Используя тип
+<tt class="docutils literal"><span class="pre">float</span></tt>, имейте в виду,
+что возможны ошибки округления, и всегда помните, что имеете дело с
+приблизительными значениями.</dd>
+<dt id="term-str">str</dt>
+<dd>Тип данных Python, представляющий последовательности символов.</dd>
+<dt id="term-">выражение</dt>
+<dd>Комбинация переменных, операторов и значений, результатом вычисления
+которой является единственное значение.</dd>
+<dt id="term-4">значение</dt>
+<dd>Число или строка (или что-то другое, о чем мы поговорим позднее),
+которые могут быть сохранены в переменной или использованы в выражении.</dd>
+<dt id="term-5">имя переменной</dt>
+<dd>Имя, данное переменной. Имена переменных в Python есть
+последовательность букв (<tt class="docutils literal"><span class="pre">a..z,</span> <span class="pre">A..Z</span></tt>), цифр (<tt class="docutils literal"><span class="pre">0..9</span></tt>) и символа <tt class="docutils literal"><span class="pre">_</span></tt>,
+начинающаяся с буквы или символа подчеркивания. Хорошей практикой
+программирования является выбор таких имен для переменных, которые
+описывают использование этих переменных в программе.</dd>
+<dt id="term-6">ключевое слово</dt>
+<dd>Слово, зарезервированное для специального использования в языке
+программирования. На ключевые слова опирается компилятор при синтаксическом
+разборе программы; нельзя использовать ключевые слова, например, <tt class="docutils literal"><span class="pre">if</span></tt>,
+<tt class="docutils literal"><span class="pre">def</span></tt> и <tt class="docutils literal"><span class="pre">while</span></tt>, в качестве имен переменных.</dd>
+<dt id="term-7">комментарий</dt>
+<dd>Информация в программе, предназначенная для программистов (или любого
+читателя исходного кода) и не оказывающая влияния на выполнение
+программы.</dd>
+<dt id="term-8">композиция</dt>
+<dd>Комбинирование простых выражений и предложений в составные для того,
+чтобы представить сложные вычисления в удобной и краткой форме.</dd>
+<dt id="term-9">конкатенация</dt>
+<dd>Соединение двух строк.</dd>
+<dt id="term-10">операнд</dt>
+<dd>То, над чем выполняется операция.</dd>
+<dt id="term-11">оператор</dt>
+<dd>Специальный символ, который обозначает операцию, например,
+сложение, умножение или конкатенацию строк.</dd>
+<dt id="term-12">оператор присваивания</dt>
+<dd>Символ <tt class="docutils literal"><span class="pre">=</span></tt> есть оператор присваивания в Python. Его не следует путать
+со знаком равенства в математике, так как они семантически различны.</dd>
+<dt id="term-13">переменная</dt>
+<dd>Имя, связанное со значением.</dd>
+<dt id="term-14">предложение</dt>
+<dd>Инструкция, которую интерпретатор Python может выполнить. Примерами
+предложений языка программирования являются предложение присваивания и
+предложение print.</dd>
+<dt id="term-15">предложение присваивания</dt>
+<dd><p class="first">Предложение, которое присваивает значение имени (переменной). Слева от
+оператора присваивания <tt class="docutils literal"><span class="pre">=</span></tt> находится имя, справа &#8212;
+выражение, которое вычисляется интерпретатором
+Python и затем присваивается имени. Разница между левой и правой частями
+предложения присваивания часто сбивает с толку начинающих программистов.
+В следующем предложении присваивания:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p class="last"><tt class="docutils literal"><span class="pre">n</span></tt> играет разные роли по разные стороны от <tt class="docutils literal"><span class="pre">=</span></tt>. На правой стороне
+<tt class="docutils literal"><span class="pre">n</span></tt> выступает как <em>значение</em>, являющееся частью <em>выражения</em>, которое
+будет вычислено и затем присвоено <em>имени</em>, находящемуся на левой
+стороне.</p>
+</dd>
+<dt id="term-16">приоритет операций</dt>
+<dd>Набор правил, управляющий порядком вычисления выражений, включающих
+более одного оператора.</dd>
+<dt id="term-17">тип данных</dt>
+<dd>Множество значений. Тип значения определяет, как это значение можно
+использовать в выражениях. Типы, которые мы встречали до сих пор: целые
+числа (тип <tt class="docutils literal"><span class="pre">int</span></tt>), числа с плавающей точкой (тип <tt class="docutils literal"><span class="pre">float</span></tt>) и строки
+(тип <tt class="docutils literal"><span class="pre">str</span></tt>).</dd>
+<dt id="term-18">целочисленное деление</dt>
+<dd>Операция деления целого на целое, результатом которой является целое.
+Целочисленное деление дает полное число раз, которое делитель умещается
+в делимое, и отбрасывает остаток.</dd>
+</dl>
+</div>
+<div class="section" id="id14">
+<h2>2.13. Упражнения<a class="headerlink" href="#id14" title="Ссылка на этот заголовок">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Выясните, что произойдет, если попробовать напечатать предложение присваивания:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">7</span>
+</pre></div>
+</div>
+<p>А что будет в этом случае?</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="mi">7</span> <span class="o">+</span> <span class="mi">5</span>
+</pre></div>
+</div>
+<p>А в этом?</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="mf">5.2</span><span class="p">,</span> <span class="s">&quot;this&quot;</span><span class="p">,</span> <span class="mi">4</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="s">&quot;that&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="o">/</span><span class="mf">2.0</span>
+</pre></div>
+</div>
+<p>Можете сформулировать общее правило о том, что может идти вслед за <tt class="docutils literal"><span class="pre">print</span></tt>?
+Что возвращает предложение print?</p>
+</li>
+<li><p class="first">Возьмем предложение: <em>All work and no play makes Jack a dull boy.</em> Сохраните
+каждое слово в отдельной переменной, затем выведите предложение в одну строку,
+используя print.</p>
+</li>
+<li><p class="first">Добавьте скобки в выражение <tt class="docutils literal"><span class="pre">6</span> <span class="pre">*</span> <span class="pre">1</span> <span class="pre">-</span> <span class="pre">2</span></tt> чтобы изменить его значение с 4
+на -6.</p>
+</li>
+<li><p class="first">Поместите символ комментария <tt class="docutils literal"><span class="pre">#</span></tt> перед строкой кода, которая до этого
+выполнялась, и посмотрите, что произойдет, если запустить программу снова.</p>
+</li>
+<li><p class="first">Разница между <tt class="docutils literal"><span class="pre">input</span></tt> и <tt class="docutils literal"><span class="pre">raw_input</span></tt> состоит в том, что <tt class="docutils literal"><span class="pre">input</span></tt> вычисляет
+введенную строку как выражение, а <tt class="docutils literal"><span class="pre">raw_input</span></tt> не делает этого. Попробуйте
+выполнить следующее в интерактивном режиме и объясните результат:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
+<span class="go">3.14</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">()</span>
+<span class="go">3.14</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
+<span class="go">&#39;The knights who say &quot;ni!&quot;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span>
+</pre></div>
+</div>
+<p>А что будет, если в этом примере не использовать кавычки?</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
+<span class="go">The knights who say &quot;ni!&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">()</span>
+<span class="go">&#39;The knights who say &quot;ni!&quot;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span>
+</pre></div>
+</div>
+<p>Объясните результат.</p>
+</li>
+<li><p class="first">Запустите интерпретатор Python и введите <tt class="docutils literal"><span class="pre">bruce</span> <span class="pre">+</span> <span class="pre">4</span></tt> в строке с приглашением.
+Интерпретатор выдаст сообщение об ошибке:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="ne">NameError</span><span class="p">:</span> <span class="n">name</span> <span class="s">&#39;bruce&#39;</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">defined</span>
+</pre></div>
+</div>
+<p>Присвойте значение переменной <tt class="docutils literal"><span class="pre">bruce</span></tt> так, чтобы вычисление <tt class="docutils literal"><span class="pre">bruce</span> <span class="pre">+</span> <span class="pre">4</span></tt>
+давало <tt class="docutils literal"><span class="pre">10</span></tt>.</p>
+</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             >словарь</a></li>
+        <li class="right" >
+          <a href="ch03.html" title="3. Функции"
+             >следующий</a> |</li>
+        <li class="right" >
+          <a href="ch01.html" title="1. Путь программирования"
+             >предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="copyright.html">Copyright</a> 2009, 2012, Джеффри Элкнер, Аллен Б. Дауни, Крис Мейерс, Андрей Трофимов.
+      При создании использован <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

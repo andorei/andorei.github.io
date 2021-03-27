@@ -1,0 +1,411 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>13. Методы &mdash; Учимся с Python</title>
+    
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2nd Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="Учимся с Python" href="index.html" />
+    <link rel="next" title="14. Коллекции объектов" href="ch14.html" />
+    <link rel="prev" title="12. Классы и объекты" href="ch12.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             accesskey="I">словарь</a></li>
+        <li class="right" >
+          <a href="ch14.html" title="14. Коллекции объектов"
+             accesskey="N">следующий</a> |</li>
+        <li class="right" >
+          <a href="ch12.html" title="12. Классы и объекты"
+             accesskey="P">предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>13. Методы<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
+<div class="section" id="index-0">
+<span id="id2"></span><h2>13.1. Функции для объектов<a class="headerlink" href="#index-0" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Не так просто дать определение, что же такое объектно-ориентированное программирование, но мы уже видели некоторые его свойства:</p>
+<ol class="arabic simple">
+<li>Программы строятся из определений объектов и определений функций, и
+большинство вычислений выражается в терминах операций над объектами.</li>
+<li>Каждое определение объекта соответствует некоторому объекту или понятию
+реального мира, а функции, работающие с объектом, соответствуют тому,
+как взаимодействуют реальные объекты.</li>
+</ol>
+<p>Например, класс <tt class="docutils literal"><span class="pre">Time</span></tt>, определенный в предыдущей главе, соответствует тому, как люди привыкли записывать время. А определенные нами функции соответствуют действиям, которые люди выполняют над временем. Подобным же образом, классы <tt class="docutils literal"><span class="pre">Point</span></tt> и <tt class="docutils literal"><span class="pre">Rectangle</span></tt> соответствуют математическим понятиям точки и прямоугольника.</p>
+<p>До сих пор мы не пользовались средствами, которые Python предоставляет для объектно-ориентированного программирования. Строго говоря, эти средства не являются необходимыми для создания программ. По большей части, они предоставляют альтернативный синтаксис для тех вещей, которые мы уже делали. Однако, часто этот синтаксис оказывается более кратким и выразительным.</p>
+<p>Например, в программе <tt class="docutils literal"><span class="pre">Time</span></tt> нет очевидной связи между определением класса и следующими за ним определениями функций. Если присмотреться, то оказывается, что каждая из функций принимает в качестве параметра, по крайней мере, один объект <tt class="docutils literal"><span class="pre">Time</span></tt>.</p>
+<p>Это наблюдение мотивирует нас перейти к <strong>методам</strong>. Мы уже встречали некоторые методы, например, <tt class="docutils literal"><span class="pre">keys</span></tt> и <tt class="docutils literal"><span class="pre">values</span></tt>, которые вызываются на словарных объектах. Каждый метод связан с классом и предназначен для использования с объектами этого класса.</p>
+<p>Методы похожи на функции, но есть два отличия:</p>
+<ol class="arabic simple">
+<li>Методы определяются внутри определения класса, чтобы сделать отношения между
+классом и методом явными.</li>
+<li>Синтаксис для вызова метода отличается от синтаксиса для вызова функции.</li>
+</ol>
+<p>В следующих разделах мы превратим функции из предыдущей главы в методы. Это преобразование почти механическое. Мы сделаем это, выполнив определенную последовательность шагов.</p>
+</div>
+<div class="section" id="increment">
+<h2>13.2. Метод <tt class="docutils literal"><span class="pre">increment</span></tt><a class="headerlink" href="#increment" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Для начала давайте превратим в метод функцию <tt class="docutils literal"><span class="pre">increment</span></tt>.</p>
+<p>Для этого достаточно поместить определение функции внутрь определения класса. Хорошим тоном будет также переименование параметра <tt class="docutils literal"><span class="pre">time</span></tt> в <tt class="docutils literal"><span class="pre">self</span></tt> (хоть делать это и не обязательно). Как вы, должно быть, помните, в сообществе программистов Python существует соглашение, согласно которому первому параметру метода дают имя <tt class="docutils literal"><span class="pre">self</span></tt> (англ.: сам).</p>
+<p>Обратите внимание на сдвиг кода метода относительно заголовка класса:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Time</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">increment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seconds</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">seconds</span> <span class="o">+=</span> <span class="n">seconds</span>
+
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">seconds</span> <span class="o">&gt;=</span> <span class="mi">60</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">seconds</span> <span class="o">-=</span> <span class="mi">60</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">minutes</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">minutes</span> <span class="o">&gt;=</span> <span class="mi">60</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">minutes</span> <span class="o">-=</span> <span class="mi">60</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hours</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>Преобразование чисто механическое &#8212; мы переместили определение метода в определение класса, и изменили имя первого параметра.</p>
+<p>Теперь можно вызвать <tt class="docutils literal"><span class="pre">increment</span></tt> как метод, используя точечную нотацию:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">my_time</span><span class="o">.</span><span class="n">increment</span><span class="p">(</span><span class="mi">600</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Объект, на котором вызывается метод, присваивается первому параметру метода. Таким образом, в данном случае <tt class="docutils literal"><span class="pre">my_time</span></tt> присваивается параметру <tt class="docutils literal"><span class="pre">self</span></tt>. Второй параметр, <tt class="docutils literal"><span class="pre">seconds</span></tt>, получает значение <tt class="docutils literal"><span class="pre">600</span></tt>.</p>
+<p>В процедурном программировании предполагается, что функции выполняют необходимые действия. Синтаксис для вызова функции , <tt class="docutils literal"><span class="pre">increment(my_time,</span> <span class="pre">600)</span></tt>, говорит: Эй, <tt class="docutils literal"><span class="pre">increment</span></tt>! Вот тебе объект <tt class="docutils literal"><span class="pre">Time</span></tt> и 600 секунд, сделай с ними все необходимое.</p>
+<p>Синтаксис объектно-ориентированном программировании предполагает, что необходимые действия выполняет объект. Вызов, подобный <tt class="docutils literal"><span class="pre">my_time.increment(600)</span></tt> говорит: Эй, <tt class="docutils literal"><span class="pre">my_time</span></tt>! Пожалуйста, увеличь себя на 600 секунд!</p>
+<p>Является ли полезным такое изменение взгляда на вещи? Дело в том, что иногда, передавая ответственность от функций объектам, мы можем писать более гибкий код. Также становится проще поддерживать и повторно использовать такой код.</p>
+</div>
+<div class="section" id="id3">
+<h2>13.3. Более сложный пример<a class="headerlink" href="#id3" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Функция <tt class="docutils literal"><span class="pre">after</span></tt> немного более сложная, поскольку она имеет дело с двумя объектами <tt class="docutils literal"><span class="pre">Time</span></tt>. Первый из параметров переименуем в <tt class="docutils literal"><span class="pre">self</span></tt>, второй оставим без изменений:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Time</span><span class="p">:</span>
+    <span class="c">#previous method definitions here...</span>
+
+    <span class="k">def</span> <span class="nf">after</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time2</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hour</span> <span class="o">&gt;</span> <span class="n">time2</span><span class="o">.</span><span class="n">hour</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hour</span> <span class="o">&lt;</span> <span class="n">time2</span><span class="o">.</span><span class="n">hour</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">False</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">minute</span> <span class="o">&gt;</span> <span class="n">time2</span><span class="o">.</span><span class="n">minute</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">minute</span> <span class="o">&lt;</span> <span class="n">time2</span><span class="o">.</span><span class="n">minute</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">False</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">second</span> <span class="o">&gt;</span> <span class="n">time2</span><span class="o">.</span><span class="n">second</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">return</span> <span class="bp">False</span>
+</pre></div>
+</div>
+<p>Мы вызываем этот метод на одном объекте <tt class="docutils literal"><span class="pre">Time</span></tt>, и передаем второй объект <tt class="docutils literal"><span class="pre">Time</span></tt> в качестве аргумента:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">doneTime</span><span class="o">.</span><span class="n">after</span><span class="p">(</span><span class="n">current_time</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;The bread will be done after it starts.&quot;</span>
+</pre></div>
+</div>
+<p>Программа состоит из предложений на почти естественном английском языке: Если время готовности (done_time) позднее, чем текущее время (current_time), то...</p>
+</div>
+<div class="section" id="index-1">
+<span id="id4"></span><h2>13.4. Инициализирующий метод<a class="headerlink" href="#index-1" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Как мы уже знаем, <strong>инициализирующий метод</strong> &#8212; это специальный метод, который вызывается при создании объекта. Этот метод имеет имя <tt class="docutils literal"><span class="pre">__init__</span></tt> (два символа подчеркивания, <tt class="docutils literal"><span class="pre">init</span></tt>, и еще два символа подчеркивания). Инициализирующий метод класса <tt class="docutils literal"><span class="pre">Time</span></tt> выглядит так:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Time</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hours</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">minutes</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">seconds</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hours</span> <span class="o">=</span> <span class="n">hours</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minutes</span> <span class="o">=</span> <span class="n">minutes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">seconds</span> <span class="o">=</span> <span class="n">seconds</span>
+</pre></div>
+</div>
+<p>Заметьте, что между атрибутом <tt class="docutils literal"><span class="pre">self.hours</span></tt> и параметром <tt class="docutils literal"><span class="pre">hours</span></tt> не возникает конфликта имен. Точечная нотация устраняет конфликт.</p>
+<p>Метод, вызываемый при создании объекта и инициализирующий состояние объекта, также называют конструктором. В Python метод <tt class="docutils literal"><span class="pre">__init__</span></tt> является конструктором.</p>
+<p>Когда мы создаем объект <tt class="docutils literal"><span class="pre">Time</span></tt>, указанные нами аргументы передаются конструктору:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">current_time</span> <span class="o">=</span> <span class="n">Time</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print_time</span><span class="p">(</span><span class="n">current_time</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mi">09</span><span class="p">:</span><span class="mi">14</span><span class="p">:</span><span class="mi">30</span>
+</pre></div>
+</div>
+<p>Поскольку параметры метода <tt class="docutils literal"><span class="pre">__init__</span></tt> имеют значения по умолчанию, мы можем и не передавать аргументы при создании объекта:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">current_time</span> <span class="o">=</span> <span class="n">Time</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print_time</span><span class="p">(</span><span class="n">current_time</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span>
+</pre></div>
+</div>
+<p>Или передать только первый аргумент:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">current_time</span> <span class="o">=</span> <span class="n">Time</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print_time</span><span class="p">(</span><span class="n">current_time</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mi">09</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span>
+</pre></div>
+</div>
+<p>Или только первые два аргумента:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">current_time</span> <span class="o">=</span> <span class="n">Time</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">14</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print_time</span><span class="p">(</span><span class="n">current_time</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mi">09</span><span class="p">:</span><span class="mi">14</span><span class="p">:</span><span class="mo">00</span>
+</pre></div>
+</div>
+<p>Мы также можем передать часть аргументов, явно поименовав их:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">current_time</span> <span class="o">=</span> <span class="n">Time</span><span class="p">(</span><span class="n">seconds</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="n">hours</span> <span class="o">=</span> <span class="mi">9</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print_time</span><span class="p">(</span><span class="n">current_time</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mi">09</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="mi">30</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="str">
+<span id="index-2"></span><h2>13.5. Метод <tt class="docutils literal"><span class="pre">__str__</span></tt><a class="headerlink" href="#str" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Метод <tt class="docutils literal"><span class="pre">__str__</span></tt> имеет специальное назначение в Python, он возвращает строковое представление объекта. Определим метод <tt class="docutils literal"><span class="pre">__str__</span></tt> для класса <tt class="docutils literal"><span class="pre">Time</span></tt>, позаимствовав решение из функции <tt class="docutils literal"><span class="pre">print_time</span></tt> из предыдущей главы:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Time</span><span class="p">:</span>
+    <span class="c">#previous method definitions here...</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;</span><span class="si">%02i</span><span class="s">:</span><span class="si">%02i</span><span class="s">:</span><span class="si">%02i</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hours</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minutes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">seconds</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Если класс предоставляет метод с именем <tt class="docutils literal"><span class="pre">__str__</span></tt>, то тем самым переопределяет поведение встроенной функции Python <tt class="docutils literal"><span class="pre">str</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">Time</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="go">00:00:00</span>
+</pre></div>
+</div>
+<p>При выводе объекта <tt class="docutils literal"><span class="pre">Time</span></tt> с помощью <tt class="docutils literal"><span class="pre">print</span></tt> неявно вызывается <tt class="docutils literal"><span class="pre">__str__</span></tt> на этом объекте. Поэтому добавление метода <tt class="docutils literal"><span class="pre">__str__</span></tt> также меняет поведение <tt class="docutils literal"><span class="pre">print</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">Time</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">t</span>
+<span class="go">09:00:00</span>
+</pre></div>
+</div>
+<p>Как видите, добавление метода <tt class="docutils literal"><span class="pre">__str__</span></tt> к классу <tt class="docutils literal"><span class="pre">Time</span></tt> сделало ненужным написанную ранее функцию <tt class="docutils literal"><span class="pre">print_time</span></tt>.</p>
+<p>Когда мы пишем новый класс, мы почти всегда начинаем с написания метода <tt class="docutils literal"><span class="pre">__init__</span></tt>, который облегчает создание объектов, и метода <tt class="docutils literal"><span class="pre">__str__</span></tt>, который часто полезен для отладки.</p>
+</div>
+<div class="section" id="points">
+<h2>13.6. Снова <tt class="docutils literal"><span class="pre">Points</span></tt><a class="headerlink" href="#points" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Теперь, для закрепления изученного материала, давайте перепишем класс <tt class="docutils literal"><span class="pre">Point</span></tt> в стиле ООП:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Point</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;(&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;, &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;)&#39;</span>
+</pre></div>
+</div>
+<p>Инициализирующий метод принимает <tt class="docutils literal"><span class="pre">x</span></tt> и <tt class="docutils literal"><span class="pre">y</span></tt> как опциональные параметры, значение по умолчанию для каждого из них 0.</p>
+<p>Метод <tt class="docutils literal"><span class="pre">__str__</span></tt> возвращает строковое представление объекта <tt class="docutils literal"><span class="pre">Point</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="go">&#39;(3, 4)&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="index-3">
+<span id="id5"></span><h2>13.7. Перегрузка операторов<a class="headerlink" href="#index-3" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Некоторые языки программирования позволяют изменять определения встроенных операторов для использования этих операторов с типами, определенными пользователем. Это свойство называется <strong>перегрузкой операторов</strong>.</p>
+<p>Например, для перегрузки оператора <tt class="docutils literal"><span class="pre">+</span></tt>, класс должен предоставить метод <tt class="docutils literal"><span class="pre">__add__</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Point</span><span class="p">:</span>
+    <span class="c"># previously defined methods here...</span>
+
+    <span class="k">def</span> <span class="nf">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Point</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Как обычно, первый параметр метода представляет объект, на котором вызывается метод. Второй параметр удачно назван <tt class="docutils literal"><span class="pre">other</span></tt> (англ.: другой) чтобы противопоставить его первому, <tt class="docutils literal"><span class="pre">self</span></tt>. Для того, чтобы сложить два объекта <tt class="docutils literal"><span class="pre">Point</span></tt>, мы создаем и возвращаем новый объект <tt class="docutils literal"><span class="pre">Point</span></tt>, содержащий сумму координат <tt class="docutils literal"><span class="pre">x</span></tt> и сумму координат <tt class="docutils literal"><span class="pre">y</span></tt> двух объектов.</p>
+<p>Теперь, когда мы применяем оператор <tt class="docutils literal"><span class="pre">+</span></tt> к объектам <tt class="docutils literal"><span class="pre">Point</span></tt>, Python вызывает  метод <tt class="docutils literal"><span class="pre">__add__</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span> <span class="n">p1</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span> <span class="n">p2</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span> <span class="n">p3</span> <span class="o">=</span> <span class="n">p1</span> <span class="o">+</span> <span class="n">p2</span>
+<span class="gp">&gt;&gt;&gt; </span> <span class="k">print</span> <span class="n">p3</span>
+<span class="go">(8, 11)</span>
+</pre></div>
+</div>
+<p>Выражение <tt class="docutils literal"><span class="pre">p1</span> <span class="pre">+</span> <span class="pre">p2</span></tt> равнозначно выражению <tt class="docutils literal"><span class="pre">p1.__add__(p2)</span></tt>, только более изящно.</p>
+<p>В качестве упражнения вам будет предложено самостоятельно написать метод <tt class="docutils literal"><span class="pre">__sub__(self,</span> <span class="pre">other)</span></tt>, который перегрузит оператор вычитания.</p>
+<p>Перегрузить оператор умножения можно, определив метод <tt class="docutils literal"><span class="pre">__mul__</span></tt>, или <tt class="docutils literal"><span class="pre">__rmul__</span></tt>, или оба эти метода. Если левый операнд оператора <tt class="docutils literal"><span class="pre">*</span></tt> является объектом <tt class="docutils literal"><span class="pre">Point</span></tt>, то Python вызовет метод <tt class="docutils literal"><span class="pre">__mul__</span></tt>, который ожидает, что второй операнд также является объектом <tt class="docutils literal"><span class="pre">Point</span></tt>. Этот метод рассчитает произведение точек согласно известной из математики формуле (сумма квадратов катетов равна квадрату гипотенузы):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span>
+</pre></div>
+</div>
+<p>Если левый операнд оператора <tt class="docutils literal"><span class="pre">*</span></tt> является примитивным числовым типом, а правый операнд &#8212; объект <tt class="docutils literal"><span class="pre">Point</span></tt>, то Python вызовет метод <tt class="docutils literal"><span class="pre">__rmul__</span></tt>, который выполнит умножение объекта <tt class="docutils literal"><span class="pre">Point</span></tt> на число:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">__rmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Point</span><span class="p">(</span><span class="n">other</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span>  <span class="n">other</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Результатом будет новый объект <tt class="docutils literal"><span class="pre">Point</span></tt>, чьи координаты кратны первоначальным координатам. Если <tt class="docutils literal"><span class="pre">other</span></tt> окажется типом, который нельзя умножить на число с плавающей точкой, то <tt class="docutils literal"><span class="pre">__rmul__</span></tt> сгенерирует ошибку.</p>
+<p>Следующий пример демонстрирует оба вида умножения:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p1</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p2</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">p1</span> <span class="o">*</span> <span class="n">p2</span>
+<span class="go">43</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">p2</span>
+<span class="go">(10, 14)</span>
+</pre></div>
+</div>
+<p>А что случится, если мы попробуем вычислить <tt class="docutils literal"><span class="pre">p2</span> <span class="pre">*</span> <span class="pre">2</span></tt>? Так как первый аргумент является объектом <tt class="docutils literal"><span class="pre">Point</span></tt>, то Python вызовет <tt class="docutils literal"><span class="pre">__mul__</span></tt> и передаст <tt class="docutils literal"><span class="pre">2</span></tt> в качестве второго аргумента. Внутри метода, <tt class="docutils literal"><span class="pre">__mul__</span></tt> попытается получить атрибут <tt class="docutils literal"><span class="pre">x</span></tt> объекта <tt class="docutils literal"><span class="pre">other</span></tt>, что закончится неудачей, поскольку целое число не имеет атрибутов:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">p2</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="go">AttributeError: &#39;int&#39; object has no attribute &#39;x&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="index-4">
+<span id="id6"></span><h2>13.8. Полиморфизм<a class="headerlink" href="#index-4" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Большинство написанных нами методов работают только с определенными типами данных. Когда создается новый класс, то пишутся методы, которые работают с объектами этого класса.</p>
+<p>Но есть некоторые операции, которые хотелось бы уметь выполнять с разными типами данных, например, арифметические операции из предыдущего раздела. Если разные типы поддерживают одни и те же операции, значит, можно писать функции, работающие с любым из этих типов.</p>
+<p>Например, операция <tt class="docutils literal"><span class="pre">multadd</span></tt> (обычная в линейной алгебре) имеет три параметра; первые два перемножаются, и к полученному произведению прибавляется третий. Можем записать это на языке Python таким образом:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">multadd</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span>
+</pre></div>
+</div>
+<p>Этот метод будет работать с любыми значениями <tt class="docutils literal"><span class="pre">x</span></tt> и <tt class="docutils literal"><span class="pre">y</span></tt>, которые можно перемножить, и с любым значением <tt class="docutils literal"><span class="pre">z</span></tt>, которое можно прибавить к полученному произведению.</p>
+<p>Можно вызвать этот метод с числовыми значениями:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">multadd</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">7</span>
+</pre></div>
+</div>
+<p>Или с объектами <tt class="docutils literal"><span class="pre">Point</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p1</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p2</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">multadd</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">)</span>
+<span class="go">(11, 15)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">multadd</span> <span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">44</span>
+</pre></div>
+</div>
+<p>В первом случае, <tt class="docutils literal"><span class="pre">Point</span></tt> умножается на число и складывается с другим <tt class="docutils literal"><span class="pre">Point</span></tt>. Во втором случае, произведение двух <tt class="docutils literal"><span class="pre">Point</span></tt> дает числовое значение, и третий аргумент также является числом.</p>
+<p>Функции, подобные этой, которые могут принимать аргументы различных типов, называются <strong>полиморфными</strong>.</p>
+<p>В качестве еще одного примера, рассмотрим метод <tt class="docutils literal"><span class="pre">front_and_back</span></tt>, который печатает список дважды, сначала &#8212; в прямом, а затем и в обратном порядке:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">front_and_back</span><span class="p">(</span><span class="n">front</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">copy</span>
+    <span class="n">back</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">front</span><span class="p">)</span>
+    <span class="n">back</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+    <span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">front</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">back</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Поскольку метод <tt class="docutils literal"><span class="pre">reverse</span></tt> модифицирующий, мы делаем копию списка, прежде чем расставить его элементы в обратном порядке. Таким образом, метод <tt class="docutils literal"><span class="pre">reverse</span></tt> не изменяет список, который он получает в качестве параметра.</p>
+<p>Вот пример использования метода <tt class="docutils literal"><span class="pre">front_and_back</span></tt> со списком:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span>  <span class="n">myList</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span>  <span class="n">front_and_back</span><span class="p">(</span><span class="n">myList</span><span class="p">)</span>
+<span class="go">[1, 2, 3, 4][4, 3, 2, 1]</span>
+</pre></div>
+</div>
+<p>Поскольку мы предназначили эту функцию для работы со списками, неудивительно, что она работает, как ожидалось. Было бы удивительно, если бы мы смогли применить эту функцию к объекту <tt class="docutils literal"><span class="pre">Point</span></tt>.</p>
+<p>Для того, чтобы определить, может ли функция быть применена к новому типу, мы воспользуемся основным правилом полиморфизма: <em>Если все операции внутри функции могут быть применены к данному типу, то вся функция может быть применена к данному типу.</em></p>
+<p>Операции внутри функции включают <tt class="docutils literal"><span class="pre">copy</span></tt>, <tt class="docutils literal"><span class="pre">reverse</span></tt> и <tt class="docutils literal"><span class="pre">print</span></tt>.</p>
+<p><tt class="docutils literal"><span class="pre">copy</span></tt> работает с любым объектом. Мы уже написали метод <tt class="docutils literal"><span class="pre">__str__</span></tt> для <tt class="docutils literal"><span class="pre">Point</span></tt>. Нам остается написать метод <tt class="docutils literal"><span class="pre">reverse</span></tt> для класса <tt class="docutils literal"><span class="pre">Point</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">reverse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
+</pre></div>
+</div>
+<p>Теперь можно передать объект <tt class="docutils literal"><span class="pre">Point</span></tt> функции <tt class="docutils literal"><span class="pre">front_and_back</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span>  <span class="n">p</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>  <span class="n">front_and_back</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="go">(3, 4)(4, 3)</span>
+</pre></div>
+</div>
+<p>Замечательное свойство языка Python &#8212; это непреднамеренный полиморфизм, когда вы обнаруживаете, что написанная вами функция может работать с типами, для которых вы ее не предназначали.</p>
+</div>
+<div class="section" id="id7">
+<h2>13.9. Глоссарий<a class="headerlink" href="#id7" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="glossary docutils">
+<dt id="term-">инициализирующий метод</dt>
+<dd>Специальный метод, который автоматически вызывается при создании нового
+объекта и инициализирует данные этого объекта.</dd>
+<dt id="term-1">конструктор</dt>
+<dd>То же, что инициализирующий метод.</dd>
+<dt id="term-2">метод</dt>
+<dd>Функция, определенная внутри определения класса и вызываемая при помощи
+точечной нотации.</dd>
+<dt id="term-3">объектно-ориентированный язык программирования</dt>
+<dd>Язык, предоставляющий средства объектно-ориентированного
+программирования, такие, как определяемые пользователем классы и
+наследование, что облегчает объектно-ориентированное программирование.</dd>
+<dt id="term-4">объектно-ориентированное программирование</dt>
+<dd>Стиль программирования, предполагающий организацию данных и операций
+для работы с этими данными в виде классов.</dd>
+<dt id="term-5">перегрузка операторов</dt>
+<dd>Распространение использования встроенных операторов
+( <cite>+</cite>, <cite>-</cite>, <cite>*</cite>, <cite>&gt;</cite>, <cite>&lt;</cite>, etc.) на типы, определенные пользователем.</dd>
+<dt id="term-6">полиморфная функция</dt>
+<dd>Функция, которая может работать с данными более чем одного типа. Если
+каждая из операций внутри функции может быть выполнена для данного типа,
+то и вся функция может работать с данным типом.</dd>
+</dl>
+</div>
+<div class="section" id="id8">
+<h2>13.10. Упражнения<a class="headerlink" href="#id8" title="Ссылка на этот заголовок">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Переделайте функцию <tt class="docutils literal"><span class="pre">convert_to_seconds</span></tt> в метод класса <tt class="docutils literal"><span class="pre">Time</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">convert_to_seconds</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="n">minutes</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">hours</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="n">t</span><span class="o">.</span><span class="n">minutes</span>
+    <span class="n">seconds</span> <span class="o">=</span> <span class="n">minutes</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="n">t</span><span class="o">.</span><span class="n">seconds</span>
+    <span class="k">return</span> <span class="n">seconds</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Добавьте в класс <tt class="docutils literal"><span class="pre">Point</span></tt> метод <tt class="docutils literal"><span class="pre">__sub__(self,</span> <span class="pre">other)</span></tt>, который перегрузит
+оператор вычитания, и попробуйте с ним поработать.</p>
+</li>
+<li><p class="first">Перепишите класс <tt class="docutils literal"><span class="pre">Rectangle</span></tt> в объектно-ориентированном стиле, определив методы
+<tt class="docutils literal"><span class="pre">__init__</span></tt> и <tt class="docutils literal"><span class="pre">__str__</span></tt>.</p>
+</li>
+<li><p class="first">Добавьте в класс <tt class="docutils literal"><span class="pre">Rectangle</span></tt> методы <tt class="docutils literal"><span class="pre">move_rect</span></tt> и <tt class="docutils literal"><span class="pre">grow_rect</span></tt>, созданные
+на основе одноименных функций из предыдущей главы.</p>
+</li>
+<li><p class="first">Определите класс <tt class="docutils literal"><span class="pre">Pet</span></tt> (англ.: любимое животное) с атрибутами имя и возраст,
+инициализируемыми в методе <tt class="docutils literal"><span class="pre">__init__</span></tt> значениями параметров метода.
+Метод <tt class="docutils literal"><span class="pre">__str__</span></tt> должен возвращать строку с именем и возрастом животного.
+Поэкспериментируйте, создавая объекты класса <tt class="docutils literal"><span class="pre">Pet</span></tt> и выводя их на печать.</p>
+</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             >словарь</a></li>
+        <li class="right" >
+          <a href="ch14.html" title="14. Коллекции объектов"
+             >следующий</a> |</li>
+        <li class="right" >
+          <a href="ch12.html" title="12. Классы и объекты"
+             >предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="copyright.html">Copyright</a> 2009, 2012, Джеффри Элкнер, Аллен Б. Дауни, Крис Мейерс, Андрей Трофимов.
+      При создании использован <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

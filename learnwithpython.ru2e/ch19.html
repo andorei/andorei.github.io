@@ -1,0 +1,478 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>19. Деревья &mdash; Учимся с Python</title>
+    
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2nd Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="Учимся с Python" href="index.html" />
+    <link rel="next" title="Как научить Python русскому языку" href="app_a_russian.html" />
+    <link rel="prev" title="18. Очереди" href="ch18.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             accesskey="I">словарь</a></li>
+        <li class="right" >
+          <a href="app_a_russian.html" title="Как научить Python русскому языку"
+             accesskey="N">следующий</a> |</li>
+        <li class="right" >
+          <a href="ch18.html" title="18. Очереди"
+             accesskey="P">предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>19. Деревья<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
+<div class="section" id="index-0">
+<span id="id2"></span><h2>19.1. Знакомьтесь: дерево<a class="headerlink" href="#index-0" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Как и связные списки, <a class="reference external" href="http://ru.wikipedia.org/wiki/%D0%94%D0%B5%D1%80%D0%B5%D0%B2%D0%BE_(%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85)">деревья</a> состоят из узлов. Широко известно <strong>бинарное дерево</strong>, каждый узел которого содержит ссылки на два других узла (либо <tt class="docutils literal"><span class="pre">None</span></tt>). Эти ссылки указывают на левое и правое поддеревья. Как и узлы связных списков, узлы деревьев также содержат полезные данные. Следующая диаграмма представляет дерево:</p>
+<img alt="Дерево" src="_images/ch19-1.png" />
+<p>Самый верхний узел дерева называется <strong>корнем</strong>. Ссылка на корень есть ссылка на все дерево. Развивая метафору с деревом, другие узлы называют ветвями, а конечные узлы, не имеющие ссылок на другие, &#8212; <strong>листьями</strong>.</p>
+<p>(Возможно, вам кажется странным, что дерево нарисовано корнем вверх и листьями вниз? Но это не самое странное из того, что связано с деревьями.)</p>
+<p>В отношении деревьев также используется метафора семьи. Поэтому узел, ссылающийся на другие, иногда называют <strong>родительским*</strong>, а узлы, на которые он ссылается &#8212; <strong>дочерними</strong>. Узлы, имеющие общего родителя, называют <strong>сестринскими</strong>.</p>
+<p>И, наконец, говоря о деревьях, пользуются словами, обозначающими стороны и направления. Мы уже упомянули левое и правое поддеревья, но также имеются направления вверх (к родителям и корню) и вниз (к детям и листьям). А все узлы, находящиеся на одинаковым расстоянием от корня, составляют <strong>уровень</strong> дерева.</p>
+<p>Подобно связным спискам, деревья также являются рекурсивными структурами, поскольку их определение рекурсивно. Дерево представляет собой:</p>
+<ul class="simple">
+<li>пустое дерево, представленное значением <tt class="docutils literal"><span class="pre">None</span></tt>, или</li>
+<li>узел, содержащий данные и ссылки на деревья.</li>
+</ul>
+<p>В случае бинарного дерева, узел содержит две ссылки.</p>
+</div>
+<div class="section" id="index-1">
+<span id="id3"></span><h2>19.2. Построение деревьев<a class="headerlink" href="#index-1" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Построение дерева похоже на построение связного списка. Каждый вызов конструктора создает один узел.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Tree</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cargo</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cargo</span> <span class="o">=</span> <span class="n">cargo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left</span>  <span class="o">=</span> <span class="n">left</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">right</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cargo</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Параметр <tt class="docutils literal"><span class="pre">cargo</span></tt>, представляющий данные, может быть любого типа, а параметры <tt class="docutils literal"><span class="pre">left</span></tt> и <tt class="docutils literal"><span class="pre">right</span></tt> должны быть узлами деревьев. <tt class="docutils literal"><span class="pre">left</span></tt> и <tt class="docutils literal"><span class="pre">right</span></tt> опциональны и имеют значения по умолчанию <tt class="docutils literal"><span class="pre">None</span></tt>.</p>
+<p>Чтобы вывести на печать узел, будем выводить его данные, <tt class="docutils literal"><span class="pre">cargo</span></tt>.</p>
+<p>Один из способов построить дерево &#8212; снизу вверх. Создадим вначале дочерние узлы:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">left</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">right</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Затем создадим родительский узел и свяжем его с дочерними:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">tree</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Можно записать этот код более компактно:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">Tree</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">Tree</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>В обоих случаях, мы получим дерево, изображенное на рисунке в начале главы.</p>
+</div>
+<div class="section" id="index-2">
+<span id="id4"></span><h2>19.3. Обход деревьев<a class="headerlink" href="#index-2" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Всякий раз, когда вы встречаетесь с новой структурой данных, первый вопрос, заданный вами, должен быть: как перебрать все элементы этой структуры? Наиболее естественный способ обойти дерево, посетив все его узлы, &#8212; рекурсивный. Например, если узлы дерева содержат целые числа в качестве данных, то следующая функция подсчитывает их сумму:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">total</span><span class="p">(</span><span class="n">tree</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">tree</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span> <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">total</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">left</span><span class="p">)</span> <span class="o">+</span> <span class="n">total</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">right</span><span class="p">)</span> <span class="o">+</span> <span class="n">tree</span><span class="o">.</span><span class="n">cargo</span>
+</pre></div>
+</div>
+<p>Базовый случай здесь пустое дерево, не содержащее данных; для него возвращается 0. На каждом шаге рекурсии делаются два вызова функции <tt class="docutils literal"><span class="pre">total</span></tt> для подсчета суммы дочерних деревьев. К сумме результатов рекурсивных вызовов добавляются родительские данные, и возвращается сумма.</p>
+</div>
+<div class="section" id="index-3">
+<span id="id5"></span><h2>19.4. Деревья выражений<a class="headerlink" href="#index-3" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Деревья естественным образом представляют структуру выражений. В отличие от других способов представления, дерево описывает порядок вычислений однозначно. Например, инфиксное выражение  <tt class="docutils literal"><span class="pre">1</span> <span class="pre">+</span> <span class="pre">2</span> <span class="pre">*</span> <span class="pre">3</span></tt> неоднозначно, если не принять во внимание, что умножение является более приоритетной операцией, чем сложение.</p>
+<p>Дерево на следующем рисунке представляет это выражение:</p>
+<img alt="Дерево выражения" src="_images/ch19-2.png" />
+<p>Узлами дерева, представляющего выражение, могут быть операнды, например, <tt class="docutils literal"><span class="pre">1</span></tt> и <tt class="docutils literal"><span class="pre">2</span></tt>, и операторы, <tt class="docutils literal"><span class="pre">+</span></tt>, <tt class="docutils literal"><span class="pre">*</span></tt> и другие. Операнды будут листьями, а узлы-операторы будут ссылаться на узлы-операнды. (Все используемые нами операторы являются бинарными, то есть, имеют ровно два операнда.)</p>
+<p>Можно построить это дерево таким образом:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">(</span><span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="n">Tree</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">Tree</span><span class="p">(</span><span class="s">&#39;*&#39;</span><span class="p">,</span> <span class="n">Tree</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">Tree</span><span class="p">(</span><span class="mi">3</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>При взгляде на это дерево не возникает вопроса о порядке операций. Вначале выполняется умножение для того, чтобы вычислить второй операнд для сложения, и затем выполняется сложение.</p>
+<p>Деревья выражений имеют многочисленные применения. Далее в этой главе деревья используются для того, чтобы переводить выражения в постфиксную, префиксную или инфиксную запись. Похожие деревья используются внутри компиляторов для синтаксического анализа, оптимизации и трансляции программ.</p>
+</div>
+<div class="section" id="index-4">
+<span id="id6"></span><h2>19.5. Обход дерева выражения<a class="headerlink" href="#index-4" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Мы можем обойти дерево выражения и вывести его на печать таким образом:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">print_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">tree</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span> <span class="k">return</span>
+    <span class="k">print</span> <span class="n">tree</span><span class="o">.</span><span class="n">cargo</span><span class="p">,</span>
+    <span class="n">print_tree</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+    <span class="n">print_tree</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Как видите, для вывода дерева на печать мы вначале выводим корень, затем левое поддерево, затем правое. Такой способ обхода дерева называется <strong>предупорядоченным обходом</strong>, или обходом в прямом порядке, потому, что родительский узел посещается перед посещением дочерних узлов. Выведем наше дерево на печать:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">(</span><span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="n">Tree</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">Tree</span><span class="p">(</span><span class="s">&#39;*&#39;</span><span class="p">,</span> <span class="n">Tree</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">Tree</span><span class="p">(</span><span class="mi">3</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+<span class="go">+ 1 * 2 3</span>
+</pre></div>
+</div>
+<p>Такая форма записи выражения отличается и от постфиксной, и от инфиксной. Запись, в которой операторы предшествуют операндам, называется <strong>префиксной</strong>.</p>
+<p>Вы, наверное, уже заподозрили, что при обходе дерева другим способом получится другая запись выражения. Так оно и есть. Например, будем выводить на печать поддеревья прежде их родителя:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">print_tree_postorder</span><span class="p">(</span><span class="n">tree</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">tree</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span> <span class="k">return</span>
+    <span class="n">print_tree_postorder</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+    <span class="n">print_tree_postorder</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">tree</span><span class="o">.</span><span class="n">cargo</span><span class="p">,</span>
+</pre></div>
+</div>
+<p>Результат, <tt class="docutils literal"><span class="pre">1</span> <span class="pre">2</span> <span class="pre">3</span> <span class="pre">*</span> <span class="pre">+</span></tt>, является постфиксной записью! Такой порядок обхода дерева называется <strong>поступорядоченным</strong>, или обходом в обратном порядке. В самом деле, вначале выводятся листья, в к конце &#8212; корень.</p>
+<p>Наконец, для выполнения <strong>симметричного обхода</strong> нужно вначале вывести левое поддерево, затем его родителя, и затем правое дерево:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">print_tree_inorder</span><span class="p">(</span><span class="n">tree</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">tree</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span> <span class="k">return</span>
+    <span class="n">print_tree_inorder</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">tree</span><span class="o">.</span><span class="n">cargo</span><span class="p">,</span>
+    <span class="n">print_tree_inorder</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Получам инфиксную запись выражения: <tt class="docutils literal"><span class="pre">1</span> <span class="pre">+</span> <span class="pre">2</span> <span class="pre">*</span> <span class="pre">3</span></tt>.</p>
+<p>Если быть до конца честными, то нужно сказать, что мы допустили существенное упрощение. Иногда для записи инфиксных выражений нужно использовать скобки, чтобы сохранить порядок выполнения операций. Поэтому симметричный обход не всегда достаточен для генерации полноценного инфиксного выражения.</p>
+<p>Тем не менее, после некоторой доработки, дерево выражений и его обход разными способами предоставляют средства для перевода выражений из одной формы в другую.</p>
+<p>Если в процессе симметричного обхода дерева мы будем следить за тем, на каком уровне дерева находимся, мы сможем получить графическое представление дерева:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">print_tree_indented</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">tree</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span> <span class="k">return</span>
+    <span class="n">print_tree_indented</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">right</span><span class="p">,</span> <span class="n">level</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;  &#39;</span> <span class="o">*</span> <span class="n">level</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">cargo</span><span class="p">)</span>
+    <span class="n">print_tree_indented</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">level</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Параметр <tt class="docutils literal"><span class="pre">level</span></tt> (англ.: уровень) сообщает нам, на каком уровне дерева мы находимся. Изначально он равен 0. Каждый раз, когда мы делаем рекурсивный вызов, мы передаем <tt class="docutils literal"><span class="pre">level+1</span></tt> в качестве параметра, поскольку уровень дочернего узла всегда на 1 больше, чем уровень родительского. Данные узла при выводе на печать сдвигаются вправо пропорционально уровню. Получаем следующее:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">print_tree_indented</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+<span class="go">    3</span>
+<span class="go">  *</span>
+<span class="go">    2</span>
+<span class="go">+</span>
+<span class="go">  1</span>
+</pre></div>
+</div>
+<p>Если взглянуть на полученный вывод сбоку, можно увидеть подобие дерева, изображенного на рисунке выше.</p>
+</div>
+<div class="section" id="index-5">
+<span id="id7"></span><h2>19.6. Построение дерева выражения<a class="headerlink" href="#index-5" title="Ссылка на этот заголовок">¶</a></h2>
+<p>В этом разделе мы выполним разбор инфиксных выражений и построим соответствующие им деревья. Например, выражение <tt class="docutils literal"><span class="pre">(3</span> <span class="pre">+</span> <span class="pre">7)</span> <span class="pre">*</span> <span class="pre">9</span></tt> даст нам следующее дерево:</p>
+<img alt="Дерево выражения" src="_images/ch19-3.png" />
+<p>Мы упростили рисунок, опустив имена атрибутов.</p>
+<p>Синтаксический анализатор, или <strong>парсер</strong>, который мы напишем, будет работать с выражениями, включающими числа, скобки и операторы <tt class="docutils literal"><span class="pre">+</span></tt> и <tt class="docutils literal"><span class="pre">*</span></tt>. Будем исходить из предположения, что исходное выражение уже разбито на лексемы, которые помещены в список Python (получите этот список сами в качестве упражнения). Список лексем для выражения <tt class="docutils literal"><span class="pre">(3</span> <span class="pre">+</span> <span class="pre">7)</span> <span class="pre">*</span> <span class="pre">9</span></tt> следующий:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="s">&#39;(&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="s">&#39;)&#39;</span><span class="p">,</span> <span class="s">&#39;*&#39;</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="s">&#39;end&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Лексема <tt class="docutils literal"><span class="pre">end</span></tt> играет роль ограничителя списка, предотвращая выход парсера за его границу.</p>
+<p>Первая функция, которую мы напишем, это функция <tt class="docutils literal"><span class="pre">get_token</span></tt>, принимающая в качестве параметров список лексем и ожидаемую лексему. Функция сравнивает ожидаемую лексему с первой в списке. Если они равны, лексема удаляется из списка, и функция возвращает <tt class="docutils literal"><span class="pre">True</span></tt>. В противном случае возвращается <tt class="docutils literal"><span class="pre">False</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">get_token</span><span class="p">(</span><span class="n">token_list</span><span class="p">,</span> <span class="n">expected</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">token_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">expected</span><span class="p">:</span>
+        <span class="k">del</span> <span class="n">token_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">False</span>
+</pre></div>
+</div>
+<p>Так как переменная <tt class="docutils literal"><span class="pre">token_list</span></tt> ссылается на изменяемый объект, сделанные в функции изменения доступны через любую переменную, ссылающуюся на тот же объект.</p>
+<p>Следующая функция, <tt class="docutils literal"><span class="pre">get_number</span></tt>, работает с операндами. Если следующая лексема в списке <tt class="docutils literal"><span class="pre">token_list</span></tt> является числом, то <tt class="docutils literal"><span class="pre">get_number</span></tt> удаляет ее из списка и возвращает узел, содержащий это число. В противном случае возвращается <tt class="docutils literal"><span class="pre">None</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">get_number</span><span class="p">(</span><span class="n">token_list</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">token_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="mi">0</span><span class="p">):</span> <span class="k">return</span> <span class="bp">None</span>
+    <span class="k">del</span> <span class="n">token_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">Tree</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Прежде чем идти дальше, стоит протестировать функцию <tt class="docutils literal"><span class="pre">get_number</span></tt>. Присвоим список чисел переменной <tt class="docutils literal"><span class="pre">token_list</span></tt>, вызовем <tt class="docutils literal"><span class="pre">get_number</span></tt> и выведем на печать результат, а также то, что осталось в <tt class="docutils literal"><span class="pre">token_list</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">token_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="s">&#39;end&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">get_number</span><span class="p">(</span><span class="n">token_list</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print_tree_postorder</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="go">9</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">token_list</span>
+<span class="go">[11, &#39;end&#39;]</span>
+</pre></div>
+</div>
+<p>Следующая необходимая нам функция, это <tt class="docutils literal"><span class="pre">get_product</span></tt> (англ.: получить произведение), которая строит дерево для произведения. Простое произведение имеет два числа в качестве операндов, например, <tt class="docutils literal"><span class="pre">3</span> <span class="pre">*</span> <span class="pre">7</span></tt>.</p>
+<p>Вот версия <tt class="docutils literal"><span class="pre">get_product</span></tt> для простых произведений.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">get_product</span><span class="p">(</span><span class="n">token_list</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">get_number</span><span class="p">(</span><span class="n">token_list</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">get_token</span><span class="p">(</span><span class="n">token_list</span><span class="p">,</span> <span class="s">&#39;*&#39;</span><span class="p">):</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">get_number</span><span class="p">(</span><span class="n">token_list</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Tree</span> <span class="p">(</span><span class="s">&#39;*&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">a</span>
+</pre></div>
+</div>
+<p>Предполагая, что <tt class="docutils literal"><span class="pre">get_number</span></tt> возвращает узел с первым операндом, присваиваем его переменной <tt class="docutils literal"><span class="pre">a</span></tt>. Если следующая лексема <tt class="docutils literal"><span class="pre">*</span></tt>, то получам второй операнд и строим дерево выражения с помощью <tt class="docutils literal"><span class="pre">a</span></tt>, <tt class="docutils literal"><span class="pre">b</span></tt> и оператора произведения.</p>
+<p>Если же следующая лексема не <tt class="docutils literal"><span class="pre">*</span></tt>, то возвращаем узел-лист первого операнда, <tt class="docutils literal"><span class="pre">a</span></tt>. Приведем два примера:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">token_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="s">&#39;*&#39;</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="s">&#39;end&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span> <span class="o">=</span> <span class="n">get_product</span><span class="p">(</span><span class="n">token_list</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print_tree_postorder</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+<span class="go">9 11 *</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">token_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="s">&#39;end&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span> <span class="o">=</span> <span class="n">get_product</span><span class="p">(</span><span class="n">token_list</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print_tree_postorder</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+<span class="go">9</span>
+</pre></div>
+</div>
+<p>Как видно из второго примера, единственный операнд рассматривается как своего рода произведение. Хотя это выглядит необычно, такой прием оказывается полезным.</p>
+<p>А теперь возьмем более сложное произведение, например, <tt class="docutils literal"><span class="pre">3</span> <span class="pre">*</span> <span class="pre">5</span> <span class="pre">*</span> <span class="pre">13</span></tt>. Это выражение можно рассматривать как произведение произведений, а именно: <tt class="docutils literal"><span class="pre">3</span> <span class="pre">*</span> <span class="pre">(5</span> <span class="pre">*</span> <span class="pre">13)</span></tt>. Получаем следующее дерево:</p>
+<img alt="Дерево выражения" src="_images/ch19-4.png" />
+<p>Немного доработав <tt class="docutils literal"><span class="pre">get_product</span></tt>, мы сможем иметь дело с произведениями произвольной длины:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">get_product</span><span class="p">(</span><span class="n">token_list</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">get_number</span><span class="p">(</span><span class="n">token_list</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">get_token</span><span class="p">(</span><span class="n">token_list</span><span class="p">,</span> <span class="s">&#39;*&#39;</span><span class="p">):</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">get_product</span><span class="p">(</span><span class="n">token_list</span><span class="p">)</span>       <span class="c"># this line changed</span>
+        <span class="k">return</span> <span class="n">Tree</span><span class="p">(</span><span class="s">&#39;*&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">a</span>
+</pre></div>
+</div>
+<p>Другими словами, произведение может быть либо деревом с единственным узлом, либо деревом с корнем <tt class="docutils literal"><span class="pre">*</span></tt>, дочерним узлом-операндом слева и дочерним узлом-произведением справа. Рекурсивные определения, подобные этому, уже должны казаться вам привычными.</p>
+<p>Протестируем новую версию функции со сложным произведением:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">token_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;*&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s">&#39;*&#39;</span><span class="p">,</span> <span class="mi">5</span> <span class="p">,</span> <span class="s">&#39;*&#39;</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="s">&#39;end&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span> <span class="o">=</span> <span class="n">get_product</span><span class="p">(</span><span class="n">token_list</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print_tree_postorder</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+<span class="go">2 3 5 7 * * *</span>
+</pre></div>
+</div>
+<p>А теперь реализуем синтаксический разбор сумм. И снова воспользуемся несколько неожиданным определением. Сумма для нас либо дерево с корнем <tt class="docutils literal"><span class="pre">+</span></tt>, дочерним узлом-произведением слева и дочерним узлом-суммой справа, либо дерево с единственным узлом-произведением.</p>
+<p>Если вы приглядитесь к этому определению повнимательнее, то обнаружите замечательное свойство: мы можем представить любое выражение без скобок как сумму произведений. На этом свойстве основывается наш алгоритм синтаксического разбора.</p>
+<p>Функция <tt class="docutils literal"><span class="pre">get_sum</span></tt> пробует построить дерево с дочерним узлом-произведением слева и дочерним узлом-суммой справа. Но если функция не обнаруживает <tt class="docutils literal"><span class="pre">+</span></tt>, она просто возвращает произведение.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">get_sum</span><span class="p">(</span><span class="n">token_list</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">get_product</span><span class="p">(</span><span class="n">token_list</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">get_token</span><span class="p">(</span><span class="n">token_list</span><span class="p">,</span> <span class="s">&#39;+&#39;</span><span class="p">):</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">get_sum</span><span class="p">(</span><span class="n">token_list</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Tree</span><span class="p">(</span><span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">a</span>
+</pre></div>
+</div>
+<p>Протестируем функцию с выражением <tt class="docutils literal"><span class="pre">9</span> <span class="pre">*</span> <span class="pre">11</span> <span class="pre">+</span> <span class="pre">5</span> <span class="pre">*</span> <span class="pre">7</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">token_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="s">&#39;*&#39;</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s">&#39;*&#39;</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="s">&#39;end&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span> <span class="o">=</span> <span class="n">get_sum</span><span class="p">(</span><span class="n">token_list</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print_tree_postorder</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+<span class="go">9 11 * 5 7 * +</span>
+</pre></div>
+</div>
+<p>Мы почти закончили, осталось только научиться работать со скобками. В любом месте выражения, где может быть число, может быть также сумма, заключенная в скобки. Изменим <tt class="docutils literal"><span class="pre">get_number</span></tt> так, чтобы обрабатывать <strong>подвыражения</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">get_number</span><span class="p">(</span><span class="n">token_list</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">get_token</span><span class="p">(</span><span class="n">token_list</span><span class="p">,</span> <span class="s">&#39;(&#39;</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">get_sum</span><span class="p">(</span><span class="n">token_list</span><span class="p">)</span>         <span class="c"># get the subexpression</span>
+        <span class="n">get_token</span><span class="p">(</span><span class="n">token_list</span><span class="p">,</span> <span class="s">&#39;)&#39;</span><span class="p">)</span>      <span class="c"># remove the closing parenthesis</span>
+        <span class="k">return</span> <span class="n">x</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">token_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="mi">0</span><span class="p">):</span> <span class="k">return</span> <span class="bp">None</span>
+        <span class="n">token_list</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">return</span> <span class="n">Tree</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Протестируем этот код с выражением <tt class="docutils literal"><span class="pre">9</span> <span class="pre">*</span> <span class="pre">(11</span> <span class="pre">+</span> <span class="pre">5)</span> <span class="pre">*</span> <span class="pre">7</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">token_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="s">&#39;*&#39;</span><span class="p">,</span> <span class="s">&#39;(&#39;</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s">&#39;)&#39;</span><span class="p">,</span> <span class="s">&#39;*&#39;</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="s">&#39;end&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span> <span class="o">=</span> <span class="n">get_sum</span><span class="p">(</span><span class="n">token_list</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print_tree_postorder</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+<span class="go">9 11 5 + 7 * *</span>
+</pre></div>
+</div>
+<p>Наш парсер обработал скобки корректно, сложение выполняется перед умножением.</p>
+<p>Финальной версии <tt class="docutils literal"><span class="pre">get_number</span></tt> было бы неплохо дать другое имя, лучше описывающее ее функциональность.</p>
+</div>
+<div class="section" id="id8">
+<h2>19.7. Обработка ошибок<a class="headerlink" href="#id8" title="Ссылка на этот заголовок">¶</a></h2>
+<p>До сих пор при разработке парсера мы полагали, что на вход поступают корректные выражения. Например, когда мы достигаем конца подвыражения, мы полагаем, что следующей лексемой будет закрывающая скобка. Однако, если это не так, программа должна справиться с ситуацией.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">get_number</span><span class="p">(</span><span class="n">token_list</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">get_token</span><span class="p">(</span><span class="n">token_list</span><span class="p">,</span> <span class="s">&#39;(&#39;</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">get_sum</span><span class="p">(</span><span class="n">token_list</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">get_token</span><span class="p">(</span><span class="n">token_list</span><span class="p">,</span> <span class="s">&#39;)&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="s">&#39;BadExpressionError&#39;</span><span class="p">,</span> <span class="s">&#39;missing parenthesis&#39;</span>
+        <span class="k">return</span> <span class="n">x</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c"># the rest of the function omitted</span>
+</pre></div>
+</div>
+<p>Предложение <tt class="docutils literal"><span class="pre">raise</span></tt> создает исключение; в данном случае мы создаем новый вид исключения с именем <tt class="docutils literal"><span class="pre">BadExpressionError</span></tt>. Если функция, вызвавшая <tt class="docutils literal"><span class="pre">get_number</span></tt>, или другая функция в текущем стеке вызовов обрабатывает это исключение, то программа сможет продолжить работу. Иначе Python выведет сообщение об ошибке и завершится.</p>
+</div>
+<div class="section" id="id9">
+<h2>19.8. Дерево животных<a class="headerlink" href="#id9" title="Ссылка на этот заголовок">¶</a></h2>
+<p>В этом разделе мы разработаем небольшую программу, которая использует дерево для построения базы знаний.</p>
+<p>Программа, взаимодействуя с пользователем, создает дерево вопросов и названий животных. Вот пример выполнения этой программы:</p>
+<div class="highlight-python"><pre>Are you thinking of an animal? y
+Is it a bird? n
+What is the animal's name? dog
+What question would distinguish a dog from a bird? Can it fly
+If the animal were dog the answer would be? n
+
+Are you thinking of an animal? y
+Can it fly? n
+Is it a dog? n
+What is the animal's name? cat
+What question would distinguish a cat from a dog? Does it bark
+If the animal were cat the answer would be? n
+
+Are you thinking of an animal? y
+Can it fly? n
+Does it bark? y
+Is it a dog? y
+I rule!
+
+Are you thinking of an animal? n</pre>
+</div>
+<p>Вот дерево, которое строит этот диалог:</p>
+<img alt="Дерево животных" src="_images/ch19-5.png" />
+<p>Каждый опрос программа начинает с корня дерева, и задает содержащийся в нем вопрос. В зависимости от ответа, программа переходит к левому или правому дочернему узлу и задает вопрос, содержащийся в этом узле. И так далее, пока не будет достигнут конечный узел-лист. Тогда программа высказывает догадку. Если эта догадка не верна, программа просит пользователя ввести название нового животного и вопрос, который позволит отличить это животное от животного, предложенного программой. Затем к дереву добавляется новый узел с вопросом и названием животного, введенными пользователем.</p>
+<p>Вот код программы:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">yes</span><span class="p">(</span><span class="n">ques</span><span class="p">):</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="n">ques</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">ans</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;y&#39;</span>
+
+<span class="k">def</span> <span class="nf">animal</span><span class="p">():</span>
+    <span class="c"># start with a singleton</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">(</span><span class="s">&quot;bird&quot;</span><span class="p">)</span>
+
+    <span class="c"># loop until the user quits</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">print</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">yes</span><span class="p">(</span><span class="s">&quot;Are you thinking of an animal? &quot;</span><span class="p">):</span> <span class="k">break</span>
+
+        <span class="c"># walk the tree</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">root</span>
+        <span class="k">while</span> <span class="n">tree</span><span class="o">.</span><span class="n">left</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">prompt</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">cargo</span> <span class="o">+</span> <span class="s">&quot;? &quot;</span>
+            <span class="k">if</span> <span class="n">yes</span><span class="p">(</span><span class="n">prompt</span><span class="p">):</span>
+                <span class="n">tree</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">right</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">tree</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">left</span>
+
+        <span class="c"># make a guess</span>
+        <span class="n">guess</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">cargo</span>
+        <span class="n">prompt</span> <span class="o">=</span> <span class="s">&quot;Is it a &quot;</span> <span class="o">+</span> <span class="n">guess</span> <span class="o">+</span> <span class="s">&quot;? &quot;</span>
+        <span class="k">if</span> <span class="n">yes</span><span class="p">(</span><span class="n">prompt</span><span class="p">):</span>
+            <span class="k">print</span> <span class="s">&quot;I rule!&quot;</span>
+            <span class="k">continue</span>
+
+        <span class="c"># get new information</span>
+        <span class="n">prompt</span>  <span class="o">=</span> <span class="s">&quot;What is the animal&#39;s name? &quot;</span>
+        <span class="n">animal</span>  <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+        <span class="n">prompt</span>  <span class="o">=</span> <span class="s">&quot;What question would distinguish a </span><span class="si">%s</span><span class="s"> from a </span><span class="si">%s</span><span class="s">? &quot;</span>
+        <span class="n">question</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="n">prompt</span> <span class="o">%</span> <span class="p">(</span><span class="n">animal</span><span class="p">,</span> <span class="n">guess</span><span class="p">))</span>
+
+        <span class="c"># add new information to the tree</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">cargo</span> <span class="o">=</span> <span class="n">question</span>
+        <span class="n">prompt</span> <span class="o">=</span> <span class="s">&quot;If the animal were </span><span class="si">%s</span><span class="s"> the answer would be? &quot;</span>
+        <span class="k">if</span> <span class="n">yes</span><span class="p">(</span><span class="n">prompt</span> <span class="o">%</span> <span class="n">animal</span><span class="p">):</span>
+            <span class="n">tree</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">(</span><span class="n">guess</span><span class="p">)</span>
+            <span class="n">tree</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">(</span><span class="n">animal</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tree</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">(</span><span class="n">animal</span><span class="p">)</span>
+            <span class="n">tree</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">(</span><span class="n">guess</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Вспомогательная функция <tt class="docutils literal"><span class="pre">yes</span></tt> печатает приглашение и принимает ввод пользователя. Если ответ пользователя начинается с <em>y</em> или <em>Y</em>, то функция возвращает <tt class="docutils literal"><span class="pre">True</span></tt>.</p>
+<p>Условием внешнего цикла в функции <tt class="docutils literal"><span class="pre">animal</span></tt> является <tt class="docutils literal"><span class="pre">True</span></tt>. Это значит, что цикл будет продолжаться до тех пор, пока не выполнится предложение <tt class="docutils literal"><span class="pre">break</span></tt> (в случае, когда пользователь не задумал животное).</p>
+<p>Во внутреннем цикле <tt class="docutils literal"><span class="pre">while</span></tt> происходит перемещение по дереву от корня к листьям, управляемое ответами пользователя.</p>
+<p>Когда к дереву добавляется новый узел, текущий узел получает новый вопрос и два дочерних узла: один с новым животным и один с оригинальным (первоначальным) вопросом.</p>
+<p>Недостаток этой программы в том, что когда она завершается, она забывает обо всем, чему вы ее научили! Решите эту проблему в качестве упражнения.</p>
+</div>
+<div class="section" id="id10">
+<h2>19.9. Глоссарий<a class="headerlink" href="#id10" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="glossary docutils">
+<dt id="term-">бинарный оператор</dt>
+<dd>Оператор, требующий два операнда.</dd>
+<dt id="term-1">бинарное дерево</dt>
+<dd>Дерево, каждый узел которого ссылается на ноль, один или два дочерних узла.</dd>
+<dt id="term-2">дочерний узел дерева</dt>
+<dd>Узел, на который ссылается родительский узел.</dd>
+<dt id="term-3">корень дерева</dt>
+<dd>Узел дерева, не имеющий родительского.</dd>
+<dt id="term-4">лист дерева</dt>
+<dd>Узел дерева, не имеющий дочерних узлов.</dd>
+<dt id="term-5">подвыражение</dt>
+<dd>Выражение в скобках, рассматриваемое как операнд объемлющего выражения.</dd>
+<dt id="term-6">предупорядоченный обход дерева</dt>
+<dd>Способ обхода дерева, при котором каждый узел посещается перед посещением
+его дочерних узлов.</dd>
+<dt id="term-7">префиксная запись</dt>
+<dd>Способ записи математического выражения, при котором оператор предшествует операндам.</dd>
+<dt id="term-8">поступорядоченный обход дерева</dt>
+<dd>Способ обхода дерева, при котором каждый узел посещается после посещения
+его дочерних узлов.</dd>
+<dt id="term-9">родительский узел дерева</dt>
+<dd>Узел, ссылающийся на другие (дочерние) узлы.</dd>
+<dt id="term-10">сестринские узлы дерева</dt>
+<dd>Узлы, имеющие общий родительский узел.</dd>
+<dt id="term-11">симметричный обход дерева</dt>
+<dd>Способ обхода дерева, при котором для каждого узла вначале посещается левый
+дочерний узел, затем сам этот узел, затем правый дочерний узел.</dd>
+<dt id="term-12">уровень дерева</dt>
+<dd>Множество узлов, равноотстоящих от корня.</dd>
+</dl>
+</div>
+<div class="section" id="id11">
+<h2>19.10. Упражнения<a class="headerlink" href="#id11" title="Ссылка на этот заголовок">¶</a></h2>
+<ol class="arabic simple">
+<li>Измените функцию <tt class="docutils literal"><span class="pre">print_tree_inorder</span></tt> так, чтобы она ставила скобки вокруг
+каждого оператора с парой операндов. Работает ли она корректно и однозначно?
+Всегда ли необходимы скобки?</li>
+<li>Напишите лексический анализатор, то есть, функцию, которая принимает строку с
+выражением и возвращает список лексем.</li>
+<li>Найдите еще места в функциях, работающих с деревом выражения, где могут возникнуть ошибки,
+и добавьте соответствующие предложения <tt class="docutils literal"><span class="pre">raise</span></tt>. Протестируйте ваш код с некорректными
+выражениями.</li>
+<li>Придумайте различные способы сохранения дерева животных в файл. Реализуйте тот,
+который считаете самым простым.</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             >словарь</a></li>
+        <li class="right" >
+          <a href="app_a_russian.html" title="Как научить Python русскому языку"
+             >следующий</a> |</li>
+        <li class="right" >
+          <a href="ch18.html" title="18. Очереди"
+             >предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="copyright.html">Copyright</a> 2009, 2012, Джеффри Элкнер, Аллен Б. Дауни, Крис Мейерс, Андрей Трофимов.
+      При создании использован <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

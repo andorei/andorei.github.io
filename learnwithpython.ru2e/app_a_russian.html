@@ -1,0 +1,1093 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Как научить Python русскому языку &mdash; Учимся с Python</title>
+    
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2nd Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="Учимся с Python" href="index.html" />
+    <link rel="next" title="Отладка" href="app_b_debug.html" />
+    <link rel="prev" title="19. Деревья" href="ch19.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             accesskey="I">словарь</a></li>
+        <li class="right" >
+          <a href="app_b_debug.html" title="Отладка"
+             accesskey="N">следующий</a> |</li>
+        <li class="right" >
+          <a href="ch19.html" title="19. Деревья"
+             accesskey="P">предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="python">
+<span id="index-0"></span><h1>Как научить Python русскому языку<a class="headerlink" href="#python" title="Ссылка на этот заголовок">¶</a></h1>
+<p>Специфика работы в Python со строками на русском языке проистекает из того, что существует множество независимых кодировок для представления на компьютере букв, отличных от латинских. Попробуем ответить на вопросы, что такое кодировка символов, почему их так много, и как нам работать с русскими символами и строками в Python.</p>
+<p>Вы, конечно, слышали, что все данные в компьютере представлены в цифровом виде. Компьютер в принципе хранит и обрабатывает только числа.</p>
+<p>Однако человек работает с текстами, состоящими из букв, цифр, знаков пунктуации и некоторых специальных символов, например, <tt class="docutils literal"><span class="pre">&#64;</span></tt>, <tt class="docutils literal"><span class="pre">#</span></tt>, <tt class="docutils literal"><span class="pre">$</span></tt>. Посмотрите внимательно на символы, из которых состоит текст на экране компьютера. Вы видите их потому, что компьютер, для передачи данных пользователю, представляет хранящиеся в нем числовые данные в виде символов.</p>
+<p>И наоборот, для передачи данных в компьютер пользователь вводит символы с клавиатуры. Посмотрите на клавиатуру и найдите кнопки для ввода букв, цифр, знаков пунктуации и специальных символов <tt class="docutils literal"><span class="pre">%</span></tt>, <tt class="docutils literal"><span class="pre">^</span></tt> и <tt class="docutils literal"><span class="pre">&amp;</span></tt>. Введенные вами с клавиатуры символы хранятся в памяти компьютера в виде чисел. Потому что ничего, кроме чисел, в компьютере не может храниться.</p>
+<p>Поэтому каждый символ, отображаемый или принимаемый компьютером, кодируется некоторым числом. Ниже представлена таблица кодировки ASCII, которая использует числа от 0 до 127 для кодирования символов, включая латиницу (буквы латинского алфавита), цифры от 0 до 9, знаки пунктуации и специальные символы. Кроме того, коды от 0 до 31 кодируют специальные управляющие символы, такие как табуляция <tt class="docutils literal"><span class="pre">TAB</span></tt>, перевод строки <tt class="docutils literal"><span class="pre">LF</span></tt> и другие. Подробнее познакомиться с <a class="reference external" href="http://ru.wikipedia.org/wiki/ASCII">таблицей ASCII</a> можно в Википедии.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="15%" />
+<col width="10%" />
+<col width="15%" />
+<col width="10%" />
+<col width="15%" />
+<col width="10%" />
+<col width="15%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>0</td>
+<td>NULL</td>
+<td>32</td>
+<td>Space</td>
+<td>64</td>
+<td>&#64;</td>
+<td>96</td>
+<td>`</td>
+</tr>
+<tr class="row-even"><td>1</td>
+<td>SOH</td>
+<td>33</td>
+<td>!</td>
+<td>65</td>
+<td>A</td>
+<td>97</td>
+<td>a</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>STX</td>
+<td>34</td>
+<td>&#8220;</td>
+<td>66</td>
+<td>B</td>
+<td>98</td>
+<td>b</td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>ETX</td>
+<td>35</td>
+<td>#</td>
+<td>67</td>
+<td>C</td>
+<td>99</td>
+<td>c</td>
+</tr>
+<tr class="row-odd"><td>4</td>
+<td>EOT</td>
+<td>36</td>
+<td>$</td>
+<td>68</td>
+<td>D</td>
+<td>100</td>
+<td>d</td>
+</tr>
+<tr class="row-even"><td>5</td>
+<td>ENQ</td>
+<td>37</td>
+<td>%</td>
+<td>69</td>
+<td>E</td>
+<td>101</td>
+<td>e</td>
+</tr>
+<tr class="row-odd"><td>6</td>
+<td>ACK</td>
+<td>38</td>
+<td>&amp;</td>
+<td>70</td>
+<td>F</td>
+<td>102</td>
+<td>f</td>
+</tr>
+<tr class="row-even"><td>7</td>
+<td>BEL</td>
+<td>39</td>
+<td>&#8216;</td>
+<td>71</td>
+<td>G</td>
+<td>103</td>
+<td>g</td>
+</tr>
+<tr class="row-odd"><td>8</td>
+<td>BS</td>
+<td>40</td>
+<td>(</td>
+<td>72</td>
+<td>H</td>
+<td>104</td>
+<td>h</td>
+</tr>
+<tr class="row-even"><td>9</td>
+<td>TAB</td>
+<td>41</td>
+<td>)</td>
+<td>73</td>
+<td>I</td>
+<td>105</td>
+<td>i</td>
+</tr>
+<tr class="row-odd"><td>10</td>
+<td>LF</td>
+<td>42</td>
+<td>*</td>
+<td>74</td>
+<td>J</td>
+<td>106</td>
+<td>j</td>
+</tr>
+<tr class="row-even"><td>11</td>
+<td>VT</td>
+<td>43</td>
+<td>+</td>
+<td>75</td>
+<td>K</td>
+<td>107</td>
+<td>k</td>
+</tr>
+<tr class="row-odd"><td>12</td>
+<td>FF</td>
+<td>44</td>
+<td>,</td>
+<td>76</td>
+<td>L</td>
+<td>108</td>
+<td>l</td>
+</tr>
+<tr class="row-even"><td>13</td>
+<td>CR</td>
+<td>45</td>
+<td>-</td>
+<td>77</td>
+<td>M</td>
+<td>109</td>
+<td>m</td>
+</tr>
+<tr class="row-odd"><td>14</td>
+<td>SO</td>
+<td>46</td>
+<td>.</td>
+<td>78</td>
+<td>N</td>
+<td>110</td>
+<td>n</td>
+</tr>
+<tr class="row-even"><td>15</td>
+<td>SI</td>
+<td>47</td>
+<td>/</td>
+<td>79</td>
+<td>O</td>
+<td>111</td>
+<td>o</td>
+</tr>
+<tr class="row-odd"><td>16</td>
+<td>DLE</td>
+<td>48</td>
+<td>0</td>
+<td>80</td>
+<td>P</td>
+<td>112</td>
+<td>p</td>
+</tr>
+<tr class="row-even"><td>17</td>
+<td>DC1</td>
+<td>49</td>
+<td>1</td>
+<td>81</td>
+<td>Q</td>
+<td>113</td>
+<td>q</td>
+</tr>
+<tr class="row-odd"><td>18</td>
+<td>DC2</td>
+<td>50</td>
+<td>2</td>
+<td>82</td>
+<td>R</td>
+<td>114</td>
+<td>r</td>
+</tr>
+<tr class="row-even"><td>19</td>
+<td>DC3</td>
+<td>51</td>
+<td>3</td>
+<td>83</td>
+<td>S</td>
+<td>115</td>
+<td>s</td>
+</tr>
+<tr class="row-odd"><td>20</td>
+<td>DC4</td>
+<td>52</td>
+<td>4</td>
+<td>84</td>
+<td>T</td>
+<td>116</td>
+<td>t</td>
+</tr>
+<tr class="row-even"><td>21</td>
+<td>NAK</td>
+<td>53</td>
+<td>5</td>
+<td>85</td>
+<td>U</td>
+<td>117</td>
+<td>u</td>
+</tr>
+<tr class="row-odd"><td>22</td>
+<td>SYN</td>
+<td>54</td>
+<td>6</td>
+<td>86</td>
+<td>V</td>
+<td>118</td>
+<td>v</td>
+</tr>
+<tr class="row-even"><td>23</td>
+<td>ETB</td>
+<td>55</td>
+<td>7</td>
+<td>87</td>
+<td>W</td>
+<td>119</td>
+<td>w</td>
+</tr>
+<tr class="row-odd"><td>24</td>
+<td>CAN</td>
+<td>56</td>
+<td>8</td>
+<td>88</td>
+<td>X</td>
+<td>120</td>
+<td>x</td>
+</tr>
+<tr class="row-even"><td>25</td>
+<td>EM</td>
+<td>57</td>
+<td>9</td>
+<td>89</td>
+<td>Y</td>
+<td>121</td>
+<td>y</td>
+</tr>
+<tr class="row-odd"><td>26</td>
+<td>SUB</td>
+<td>58</td>
+<td>:</td>
+<td>90</td>
+<td>Z</td>
+<td>122</td>
+<td>z</td>
+</tr>
+<tr class="row-even"><td>27</td>
+<td>ESC</td>
+<td>59</td>
+<td>;</td>
+<td>91</td>
+<td>[</td>
+<td>123</td>
+<td>{</td>
+</tr>
+<tr class="row-odd"><td>28</td>
+<td>FS</td>
+<td>60</td>
+<td>&lt;</td>
+<td>92</td>
+<td></td>
+<td>124</td>
+<td>|</td>
+</tr>
+<tr class="row-even"><td>29</td>
+<td>GS</td>
+<td>61</td>
+<td>=</td>
+<td>93</td>
+<td>]</td>
+<td>125</td>
+<td>}</td>
+</tr>
+<tr class="row-odd"><td>30</td>
+<td>RS</td>
+<td>62</td>
+<td>&gt;</td>
+<td>94</td>
+<td>^</td>
+<td>126</td>
+<td>~</td>
+</tr>
+<tr class="row-even"><td>31</td>
+<td>US</td>
+<td>63</td>
+<td>?</td>
+<td>95</td>
+<td>_</td>
+<td>127</td>
+<td>DEL</td>
+</tr>
+</tbody>
+</table>
+<p>Все современные компьютеры и программы понимают и широко используют кодировку ASCII. Вот почему латиница является самым распространенным алфавитом на компьютерах, а англоязычные пользователи компьютеров, по большей части, лишены необходимости задумываться о кодировках символов и переключать раскладку клавиатуры.</p>
+<p>Закодируем, используя приведенную выше таблицу кодов ASCII, слово &#8220;Hello&#8221;. Мы получим следующую последовательностью числовых кодов: 72, 101, 108, 108, 111. Проверить (и узнать) соответствие букв и кодов можно при помощи встроенных функций Python <tt class="docutils literal"><span class="pre">chr</span></tt> и <tt class="docutils literal"><span class="pre">ord</span></tt>. Функция <tt class="docutils literal"><span class="pre">chr</span></tt> принимает в качестве аргумента целочисленный код и возвращает соответствующий ему символ. Функция <tt class="docutils literal"><span class="pre">ord</span></tt>, наоборот, принимает символ и возвращает кодирующее его целое число:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">ord</span><span class="p">(</span><span class="s">&#39;H&#39;</span><span class="p">)</span>
+<span class="go">72</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">ord</span><span class="p">(</span><span class="s">&#39;e&#39;</span><span class="p">)</span>
+<span class="go">101</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">chr</span><span class="p">(</span><span class="mi">101</span><span class="p">)</span>
+<span class="go">&#39;e&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="mi">101</span><span class="p">))</span>
+<span class="go">&lt;type &#39;str&#39;&gt;</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Посмотрите еще раз на таблицу ASCII. Как видите, в ней нет букв русского алфавита. А также в ней греческих, арабских, японских и других букв и иероглифов, использующихся в разных языках Земли. Для кодирования букв и других символов, отсутствующих в таблице ASCII, используются числа больше 128. На следующем рисунке представлена кодировка cp866, использующая числа от 128 до 255 для кодирования символов кириллицы  (букв русского алфавита) и специальных графических символов.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="15%" />
+<col width="10%" />
+<col width="15%" />
+<col width="10%" />
+<col width="13%" />
+<col width="13%" />
+<col width="13%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>128</td>
+<td>А</td>
+<td>160</td>
+<td>а</td>
+<td>192</td>
+<td>└</td>
+<td>224</td>
+<td>р</td>
+</tr>
+<tr class="row-even"><td>129</td>
+<td>Б</td>
+<td>161</td>
+<td>б</td>
+<td>193</td>
+<td>┴</td>
+<td>225</td>
+<td>с</td>
+</tr>
+<tr class="row-odd"><td>130</td>
+<td>В</td>
+<td>162</td>
+<td>в</td>
+<td>194</td>
+<td>┬</td>
+<td>226</td>
+<td>т</td>
+</tr>
+<tr class="row-even"><td>131</td>
+<td>Г</td>
+<td>163</td>
+<td>г</td>
+<td>195</td>
+<td>├</td>
+<td>227</td>
+<td>у</td>
+</tr>
+<tr class="row-odd"><td>132</td>
+<td>Д</td>
+<td>164</td>
+<td>д</td>
+<td>196</td>
+<td>─</td>
+<td>228</td>
+<td>ф</td>
+</tr>
+<tr class="row-even"><td>133</td>
+<td>Е</td>
+<td>165</td>
+<td>е</td>
+<td>197</td>
+<td>┼</td>
+<td>229</td>
+<td>х</td>
+</tr>
+<tr class="row-odd"><td>134</td>
+<td>Ж</td>
+<td>166</td>
+<td>ж</td>
+<td>198</td>
+<td>╞</td>
+<td>230</td>
+<td>ц</td>
+</tr>
+<tr class="row-even"><td>135</td>
+<td>З</td>
+<td>167</td>
+<td>з</td>
+<td>199</td>
+<td>╟</td>
+<td>231</td>
+<td>ч</td>
+</tr>
+<tr class="row-odd"><td>136</td>
+<td>И</td>
+<td>168</td>
+<td>и</td>
+<td>200</td>
+<td>╚</td>
+<td>232</td>
+<td>ш</td>
+</tr>
+<tr class="row-even"><td>137</td>
+<td>Й</td>
+<td>169</td>
+<td>й</td>
+<td>201</td>
+<td>╔</td>
+<td>233</td>
+<td>щ</td>
+</tr>
+<tr class="row-odd"><td>138</td>
+<td>К</td>
+<td>170</td>
+<td>к</td>
+<td>202</td>
+<td>╩</td>
+<td>234</td>
+<td>ъ</td>
+</tr>
+<tr class="row-even"><td>139</td>
+<td>Л</td>
+<td>171</td>
+<td>л</td>
+<td>203</td>
+<td>╦</td>
+<td>235</td>
+<td>ы</td>
+</tr>
+<tr class="row-odd"><td>140</td>
+<td>М</td>
+<td>172</td>
+<td>м</td>
+<td>204</td>
+<td>╠</td>
+<td>236</td>
+<td>ь</td>
+</tr>
+<tr class="row-even"><td>141</td>
+<td>Н</td>
+<td>173</td>
+<td>н</td>
+<td>205</td>
+<td>═</td>
+<td>237</td>
+<td>э</td>
+</tr>
+<tr class="row-odd"><td>142</td>
+<td>О</td>
+<td>174</td>
+<td>о</td>
+<td>206</td>
+<td>╬</td>
+<td>238</td>
+<td>ю</td>
+</tr>
+<tr class="row-even"><td>143</td>
+<td>П</td>
+<td>175</td>
+<td>п</td>
+<td>207</td>
+<td>╧</td>
+<td>239</td>
+<td>я</td>
+</tr>
+<tr class="row-odd"><td>144</td>
+<td>Р</td>
+<td>176</td>
+<td>░</td>
+<td>208</td>
+<td>╨</td>
+<td>240</td>
+<td>Ё</td>
+</tr>
+<tr class="row-even"><td>145</td>
+<td>С</td>
+<td>177</td>
+<td>▒</td>
+<td>209</td>
+<td>╤</td>
+<td>241</td>
+<td>ё</td>
+</tr>
+<tr class="row-odd"><td>146</td>
+<td>Т</td>
+<td>178</td>
+<td>▓</td>
+<td>210</td>
+<td>╥</td>
+<td>242</td>
+<td>Є</td>
+</tr>
+<tr class="row-even"><td>147</td>
+<td>У</td>
+<td>179</td>
+<td>│</td>
+<td>211</td>
+<td>╙</td>
+<td>243</td>
+<td>є</td>
+</tr>
+<tr class="row-odd"><td>148</td>
+<td>Ф</td>
+<td>180</td>
+<td>┤</td>
+<td>212</td>
+<td>╘</td>
+<td>244</td>
+<td>Ї</td>
+</tr>
+<tr class="row-even"><td>149</td>
+<td>Х</td>
+<td>181</td>
+<td>╡</td>
+<td>213</td>
+<td>╒</td>
+<td>245</td>
+<td>ї</td>
+</tr>
+<tr class="row-odd"><td>150</td>
+<td>Ц</td>
+<td>182</td>
+<td>╢</td>
+<td>214</td>
+<td>╓</td>
+<td>246</td>
+<td>Ў</td>
+</tr>
+<tr class="row-even"><td>151</td>
+<td>Ч</td>
+<td>183</td>
+<td>╖</td>
+<td>215</td>
+<td>╫</td>
+<td>247</td>
+<td>ў</td>
+</tr>
+<tr class="row-odd"><td>152</td>
+<td>Ш</td>
+<td>184</td>
+<td>╕</td>
+<td>216</td>
+<td>╪</td>
+<td>248</td>
+<td>°</td>
+</tr>
+<tr class="row-even"><td>153</td>
+<td>Щ</td>
+<td>185</td>
+<td>╣</td>
+<td>217</td>
+<td>┘</td>
+<td>249</td>
+<td>∙</td>
+</tr>
+<tr class="row-odd"><td>154</td>
+<td>Ъ</td>
+<td>186</td>
+<td>║</td>
+<td>218</td>
+<td>┌</td>
+<td>250</td>
+<td>·</td>
+</tr>
+<tr class="row-even"><td>155</td>
+<td>Ы</td>
+<td>187</td>
+<td>╗</td>
+<td>219</td>
+<td>█</td>
+<td>251</td>
+<td>√</td>
+</tr>
+<tr class="row-odd"><td>156</td>
+<td>Ь</td>
+<td>188</td>
+<td>╝</td>
+<td>220</td>
+<td>▄</td>
+<td>252</td>
+<td>№</td>
+</tr>
+<tr class="row-even"><td>157</td>
+<td>Э</td>
+<td>189</td>
+<td>╜</td>
+<td>221</td>
+<td>▌</td>
+<td>253</td>
+<td>¤</td>
+</tr>
+<tr class="row-odd"><td>158</td>
+<td>Ю</td>
+<td>190</td>
+<td>╛</td>
+<td>222</td>
+<td>▐</td>
+<td>254</td>
+<td>■</td>
+</tr>
+<tr class="row-even"><td>159</td>
+<td>Я</td>
+<td>191</td>
+<td>┐</td>
+<td>223</td>
+<td>▀</td>
+<td>255</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p>Кодировка cp866 использовалась в операционной системе MS DOS и теперь по умолчанию используется в консоли MS Windows. Буквы cp в названии этой и других кодировок &#8212; сокращение от code page (англ.: кодовая страница).</p>
+<p>Случилось так, что числа от 128 до 255 стали использоваться в разных странах для кодирования букв алфавитов разных языков, а не только русского. Но даже если вести речь только о кириллице, то, кроме кодировки cp866, существуют несколько других кодировок, которые иначе сопоставляют буквы кириллицы кодам в диапазоне от 128 до 255. В качестве примера еще одной кириллической кодировки ниже приведена таблица кодов cp1251, используемая графическими приложениями в ОС MS Windows, такими как Блокнот, MS Office и другими.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="15%" />
+<col width="10%" />
+<col width="15%" />
+<col width="10%" />
+<col width="13%" />
+<col width="13%" />
+<col width="13%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>128</td>
+<td>Ђ</td>
+<td>160</td>
+<td>&nbsp;</td>
+<td>192</td>
+<td>А</td>
+<td>224</td>
+<td>а</td>
+</tr>
+<tr class="row-even"><td>129</td>
+<td>Ѓ</td>
+<td>161</td>
+<td>Ў</td>
+<td>193</td>
+<td>Б</td>
+<td>225</td>
+<td>б</td>
+</tr>
+<tr class="row-odd"><td>130</td>
+<td>‚</td>
+<td>162</td>
+<td>ў</td>
+<td>194</td>
+<td>В</td>
+<td>226</td>
+<td>в</td>
+</tr>
+<tr class="row-even"><td>131</td>
+<td>ѓ</td>
+<td>163</td>
+<td>Ј</td>
+<td>195</td>
+<td>Г</td>
+<td>227</td>
+<td>г</td>
+</tr>
+<tr class="row-odd"><td>132</td>
+<td>„</td>
+<td>164</td>
+<td>¤</td>
+<td>196</td>
+<td>Д</td>
+<td>228</td>
+<td>д</td>
+</tr>
+<tr class="row-even"><td>133</td>
+<td>…</td>
+<td>165</td>
+<td>Ґ</td>
+<td>197</td>
+<td>Е</td>
+<td>229</td>
+<td>е</td>
+</tr>
+<tr class="row-odd"><td>134</td>
+<td>†</td>
+<td>166</td>
+<td>¦</td>
+<td>198</td>
+<td>Ж</td>
+<td>230</td>
+<td>ж</td>
+</tr>
+<tr class="row-even"><td>135</td>
+<td>‡</td>
+<td>167</td>
+<td>§</td>
+<td>199</td>
+<td>З</td>
+<td>231</td>
+<td>з</td>
+</tr>
+<tr class="row-odd"><td>136</td>
+<td>€</td>
+<td>168</td>
+<td>Ё</td>
+<td>200</td>
+<td>И</td>
+<td>232</td>
+<td>и</td>
+</tr>
+<tr class="row-even"><td>137</td>
+<td>‰</td>
+<td>169</td>
+<td>©</td>
+<td>201</td>
+<td>Й</td>
+<td>233</td>
+<td>й</td>
+</tr>
+<tr class="row-odd"><td>138</td>
+<td>Љ</td>
+<td>170</td>
+<td>Є</td>
+<td>202</td>
+<td>К</td>
+<td>234</td>
+<td>к</td>
+</tr>
+<tr class="row-even"><td>139</td>
+<td>‹</td>
+<td>171</td>
+<td>«</td>
+<td>203</td>
+<td>Л</td>
+<td>235</td>
+<td>л</td>
+</tr>
+<tr class="row-odd"><td>140</td>
+<td>Њ</td>
+<td>172</td>
+<td>¬</td>
+<td>204</td>
+<td>М</td>
+<td>236</td>
+<td>м</td>
+</tr>
+<tr class="row-even"><td>141</td>
+<td>Ќ</td>
+<td>173</td>
+<td>­</td>
+<td>205</td>
+<td>Н</td>
+<td>237</td>
+<td>н</td>
+</tr>
+<tr class="row-odd"><td>142</td>
+<td>Ћ</td>
+<td>174</td>
+<td>®</td>
+<td>206</td>
+<td>О</td>
+<td>238</td>
+<td>о</td>
+</tr>
+<tr class="row-even"><td>143</td>
+<td>Џ</td>
+<td>175</td>
+<td>Ї</td>
+<td>207</td>
+<td>П</td>
+<td>239</td>
+<td>п</td>
+</tr>
+<tr class="row-odd"><td>144</td>
+<td>ђ</td>
+<td>176</td>
+<td>°</td>
+<td>208</td>
+<td>Р</td>
+<td>240</td>
+<td>р</td>
+</tr>
+<tr class="row-even"><td>145</td>
+<td>‘</td>
+<td>177</td>
+<td>±</td>
+<td>209</td>
+<td>С</td>
+<td>241</td>
+<td>с</td>
+</tr>
+<tr class="row-odd"><td>146</td>
+<td>’</td>
+<td>178</td>
+<td>І</td>
+<td>210</td>
+<td>Т</td>
+<td>242</td>
+<td>т</td>
+</tr>
+<tr class="row-even"><td>147</td>
+<td>“</td>
+<td>179</td>
+<td>і</td>
+<td>211</td>
+<td>У</td>
+<td>243</td>
+<td>у</td>
+</tr>
+<tr class="row-odd"><td>148</td>
+<td>”</td>
+<td>180</td>
+<td>ґ</td>
+<td>212</td>
+<td>Ф</td>
+<td>244</td>
+<td>ф</td>
+</tr>
+<tr class="row-even"><td>149</td>
+<td>•</td>
+<td>181</td>
+<td>µ</td>
+<td>213</td>
+<td>Х</td>
+<td>245</td>
+<td>х</td>
+</tr>
+<tr class="row-odd"><td>150</td>
+<td>–</td>
+<td>182</td>
+<td>¶</td>
+<td>214</td>
+<td>Ц</td>
+<td>246</td>
+<td>ц</td>
+</tr>
+<tr class="row-even"><td>151</td>
+<td>—</td>
+<td>183</td>
+<td>·</td>
+<td>215</td>
+<td>Ч</td>
+<td>247</td>
+<td>ч</td>
+</tr>
+<tr class="row-odd"><td>152</td>
+<td></td>
+<td>184</td>
+<td>ё</td>
+<td>216</td>
+<td>Ш</td>
+<td>248</td>
+<td>ш</td>
+</tr>
+<tr class="row-even"><td>153</td>
+<td>™</td>
+<td>185</td>
+<td>№</td>
+<td>217</td>
+<td>Щ</td>
+<td>249</td>
+<td>щ</td>
+</tr>
+<tr class="row-odd"><td>154</td>
+<td>љ</td>
+<td>186</td>
+<td>є</td>
+<td>218</td>
+<td>Ъ</td>
+<td>250</td>
+<td>ъ</td>
+</tr>
+<tr class="row-even"><td>155</td>
+<td>›</td>
+<td>187</td>
+<td>»</td>
+<td>219</td>
+<td>Ы</td>
+<td>251</td>
+<td>ы</td>
+</tr>
+<tr class="row-odd"><td>156</td>
+<td>њ</td>
+<td>188</td>
+<td>ј</td>
+<td>220</td>
+<td>Ь</td>
+<td>252</td>
+<td>ь</td>
+</tr>
+<tr class="row-even"><td>157</td>
+<td>ќ</td>
+<td>189</td>
+<td>Ѕ</td>
+<td>221</td>
+<td>Э</td>
+<td>253</td>
+<td>э</td>
+</tr>
+<tr class="row-odd"><td>158</td>
+<td>ћ</td>
+<td>190</td>
+<td>ѕ</td>
+<td>222</td>
+<td>Ю</td>
+<td>254</td>
+<td>ю</td>
+</tr>
+<tr class="row-even"><td>159</td>
+<td>џ</td>
+<td>191</td>
+<td>ї</td>
+<td>223</td>
+<td>Я</td>
+<td>255</td>
+<td>я</td>
+</tr>
+</tbody>
+</table>
+<p>Из сказанного можно сделать вывод о том, что <strong>для правильного отображения символов на экране компьютеру необходимо знать, в какой кодировке представлены данные, которые нужно отобразить</strong>. Например, пускай нам дана следующая последовательность кодов: 232, 227, 226. Если принять, что это символы, представленные в кодировке cp866, то мы получим слово &#8220;шут&#8221;. А если принять, что это символы, представленные в кодировке cp1251, то мы получим слово &#8220;игв&#8221;. А в греческой кодировке cp1253 эти же коды дадут нам &#8220;θγβ&#8221;! На сегодняшний день существуют десятки кодировок, сопоставляющих числовые коды от 128 до 255 различным символам!</p>
+<p>Если вы запускаете интерпретатор Python в консоли русскоязычной Windows, то Python ожидает, что строки используют кодировку cp866. Давайте проведем небольшое исследование для того, чтобы подтвердить или опровергнуть это утверждение. Воспользуемся функцией <tt class="docutils literal"><span class="pre">ord</span></tt> для получения числовых кодов нескольких русских букв, введенных с клавиатуры, и таблицей кодов cp866, приведенной выше, чтобы убедиться, что функция <tt class="docutils literal"><span class="pre">ord</span></tt> вернула нам коды букв в кодировке cp866:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="nb">ord</span><span class="p">(</span><span class="s">&#39;э&#39;</span><span class="p">),</span> <span class="nb">ord</span><span class="p">(</span><span class="s">&#39;ю&#39;</span><span class="p">),</span> <span class="nb">ord</span><span class="p">(</span><span class="s">&#39;я&#39;</span><span class="p">)</span>
+<span class="go">237 238 239</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>А функция <tt class="docutils literal"><span class="pre">chr</span></tt> выведет буквы русского алфавита, соответствующие кодам, взятым нами из таблицы cp866:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">128</span><span class="p">),</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">129</span><span class="p">),</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">130</span><span class="p">)</span>
+<span class="go">А Б В</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Итак, русские буквы, которые мы вводим с клавиатуры при работе в интерактивном режиме Python, представлены в кодировке cp866. Работая в интерактивном режиме Python, мы можем смело использовать русские буквы в строковых значениях:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;мир&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&#39;Привет&#39;</span><span class="p">,</span> <span class="n">name</span>
+<span class="go">Привет мир</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Таким образом, все примеры работы в интерактивном режиме, приведенные в книге, можно безболезненно русифицировать, заменяя английские слова и предложения на русские.</p>
+<p>Однако, для русификации скриптов Python, сохраненных в файлах, нам осталось сделать еще один шаг. Нам нужно ответить на вопрос, в какой кодировке сохранен наш скрипт в файле? Это зависит от текстового редактора, в котором был написан и сохранен скрипт, и от того, была ли явно указана кодировка при сохранении файла.</p>
+<p>Как было сказано выше, Блокнот, или Notepad, простой текстовый редактор, имеющийся в ОС Windows, использует кириллическую кодировку cp1251, а консоль Windows, или окно для работы с командной строкой, по умолчанию использует кириллическую кодировку cp866. Это очень неудобно для русскоязычных пользователей.</p>
+<p>Например, создайте в Блокноте файл C:\russian.txt с единственной строкой:</p>
+<div class="highlight-python"><pre>Привет мир!</pre>
+</div>
+<p>А теперь откройте окно с командной строкой и выведите содержимое этого файла на экран:</p>
+<div class="highlight-python"><pre>C:\&gt;type russian.txt
+╧ЁштхЄ ьшЁ!</pre>
+</div>
+<p>Что это за кракозябры?</p>
+<p>Если вы отыщете эти символы, один за одним, в приведенной выше таблице кодов cp866, то получится последовательность кодов: 207, 240, 232, 226, 229, 242, 32, 252, 248, 240, 33. (Пробел и восклицательный знак имеют коды из диапазона 0 - 127 и кодируются таблицей ASCII.) Теперь переведите эти коды в символы, используя таблицу кодировки cp1251, и вы получите &#8220;Привет мир!&#8221; Кракозябры в консольном окне мы видим потому, что Блокнот сохранил файл в кодировке cp1251, а консольное окно считает, что коды от 128 до 255 представляют символы из кодировки cp866!</p>
+<p>Преодолеть эту проблему можно с помощью консольной команды <tt class="docutils literal"><span class="pre">chcp</span></tt>. Команда <tt class="docutils literal"><span class="pre">chcp</span></tt> без параметров показывает, какая кодировка является текущей:</p>
+<div class="highlight-python"><pre>C:\&gt;chcp
+Active code page: 866</pre>
+</div>
+<p>А в качестве параметра команда <tt class="docutils literal"><span class="pre">chcp</span></tt> принимает номер кодировки, которую необходимо сделать текущей.  Если с ее помощью изменить текущую кодировку консольного окна на cp1251, то мы, наконец, сможем увидеть содержимое файла russian.txt неискаженным:</p>
+<div class="highlight-python"><pre>C:\&gt;chcp 1251
+Active code page: 1251
+
+C:\&gt;type russian.txt
+Привет мир!</pre>
+</div>
+<p>Скрипт на Python является текстовым файлом точно так же, как файл russian.txt, с которым мы экспериментировали. И если создать и сохранить скрипт, использующий русские буквы, в Блокноте, то скрипт будет сохранен в кодировке cp1251. Давайте откроем в Блокноте файл russian.txt и сохраним его как russian.py, слегка изменив его содержимое:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="s">&#39;Привет мир!&#39;</span>
+</pre></div>
+</div>
+<p>Теперь это файл с очень простым скриптом на языке Python. Выполним его:</p>
+<div class="highlight-python"><pre>C:\&gt;python russian.py
+  File "russian.py", line 1
+SyntaxError: Non-ASCII character '\xcf' in file russian.py on line 1, but no encoding declared; see http://www.python.org/peps/pep-0263.html for details</pre>
+</div>
+<p>Вместо ожидаемого приветствия на русском языке Python вывел сообщение об ошибке. Сообщение говорит о том, что в 1-ой строке файла встретился символ, не являющийся символом ASCII, а кодировка не объявлена. Очевидно, что символы, не являющиеся символами ASCII, в нашем файле &#8212; это русские буквы. Но что же в этом плохого?</p>
+<p>Дело в том, что <strong>Python по умолчанию ожидает, что скрипты, переданные ему для выполнения, имеют кодировку ASCII, то есть, содержат символы с кодами в диапазоне 0 - 127</strong>. Для всех, кто использует в своих скриптах только латиницу, цифры и другие символы ASCII, это работает прекрасно. Пользователи, использующие в своих программах строковые значения и комментарии на английском языке, чувствуют себя совершенно комфортно в этой ситуации и, по большей части, не подозревают о проблеме, с которой мы только что столкнулись.</p>
+<p>Чтобы сообщить Python о том, что скрипт использует кодировку, отличную от ASCII, нужно в начале файла поместить комментарий специального вида, содержащий информацию о кодировке файла. Для скрипта russian.py, созданного в Блокноте, укажем кодировку cp1251, после чего скрипт будет выглядеть так:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># -*- coding: cp1251 -*-</span>
+
+<span class="k">print</span> <span class="s">&#39;Привет мир!&#39;</span>
+</pre></div>
+</div>
+<p>После этого сможем успешно выполнить скрипт в консольном окне Windows (только не забудьте установить текущую кодировку командой <tt class="docutils literal"><span class="pre">chcp</span> <span class="pre">1251</span></tt>):</p>
+<div class="highlight-python"><pre>C:\&gt;chcp 1251
+Active code page: 1251
+
+C:\&gt;python russian.py
+Привет мир!</pre>
+</div>
+<p>Итак, для того, чтобы скрипт Python заговорил по-русски в консольном окне Windows, необходимо:</p>
+<ol class="arabic">
+<li><p class="first">Указать в начале скрипта кодировку, которую использует файл. Например:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># -*- coding: cp1251 -*-</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Установить в консольном окне Windows кодировку, которую использует выполняемый скрипт. Например:</p>
+<div class="highlight-python"><pre>C:\&gt; chcp 1251
+Active code page: 1251</pre>
+</div>
+</li>
+</ol>
+<p>В общем случае, скрипт с русскими строками и комментариями может использовать любую из кириллических кодировок, в частности, любую из рассмотренных выше, cp1251 или cp866. Важно, чтобы объявленная в начале файла кодировка была та самая, в которой сохранен файл.</p>
+<p>Если скрипт использует кодировку cp866, то в консольном окне русскоязычной Windows не нужно предпринимать никаких специальных действий перед выполнением скрипта, ведь cp866 &#8212; кодировка, установленная в консоли по умолчанию. Но если скрипт использует кодировку cp1251, то перед его выполнением в консоли нужно установить текущую кодировку командой <tt class="docutils literal"><span class="pre">chcp</span> <span class="pre">1251</span></tt>.</p>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             >словарь</a></li>
+        <li class="right" >
+          <a href="app_b_debug.html" title="Отладка"
+             >следующий</a> |</li>
+        <li class="right" >
+          <a href="ch19.html" title="19. Деревья"
+             >предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="copyright.html">Copyright</a> 2009, 2012, Джеффри Элкнер, Аллен Б. Дауни, Крис Мейерс, Андрей Трофимов.
+      При создании использован <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

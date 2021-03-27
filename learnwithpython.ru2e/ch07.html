@@ -1,0 +1,698 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>7. Строки &mdash; Учимся с Python</title>
+    
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2nd Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="Учимся с Python" href="index.html" />
+    <link rel="next" title="8. Списки" href="ch08.html" />
+    <link rel="prev" title="6. Итерации" href="ch06.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             accesskey="I">словарь</a></li>
+        <li class="right" >
+          <a href="ch08.html" title="8. Списки"
+             accesskey="N">следующий</a> |</li>
+        <li class="right" >
+          <a href="ch06.html" title="6. Итерации"
+             accesskey="P">предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>7. Строки<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
+<span class="target" id="index-0"></span><div class="section" id="index-1">
+<span id="id2"></span><h2>7.1. Составной тип данных<a class="headerlink" href="#index-1" title="Ссылка на этот заголовок">¶</a></h2>
+<p>К этому момент мы уже встречали пять типов данных: <tt class="docutils literal"><span class="pre">int</span></tt>, <tt class="docutils literal"><span class="pre">float</span></tt>, <tt class="docutils literal"><span class="pre">bool</span></tt>, <tt class="docutils literal"><span class="pre">NoneType</span></tt> и <tt class="docutils literal"><span class="pre">str</span></tt>. Тип str &#8212; строка &#8212; качественно отличается от четырех других тем, что состоит из меньших элементов &#8212; символов.</p>
+<p>Типы, включающие меньшие элементы, называются <strong>составными типами данных</strong>. В разных ситуациях можно либо обращаться с составным типом данных как с чем-то цельным, либо работать с его отдельными частями. Эта двоякость полезна.</p>
+<p>Оператор <tt class="docutils literal"><span class="pre">[]</span></tt> выбирает единственный символ из строки:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fruit</span> <span class="o">=</span> <span class="s">&quot;banana&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">letter</span> <span class="o">=</span> <span class="n">fruit</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">letter</span>
+</pre></div>
+</div>
+<p>Выражение <tt class="docutils literal"><span class="pre">fruit[1]</span></tt> выбирает символ номер 1 из строки <tt class="docutils literal"><span class="pre">fruit</span></tt>. Результат присваивается переменной <tt class="docutils literal"><span class="pre">letter</span></tt>. Отобразив <tt class="docutils literal"><span class="pre">letter</span></tt>, вы, вероятно, удивитесь:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">a</span>
+</pre></div>
+</div>
+<p>Ведь первая буква в строке <tt class="docutils literal"><span class="pre">&quot;banana&quot;</span></tt> не <tt class="docutils literal"><span class="pre">a</span></tt>! Но программисты часто ведут счет, начиная с 0. Буква номер 0 в строке <tt class="docutils literal"><span class="pre">&quot;banana&quot;</span></tt> &#8212; буква <tt class="docutils literal"><span class="pre">b</span></tt>. Буква номер 1 &#8212; <tt class="docutils literal"><span class="pre">a</span></tt>, номер 2 &#8212; <tt class="docutils literal"><span class="pre">n</span></tt>, и так далее.</p>
+<p>Если вам нужна буква номер 0, просто поместите 0, или любое выражение, дающее 0, в квадратные скобки:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">letter</span> <span class="o">=</span> <span class="n">fruit</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">letter</span>
+<span class="go">b</span>
+</pre></div>
+</div>
+<p>Выражение в скобках называется <strong>индекс</strong>. Индекс указывает на элемент упорядоченного набора, в данном случае, набора символов строки. Индекс может быть произвольным целочисленным выражением.</p>
+</div>
+<div class="section" id="index-2">
+<span id="id3"></span><h2>7.2. Длина<a class="headerlink" href="#index-2" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Функция <tt class="docutils literal"><span class="pre">len</span></tt> (англ.: длина) возвращает количество символов в строке:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fruit</span> <span class="o">=</span> <span class="s">&quot;banana&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">fruit</span><span class="p">)</span>
+<span class="go">6</span>
+</pre></div>
+</div>
+<p>Возможно, для получения последнего символа в строке вы захотите сделать так:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fruit</span><span class="p">)</span>
+<span class="n">last</span> <span class="o">=</span> <span class="n">fruit</span><span class="p">[</span><span class="n">length</span><span class="p">]</span>       <span class="c"># Ошибка!</span>
+</pre></div>
+</div>
+<p>Это не работает! Вы получите ошибку выполнения <tt class="docutils literal"><span class="pre">IndexError:</span> <span class="pre">string</span> <span class="pre">index</span> <span class="pre">out</span> <span class="pre">of</span> <span class="pre">range</span></tt>. Причина в том, что в строке <tt class="docutils literal"><span class="pre">&quot;banana&quot;</span></tt> нет символа с индексом 6. Так как мы начинаем счет с 0, шесть символов пронумерованы от 0 до 5. Для того, чтобы получить последний символ, нужно из <tt class="docutils literal"><span class="pre">length</span></tt> вычесть 1:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fruit</span><span class="p">)</span>
+<span class="n">last</span> <span class="o">=</span> <span class="n">fruit</span><span class="p">[</span><span class="n">length</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Кроме того, можно использовать отрицательные индексы, которые позволяют вести счет от конца строки. Выражение <tt class="docutils literal"><span class="pre">fruit[-1]</span></tt> дает последний символ строки, <tt class="docutils literal"><span class="pre">fruit[-2]</span></tt> дает второй символ от конца строки, и так далее.</p>
+</div>
+<div class="section" id="for">
+<span id="index-3"></span><h2>7.3. Обход и цикл <tt class="docutils literal"><span class="pre">for</span></tt><a class="headerlink" href="#for" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Часто программе требуется обрабатывать строку по одному символу за раз. Начав с начала строки, программа выбирает очередной символ и что-то с ним делает, и так до тех пор, пока строка не закончится. Такой прием обработки называется <strong>обходом</strong>. Вот как можно запрограммировать обход с помощью предложения <tt class="docutils literal"><span class="pre">while</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">fruit</span><span class="p">):</span>
+    <span class="n">letter</span> <span class="o">=</span> <span class="n">fruit</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+    <span class="k">print</span> <span class="n">letter</span>
+    <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>Этот цикл обходит строку и выводит каждую букву в отдельной строке. Условие цикла здесь <tt class="docutils literal"><span class="pre">index</span> <span class="pre">&lt;</span> <span class="pre">len(fruit)</span></tt>, так что, когда <tt class="docutils literal"><span class="pre">index</span></tt> становится равным длине строки, условие становится ложным и тело цикла больше не выполняется. Последний обработанный символ имеет индекс <tt class="docutils literal"><span class="pre">len(fruit)-1</span></tt>, и является последним символом в строке.</p>
+<p>Обход элементов последовательности настолько часто используется, что Python предлагает для этого другой, более простой синтаксис &#8212; цикл <tt class="docutils literal"><span class="pre">for</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">fruit</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">char</span>
+</pre></div>
+</div>
+<p>В каждой итерации переменной <tt class="docutils literal"><span class="pre">char</span></tt> присваивается очередной символ строки. Цикл продолжается до тех пор, пока строка не закончится.</p>
+<p>Следующий пример показывает, как с помощью конкатенации и цикла <tt class="docutils literal"><span class="pre">for</span></tt> сгенерировать последовательность в алфавитном порядке. Например, Роберт МакКлоски в своей книге дал такие имена утятам: Jack, Kack, Lack, Mack, Nack, Ouack, Pack и Quack. Следующий цикл выводит имена утят в алфавитном порядке:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">prefixes</span> <span class="o">=</span> <span class="s">&quot;JKLMNOPQ&quot;</span>
+<span class="n">suffix</span> <span class="o">=</span> <span class="s">&quot;ack&quot;</span>
+
+<span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">prefixes</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">letter</span> <span class="o">+</span> <span class="n">suffix</span>
+</pre></div>
+</div>
+<p>Эта программа выводит:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Jack</span>
+<span class="n">Kack</span>
+<span class="n">Lack</span>
+<span class="n">Mack</span>
+<span class="n">Nack</span>
+<span class="n">Oack</span>
+<span class="n">Pack</span>
+<span class="n">Qack</span>
+</pre></div>
+</div>
+<p>Конечно, это не совсем то, что нужно, поскольку Ouack и Quack написаны неправильно. Вам предстоит исправить это в одном из упражнений к этой главе.</p>
+</div>
+<div class="section" id="index-4">
+<span id="id4"></span><h2>7.4. Срезы строк<a class="headerlink" href="#index-4" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Подстроку строки будем называть <strong>срезом</strong>. Получение среза строки похоже на получение одного символа:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="s">&quot;Peter, Paul, and Mary&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span>
+<span class="go">Peter</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">s</span><span class="p">[</span><span class="mi">7</span><span class="p">:</span><span class="mi">11</span><span class="p">]</span>
+<span class="go">Paul</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">s</span><span class="p">[</span><span class="mi">17</span><span class="p">:</span><span class="mi">21</span><span class="p">]</span>
+<span class="go">Mary</span>
+</pre></div>
+</div>
+<p>Оператор <tt class="docutils literal"><span class="pre">[n:m]</span></tt> возвращает часть строки, начиная с символа с индексом <tt class="docutils literal"><span class="pre">n</span></tt> по символ с индексом <tt class="docutils literal"><span class="pre">m</span></tt>, включая первый, но исключая последний. Это поведение может показаться странным на первый взгляд; но представьте, что индексы указывают на места <em>между</em> символами, как на следующей диаграмме:</p>
+<img alt="Строка 'banana'" src="_images/ch7-1.png" />
+<p>Если в операторе среза опустить первый индекс (перед двоеточием), то началом среза будет начало строки (индекс 0). Если опустить второй индекс, то срез включит все символы до конца строки. Таким образом:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fruit</span> <span class="o">=</span> <span class="s">&quot;banana&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fruit</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+<span class="go">&#39;ban&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fruit</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span>
+<span class="go">&#39;ana&#39;</span>
+</pre></div>
+</div>
+<p>А как вы думаете, что дает срез <tt class="docutils literal"><span class="pre">s[:]</span></tt>?</p>
+</div>
+<div class="section" id="index-5">
+<span id="id5"></span><h2>7.5. Сравнение строк<a class="headerlink" href="#index-5" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Операторы сравнения работают со строками. Вот как можно узнать, равны ли две строки:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">word</span> <span class="o">==</span> <span class="s">&quot;banana&quot;</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;Yes, we have no bananas!&quot;</span>
+</pre></div>
+</div>
+<p>С помощью других операторов сравнения можно располагать слова в алфавитном порядке:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">word</span> <span class="o">&lt;</span> <span class="s">&quot;banana&quot;</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;Your word, &quot;</span> <span class="o">+</span> <span class="n">word</span> <span class="o">+</span> <span class="s">&quot;, comes before banana.&quot;</span>
+<span class="k">elif</span> <span class="n">word</span> <span class="o">&gt;</span> <span class="s">&quot;banana&quot;</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;Your word, &quot;</span> <span class="o">+</span> <span class="n">word</span> <span class="o">+</span> <span class="s">&quot;, comes after banana.&quot;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;Yes, we have no bananas!&quot;</span>
+</pre></div>
+</div>
+<p>Знайте, однако, что Python обращается с большими и маленькими буквами не так, как это делают люди. Все большие буквы (буквы верхнего регистра) предшествуют всем маленьким буквам (буквам нижнего регистра). В результате:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Your</span> <span class="n">word</span><span class="p">,</span> <span class="n">Zebra</span><span class="p">,</span> <span class="n">comes</span> <span class="n">before</span> <span class="n">banana</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>Стандартное решение этой задачи &#8212; преобразовать строки к единому виду, например, в нижний регистр, и только потом сравнивать. (А вот заставить программу понимать, что зебры &#8212; не фрукты, является более сложной задачей.)</p>
+</div>
+<div class="section" id="index-6">
+<span id="id6"></span><h2>7.6. Строки неизменяемы<a class="headerlink" href="#index-6" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Возможно, вы захотите изменить символ в строке, используя оператор <tt class="docutils literal"><span class="pre">[]</span></tt> в левой части предложения присваивания. Например:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">greeting</span> <span class="o">=</span> <span class="s">&quot;Hello, world!&quot;</span>
+<span class="n">greeting</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;J&#39;</span>            <span class="c"># Ошибка!</span>
+<span class="k">print</span> <span class="n">greeting</span>
+</pre></div>
+</div>
+<p>Вместо вывода <tt class="docutils literal"><span class="pre">Jello,</span> <span class="pre">world!</span></tt> этот код выдаст сообщение об ошибке выполнения <tt class="docutils literal"><span class="pre">TypeError:</span> <span class="pre">'str'</span> <span class="pre">object</span> <span class="pre">doesn't</span> <span class="pre">support</span> <span class="pre">item</span> <span class="pre">assignment</span></tt>.</p>
+<p>Строки в Python <strong>неизменяемы</strong>. Это значит, вы не можете изменить существующую строку. Если вам необходимо изменить существующую строку, то придется создать новую строку на основе имеющейся:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">greeting</span> <span class="o">=</span> <span class="s">&quot;Hello, world!&quot;</span>
+<span class="n">newGreeting</span> <span class="o">=</span> <span class="s">&#39;J&#39;</span> <span class="o">+</span> <span class="n">greeting</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+<span class="k">print</span> <span class="n">newGreeting</span>
+</pre></div>
+</div>
+<p>Здесь конкатенируются первая буква и срез строки <tt class="docutils literal"><span class="pre">greeting</span></tt>. Это никак не влияет на первоначальную строку.</p>
+</div>
+<div class="section" id="in">
+<span id="index-7"></span><h2>7.7. Оператор <tt class="docutils literal"><span class="pre">in</span></tt><a class="headerlink" href="#in" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Оператор <tt class="docutils literal"><span class="pre">in</span></tt> проверяет, является ли одна строка частью другой строки (ее подстрокой):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="s">&#39;p&#39;</span> <span class="ow">in</span> <span class="s">&#39;apple&#39;</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s">&#39;i&#39;</span> <span class="ow">in</span> <span class="s">&#39;apple&#39;</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s">&#39;ap&#39;</span> <span class="ow">in</span> <span class="s">&#39;apple&#39;</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s">&#39;pa&#39;</span> <span class="ow">in</span> <span class="s">&#39;apple&#39;</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>Заметьте, что строка является подстрокой самой себя:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="s">&#39;a&#39;</span> <span class="ow">in</span> <span class="s">&#39;a&#39;</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s">&#39;apple&#39;</span> <span class="ow">in</span> <span class="s">&#39;apple&#39;</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Комбинируя оператор <tt class="docutils literal"><span class="pre">in</span></tt> с конкатенацией строк, напишем функцию, удаляющую из строки все гласные:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">remove_vowels</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">vowels</span> <span class="o">=</span> <span class="s">&quot;aeiouAEIOU&quot;</span>
+    <span class="n">s_without_vowels</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">letter</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">vowels</span><span class="p">:</span>
+            <span class="n">s_without_vowels</span> <span class="o">+=</span> <span class="n">letter</span>
+    <span class="k">return</span> <span class="n">s_without_vowels</span>
+</pre></div>
+</div>
+<p>Напишите доктесты для этой функции, чтобы убедиться, что она работает как задумано.</p>
+</div>
+<div class="section" id="find">
+<span id="index-8"></span><h2>7.8. Функция <tt class="docutils literal"><span class="pre">find</span></tt><a class="headerlink" href="#find" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Что делает следующая функция?</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="n">strng</span><span class="p">,</span> <span class="n">ch</span><span class="p">):</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">strng</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">strng</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">==</span> <span class="n">ch</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">index</span>
+        <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>В некотором смысле, <tt class="docutils literal"><span class="pre">find</span></tt> является противоположностью оператора <tt class="docutils literal"><span class="pre">[]</span></tt>. Вместо того, чтобы по индексу извлекать символ, эта функция по символу находит индекс, под которым этот символ присутствует в строке.  Если символ не найден, функция возвращает <tt class="docutils literal"><span class="pre">-1</span></tt>.</p>
+<p>Это первый случай, когда мы видим предложение <tt class="docutils literal"><span class="pre">return</span></tt> в теле цикла.  Если <tt class="docutils literal"><span class="pre">strng[index]</span> <span class="pre">==</span> <span class="pre">ch</span></tt>, функция немедленно возвращает значение и завершается, прекращая выполнение цикла.</p>
+<p>Если искомого символа в строке нет, то цикл завершится, как обычно, после чего программа завершится, возвращая <tt class="docutils literal"><span class="pre">-1</span></tt>.</p>
+<p>Этот прием иногда называют <strong>эврика-обходом</strong>. Ведь как только мы нашли то, что ищем, мы можем закричать &#8220;Эврика!&#8221;, и больше не искать.</p>
+</div>
+<div class="section" id="index-9">
+<span id="id7"></span><h2>7.9. Счетчик в цикле<a class="headerlink" href="#index-9" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Следующая программа подсчитывает, сколько раз в строке встречается буква <tt class="docutils literal"><span class="pre">a</span></tt>. Это еще один пример использования приема счетчик, с которым мы познакомились в главе 6:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">fruit</span> <span class="o">=</span> <span class="s">&quot;banana&quot;</span>
+<span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">fruit</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">char</span> <span class="o">==</span> <span class="s">&#39;a&#39;</span><span class="p">:</span>
+        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="k">print</span> <span class="n">count</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="optional-parameters">
+<span id="index-10"></span><span id="id8"></span><h2>7.10. Необязательные параметры<a class="headerlink" href="#optional-parameters" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Для того, чтобы найти в строке второе или третье вхождение некоторого символа, можно изменить функцию <tt class="docutils literal"><span class="pre">find</span></tt>, добавив третий параметр для указания позиции начала поиска:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">find2</span><span class="p">(</span><span class="n">strng</span><span class="p">,</span> <span class="n">ch</span><span class="p">,</span> <span class="n">start</span><span class="p">):</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">start</span>
+    <span class="k">while</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">strng</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">strng</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">==</span> <span class="n">ch</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">index</span>
+        <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>Вызов <tt class="docutils literal"><span class="pre">find2('banana',</span> <span class="pre">'a',</span> <span class="pre">2)</span></tt> теперь возвращает <tt class="docutils literal"><span class="pre">3</span></tt>, позицию первого вхождения &#8216;a&#8217; в строке &#8216;banana&#8217; после позиции 2. А что вернет вызов <tt class="docutils literal"><span class="pre">find2('banana',</span> <span class="pre">'n',</span> <span class="pre">3)</span></tt>? Если вы ответили 4, значит, вы поняли, как работает <tt class="docutils literal"><span class="pre">find2</span></tt>.</p>
+<p>Но можно пойти дальше, и объединить <tt class="docutils literal"><span class="pre">find</span></tt> и <tt class="docutils literal"><span class="pre">find2</span></tt> с помощью <strong>необязательного параметра</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="n">strng</span><span class="p">,</span> <span class="n">ch</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">start</span>
+    <span class="k">while</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">strng</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">strng</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">==</span> <span class="n">ch</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">index</span>
+        <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>Вызов <tt class="docutils literal"><span class="pre">find('banana',</span> <span class="pre">'a',</span> <span class="pre">2)</span></tt> теперь ведет себя так же, как <tt class="docutils literal"><span class="pre">find2</span></tt>, и, в то же время, при вызове <tt class="docutils literal"><span class="pre">find('banana',</span> <span class="pre">'a')</span></tt> параметр <tt class="docutils literal"><span class="pre">start</span></tt> получит <strong>значение по умолчанию</strong> <tt class="docutils literal"><span class="pre">0</span></tt>.</p>
+<p>Добавив еще один необязательный параметр к <tt class="docutils literal"><span class="pre">find</span></tt>, получим возможность искать как в прямом направлении, так и в обратном:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="n">strng</span><span class="p">,</span> <span class="n">ch</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">start</span>
+    <span class="k">while</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">strng</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">strng</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">==</span> <span class="n">ch</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">index</span>
+        <span class="n">index</span> <span class="o">+=</span> <span class="n">step</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>Передав значение <tt class="docutils literal"><span class="pre">-1</span></tt> для <tt class="docutils literal"><span class="pre">step</span></tt>, мы заставим функцию искать от конца к началу. Обратите внимание, что в условии цикла теперь нужно поверять достижение <tt class="docutils literal"><span class="pre">index</span></tt> как нижней, так и верхней границы строки.</p>
+</div>
+<div class="section" id="string">
+<span id="index-11"></span><h2>7.11. Модуль <tt class="docutils literal"><span class="pre">string</span></tt><a class="headerlink" href="#string" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Модуль <tt class="docutils literal"><span class="pre">string</span></tt> содержит полезные функции для работы со строками. Как обычно, для того, чтобы использовать модуль, мы должны его импортировать:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">string</span>
+</pre></div>
+</div>
+<p>Чтобы посмотреть, что содержится в модуле, воспользуйтесь функцией <tt class="docutils literal"><span class="pre">dir</span></tt> с именем модуля в качестве аргумента.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Вы получите список элементов модуля <tt class="docutils literal"><span class="pre">string</span></tt>:</p>
+<p><tt class="docutils literal"><span class="pre">['Template',</span> <span class="pre">'_TemplateMetaclass',</span> <span class="pre">'__builtins__',</span> <span class="pre">'__doc__',</span>
+<span class="pre">'__file__',</span> <span class="pre">'__name__',</span> <span class="pre">'_float',</span> <span class="pre">'_idmap',</span> <span class="pre">'_idmapL',</span> <span class="pre">'_int',</span>
+<span class="pre">'_long',</span> <span class="pre">'_multimap',</span> <span class="pre">'_re',</span> <span class="pre">'ascii_letters',</span> <span class="pre">'ascii_lowercase',</span>
+<span class="pre">'ascii_uppercase',</span> <span class="pre">'atof',</span> <span class="pre">'atof_error',</span> <span class="pre">'atoi',</span> <span class="pre">'atoi_error',</span> <span class="pre">'atol',</span>
+<span class="pre">'atol_error',</span> <span class="pre">'capitalize',</span> <span class="pre">'capwords',</span> <span class="pre">'center',</span> <span class="pre">'count',</span> <span class="pre">'digits',</span>
+<span class="pre">'expandtabs',</span> <span class="pre">'find',</span> <span class="pre">'hexdigits',</span> <span class="pre">'index',</span> <span class="pre">'index_error',</span> <span class="pre">'join',</span>
+<span class="pre">'joinfields',</span> <span class="pre">'letters',</span> <span class="pre">'ljust',</span> <span class="pre">'lower',</span> <span class="pre">'lowercase',</span> <span class="pre">'lstrip',</span>
+<span class="pre">'maketrans',</span> <span class="pre">'octdigits',</span> <span class="pre">'printable',</span> <span class="pre">'punctuation',</span> <span class="pre">'replace',</span>
+<span class="pre">'rfind',</span> <span class="pre">'rindex',</span> <span class="pre">'rjust',</span> <span class="pre">'rsplit',</span> <span class="pre">'rstrip',</span> <span class="pre">'split',</span>
+<span class="pre">'splitfields',</span> <span class="pre">'strip',</span> <span class="pre">'swapcase',</span> <span class="pre">'translate',</span> <span class="pre">'upper',</span> <span class="pre">'uppercase',</span>
+<span class="pre">'whitespace',</span> <span class="pre">'zfill']</span></tt></p>
+<p>Чтобы побольше узнать о любом из элементов списка, можно воспользоваться функцией <tt class="docutils literal"><span class="pre">type</span></tt>. Укажите имя модуля и имя элемента, используя <strong>точечную нотацию</strong>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">digits</span><span class="p">)</span>
+<span class="go">&lt;type &#39;str&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">find</span><span class="p">)</span>
+<span class="go">&lt;type &#39;function&#39;&gt;</span>
+</pre></div>
+</div>
+<p>Поскольку <tt class="docutils literal"><span class="pre">string.digits</span></tt> (англ.: цифры) является строкой, мы можем вывести ее и посмотреть, что она содержит:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">string</span><span class="o">.</span><span class="n">digits</span>
+<span class="go">0123456789</span>
+</pre></div>
+</div>
+<p>Как и следовало ожидать, она содержит все десятичные цифры.</p>
+<p>Функция <tt class="docutils literal"><span class="pre">string.find</span></tt> делает, в основном, то же самое, что и функция, которую мы написали. Чтобы узнать о ней больше, мы можем вывести ее <strong>документирующую строку</strong> <tt class="docutils literal"><span class="pre">__doc__</span></tt>, которая содержит документацию по этой функции:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">string</span><span class="o">.</span><span class="n">find</span><span class="o">.</span><span class="n">__doc__</span>
+<span class="go">find(s, sub [,start [,end]]) -&gt; in</span>
+
+<span class="go">    Return the lowest index in s where substring sub is found,</span>
+<span class="go">    such that sub is contained within s[start,end].  Optional</span>
+<span class="go">    arguments start and end are interpreted as in slice notation.</span>
+
+<span class="go">    Return -1 on failure.</span>
+</pre></div>
+</div>
+<p>Параметры, указанные в документации в квадратных скобках, являются необязательными. Заметьте, что функцию <tt class="docutils literal"><span class="pre">string.find</span></tt> можно использовать почти так же, как нашу собственную <tt class="docutils literal"><span class="pre">find</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fruit</span> <span class="o">=</span> <span class="s">&quot;banana&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">index</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">fruit</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">index</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+<p>Этот пример демонстрирует одно из преимуществ модулей: они помогают избежать конфликта между именами встроенных функций и функций, определенных пользователем. Используя точечную нотацию, мы можем указать, какая именно функция <tt class="docutils literal"><span class="pre">find</span></tt> нам нужна.</p>
+<p>На самом деле, <tt class="docutils literal"><span class="pre">string.find</span></tt> является функцией более общего применения, чем наша. Она может искать подстроки, а не только отдельные символы:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">string</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;banana&quot;</span><span class="p">,</span> <span class="s">&quot;na&quot;</span><span class="p">)</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+<p>Как и наша функция, она принимает дополнительный аргумент, задающий индекс для начала поиска:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">string</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;banana&quot;</span><span class="p">,</span> <span class="s">&quot;na&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="go">4</span>
+</pre></div>
+</div>
+<p>Однако, в отличие от нашей функции, ее второй необязательный параметр задает индекс для завершения поиска:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">string</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;bob&quot;</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">-1</span>
+</pre></div>
+</div>
+<p>В этом примере поиск не удался, поскольку буква <em>b</em> не встречается между индексами <tt class="docutils literal"><span class="pre">1</span></tt> и <tt class="docutils literal"><span class="pre">2</span></tt> (последний исключается).</p>
+<span class="target" id="index-12"></span></div>
+<div class="section" id="index-13">
+<span id="id9"></span><h2>7.12. Классификация символов<a class="headerlink" href="#index-13" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Часто бывает нужно исследовать символ и выяснить, например, к какому регистру он принадлежит, является он буквой или цифрой. Модуль <tt class="docutils literal"><span class="pre">string</span></tt> предоставляет несколько констант, которые полезны для этих целей. С одной из них, <tt class="docutils literal"><span class="pre">string.digits</span></tt>, мы уже встречались.</p>
+<p>Строка <tt class="docutils literal"><span class="pre">string.lowercase</span></tt> содержит все латинские символы, которые система относит к нижнему регистру. Аналогично, <tt class="docutils literal"><span class="pre">string.uppercase</span></tt> содержит все латинские символы верхнего регистра. Выполните следующее и посмотрите, что вы получите:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="n">string</span><span class="o">.</span><span class="n">lowercase</span>
+<span class="k">print</span> <span class="n">string</span><span class="o">.</span><span class="n">uppercase</span>
+<span class="k">print</span> <span class="n">string</span><span class="o">.</span><span class="n">digits</span>
+</pre></div>
+</div>
+<p>С помощью этих констант и функции <tt class="docutils literal"><span class="pre">find</span></tt> можно классифицировать символы. Например, если <tt class="docutils literal"><span class="pre">find(lowercase,</span> <span class="pre">ch)</span></tt> возвращает число, отличное от <tt class="docutils literal"><span class="pre">-1</span></tt>, значит, <tt class="docutils literal"><span class="pre">ch</span></tt> является символом нижнего регистра:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">is_lower</span><span class="p">(</span><span class="n">ch</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">string</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">lowercase</span><span class="p">,</span> <span class="n">ch</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>Как вариант, можно воспользоваться оператором <tt class="docutils literal"><span class="pre">in</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">is_lower</span><span class="p">(</span><span class="n">ch</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">lowercase</span>
+</pre></div>
+</div>
+<p>Той же цели можно достичь с помощью операторов сравнения:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">is_lower</span><span class="p">(</span><span class="n">ch</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s">&#39;a&#39;</span> <span class="o">&lt;=</span> <span class="n">ch</span> <span class="o">&lt;=</span> <span class="s">&#39;z&#39;</span>
+</pre></div>
+</div>
+<p>Если <tt class="docutils literal"><span class="pre">ch</span></tt> больше или равен <em>a</em> и меньше или равен <em>z</em>, то он является символом нижнего регистра.</p>
+<p>Еще одна константа, определенная в модуле <tt class="docutils literal"><span class="pre">string</span></tt>, может удивить вас, если вывести ее на экран:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">string</span><span class="o">.</span><span class="n">whitespace</span>
+</pre></div>
+</div>
+<p><strong>Пробельные</strong> символы перемещают курсор, ничего не отображая. Они создают пустое пространство между видимыми символами. Константа <tt class="docutils literal"><span class="pre">string.whitespace</span></tt> содержит все пробельные символы, включая пробел, табуляцию (<tt class="docutils literal"><span class="pre">\t</span></tt>) и перевод строки (<tt class="docutils literal"><span class="pre">\n</span></tt>).</p>
+<p>В модуле <tt class="docutils literal"><span class="pre">string</span></tt> содержится много других полезных функций. Но эта книга &#8212; не справочник. Если вам нужно больше узнать о возможностях модулей Python, обратитесь к справочнику <em>Python Library Reference</em>. Так же, как и другая документация, справочник по библиотеке Python доступен на сайте Python <a class="reference external" href="http://www.python.org">http://www.python.org</a>.</p>
+</div>
+<div class="section" id="index-14">
+<span id="id10"></span><h2>7.13. Форматирование строк<a class="headerlink" href="#index-14" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Наиболее выразительный и мощный способ форматирования строк в Python &#8212; использование <em>оператора форматирования строки</em> <tt class="docutils literal"><span class="pre">%</span></tt> вместе с операндами для форматирования. Чтобы посмотреть, как это работает, начнем с нескольких примеров:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="s">&quot;His name is </span><span class="si">%s</span><span class="s">.&quot;</span>  <span class="o">%</span> <span class="s">&quot;Arthur&quot;</span>
+<span class="go">&#39;His name is Arthur.&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Alice&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">age</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s">&quot;I am </span><span class="si">%s</span><span class="s"> and I am </span><span class="si">%d</span><span class="s"> years old.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">)</span>
+<span class="go">&#39;I am Alice and I am 10 years old.&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n1</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n2</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s">&quot;2**10 = </span><span class="si">%d</span><span class="s"> and </span><span class="si">%d</span><span class="s"> * </span><span class="si">%d</span><span class="s"> = </span><span class="si">%f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">10</span><span class="p">,</span> <span class="n">n1</span><span class="p">,</span> <span class="n">n2</span><span class="p">,</span> <span class="n">n1</span> <span class="o">*</span> <span class="n">n2</span><span class="p">)</span>
+<span class="go">&#39;2**10 = 1024 and 4 * 5 = 20.000000&#39;</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Операция форматирования строки записывается так:</p>
+<div class="highlight-python"><pre>"&lt;формат&gt;" % (&lt;значения&gt;)</pre>
+</div>
+<p>Левый операнд <em>формат</em> &#8212; строка, содержащая, помимо прочего, <em>спецификации преобразования</em>, которые начинаются с символа <tt class="docutils literal"><span class="pre">%</span></tt>. Справа от оператора форматирования <tt class="docutils literal"><span class="pre">%</span></tt> записывается в скобках последовательность значений, разделенных запятыми. Каждое значение в этой последовательности соответствует спецификации преобразования в форматируемой строке слева от оператора <tt class="docutils literal"><span class="pre">%</span></tt>. Скобки необязательны, если последовательность включает только одно значение.</p>
+<p>В первом из приведенных выше примеров только одна спецификация преобразования, <tt class="docutils literal"><span class="pre">%s</span></tt>, обозначающая строку. Ей соответствует единственное значение <tt class="docutils literal"><span class="pre">&quot;Arthur&quot;</span></tt>, не заключенное в скобки.</p>
+<p>Во втором примере имеются переменные <tt class="docutils literal"><span class="pre">name</span></tt> со строковым значением <tt class="docutils literal"><span class="pre">&quot;Alice&quot;</span></tt> и <tt class="docutils literal"><span class="pre">age</span></tt> с целочисленным значением <tt class="docutils literal"><span class="pre">10</span></tt>. Они соответствуют двум спецификациям преобразования, <tt class="docutils literal"><span class="pre">%s</span></tt> и <tt class="docutils literal"><span class="pre">%d</span></tt>. Во второй спецификации <tt class="docutils literal"><span class="pre">d</span></tt> обозначает десятичное целое число.</p>
+<p>В третьем примере переменные <tt class="docutils literal"><span class="pre">n1</span></tt> и <tt class="docutils literal"><span class="pre">n2</span></tt> имеют целочисленные значения <tt class="docutils literal"><span class="pre">4</span></tt> и <tt class="docutils literal"><span class="pre">5</span></tt>, соответственно. В форматируемой строке имеются четыре спецификации преобразования: три <tt class="docutils literal"><span class="pre">%d</span></tt> и одна <tt class="docutils literal"><span class="pre">%f</span></tt>. Спецификация преобразования <tt class="docutils literal"><span class="pre">%f</span></tt> показывает, что соответствующее значение должно быть представлено как число с плавающей точкой. Четыре значения, соответствующие четырем спецификациям преобразования, следующие: <tt class="docutils literal"><span class="pre">2**10</span></tt>, <tt class="docutils literal"><span class="pre">n1</span></tt>, <tt class="docutils literal"><span class="pre">n2</span></tt>, and <tt class="docutils literal"><span class="pre">n1</span> <span class="pre">*</span> <span class="pre">n2</span></tt>.</p>
+<p>В этой книге нам будет достаточно форматных преобразований <tt class="docutils literal"><span class="pre">s</span></tt>, <tt class="docutils literal"><span class="pre">d</span></tt> и <tt class="docutils literal"><span class="pre">f</span></tt>. Полный их список можно найти в справочнике по библиотеке Python в разделе <a class="reference external" href="http://docs.python.org/lib/typesseq-strings.html">String Formatting Operations</a>.</p>
+<p>Следующий пример демонстрирует реальную пользу от форматирования строк:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">print</span> <span class="s">&quot;i</span><span class="se">\t</span><span class="s">i**2</span><span class="se">\t</span><span class="s">i**3</span><span class="se">\t</span><span class="s">i**5</span><span class="se">\t</span><span class="s">i**10</span><span class="se">\t</span><span class="s">i**20&quot;</span>
+<span class="k">while</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">i</span><span class="p">,</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">i</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">i</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">i</span><span class="o">**</span><span class="mi">5</span><span class="p">,</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">i</span><span class="o">**</span><span class="mi">10</span><span class="p">,</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">i</span><span class="o">**</span><span class="mi">20</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>Программа печатает таблицу степеней чисел от 1 до 10. В этом варианте программы для выравнивания столбцов значений используется символ табуляции (<tt class="docutils literal"><span class="pre">\t</span></tt>). Это перестает работать, как только число в столбце становится достаточно длинным и достигает следующей позиции табуляции:</p>
+<div class="highlight-python"><pre>i       i**2    i**3    i**5    i**10   i**20
+1       1       1       1       1       1
+2       4       8       32      1024    1048576
+3       9       27      243     59049   3486784401
+4       16      64      1024    1048576         1099511627776
+5       25      125     3125    9765625         95367431640625
+6       36      216     7776    60466176        3656158440062976
+7       49      343     16807   282475249       79792266297612001
+8       64      512     32768   1073741824      1152921504606846976
+9       81      729     59049   3486784401      12157665459056928801
+10      100     1000    100000  10000000000     100000000000000000000</pre>
+</div>
+<p>Также обратите внимание на то, что первый столбец получается намного шире, чем требуется. Лучшим решением в данном случае было бы независимо устанавливать ширину каждого столбца. Форматирование строк предоставляет такую возможность:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">print</span> <span class="s">&quot;</span><span class="si">%-4s%-5s%-6s%-8s%-13s%-15s</span><span class="s">&quot;</span> <span class="o">%</span> \
+      <span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">,</span> <span class="s">&#39;i**2&#39;</span><span class="p">,</span> <span class="s">&#39;i**3&#39;</span><span class="p">,</span> <span class="s">&#39;i**5&#39;</span><span class="p">,</span> <span class="s">&#39;i**10&#39;</span><span class="p">,</span> <span class="s">&#39;i**20&#39;</span><span class="p">)</span>
+<span class="k">while</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;</span><span class="si">%-4d%-5d%-6d%-8d%-13d%-15d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">i</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span> <span class="n">i</span><span class="o">**</span><span class="mi">5</span><span class="p">,</span> <span class="n">i</span><span class="o">**</span><span class="mi">10</span><span class="p">,</span> <span class="n">i</span><span class="o">**</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>Эта версия программы выводит следующее:</p>
+<div class="highlight-python"><pre>i   i**2 i**3  i**5    i**10        i**20
+1   1    1     1       1            1
+2   4    8     32      1024         1048576
+3   9    27    243     59049        3486784401
+4   16   64    1024    1048576      1099511627776
+5   25   125   3125    9765625      95367431640625
+6   36   216   7776    60466176     3656158440062976
+7   49   343   16807   282475249    79792266297612001
+8   64   512   32768   1073741824   1152921504606846976
+9   81   729   59049   3486784401   12157665459056928801
+10  100  1000  100000  10000000000  100000000000000000000</pre>
+</div>
+<p>Знак <tt class="docutils literal"><span class="pre">-</span></tt> после <tt class="docutils literal"><span class="pre">%</span></tt> в спецификации преобразования обозначает выравнивание по левому краю, а число обозначает минимальную длину. Так, <tt class="docutils literal"><span class="pre">%-13d</span></tt> обозначает десятичное число длиной не менее 13 символов, выровненное по левому краю.</p>
+</div>
+<div class="section" id="id11">
+<h2>7.14. Глоссарий<a class="headerlink" href="#id11" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="glossary docutils">
+<dt id="term-">документирующая строка</dt>
+<dd>Строковое значение, расположенное сразу после заголовка функции или
+модуля (и, как мы увидим дальше, после заголовка класса или метода).
+Документирующие строки, или докстроки, предоставляют удобный способ
+документировать код. Докстроки также используются модулем <tt class="docutils literal"><span class="pre">doctest</span></tt>
+для автоматического тестирования.</dd>
+<dt id="term-1">значение по умолчанию</dt>
+<dd>Значение, которое получит необязательный параметр, если при вызове
+функции для него не передан аргумент.</dd>
+<dt id="term-2">индекс</dt>
+<dd>Переменная или значение, используемое для доступа к элементу некоторого
+упорядоченного набора, например, к символу в строке.</dd>
+<dt id="term-3">неизменяемый тип данных</dt>
+<dd>Неизменяемым является составной тип данных, элементам которого нельзя
+присвоить новые значения.</dd>
+<dt id="term-4">необязательный параметр</dt>
+<dd>Параметр, для которого вы заголовке функции указано значение по умолчанию.
+Параметр получит значение по умолчанию, если при вызове функции не будет
+передан аргумент для него.</dd>
+<dt id="term-5">обход</dt>
+<dd>Перебор всех элементов некоторого множества, с выполнением над каждым
+некоторой операции.</dd>
+<dt id="term-6">пробельные символы</dt>
+<dd>Символы, которые перемещают курсор, не выводя видимые символы. Строка
+<tt class="docutils literal"><span class="pre">string.whitespace</span></tt> содержит все пробельные символы.</dd>
+<dt id="term-7">составной тип данных:</dt>
+<dd>Тип данных, включающий компоненты, которые сами относятся к некоторому
+типу данных и могут использоваться как самостоятельные значения.</dd>
+<dt id="term-8">срез</dt>
+<dd>Часть строки (подстрока), заданная диапазоном индексов. Вообще, в Python
+можно получить подпоследовательность любой последовательности (не только
+строки) с помощью оператора среза <tt class="docutils literal"><span class="pre">последовательность[start:stop]</span></tt>.</dd>
+<dt id="term-9">точечная нотация</dt>
+<dd>Использование оператора <tt class="docutils literal"><span class="pre">.</span></tt> (точка), например, для доступа к
+функции внутри модуля.</dd>
+</dl>
+</div>
+<div class="section" id="id12">
+<h2>7.15. Упражнения<a class="headerlink" href="#id12" title="Ссылка на этот заголовок">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Измените следующий код:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">prefixes</span> <span class="o">=</span> <span class="s">&quot;JKLMNOPQ&quot;</span>
+<span class="n">suffix</span> <span class="o">=</span> <span class="s">&quot;ack&quot;</span>
+
+<span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">prefixes</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">letter</span> <span class="o">+</span> <span class="n">suffix</span>
+</pre></div>
+</div>
+<p>так, чтобы <tt class="docutils literal"><span class="pre">Ouack</span></tt> и <tt class="docutils literal"><span class="pre">Quack</span></tt> выводились корректно.</p>
+</li>
+<li><p class="first">Оформите следующий код как функцию с именем <tt class="docutils literal"><span class="pre">count_letters</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">fruit</span> <span class="o">=</span> <span class="s">&quot;banana&quot;</span>
+<span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">fruit</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">char</span> <span class="o">==</span> <span class="s">&#39;a&#39;</span><span class="p">:</span>
+        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="k">print</span> <span class="n">count</span>
+</pre></div>
+</div>
+<p>Обобщите эту функцию, чтобы она принимала
+строку и символ в качестве аргументов.</p>
+</li>
+<li><p class="first">Теперь перепишите функцию <tt class="docutils literal"><span class="pre">count_letters</span></tt> так, чтобы вместо обхода строки
+она многократно вызывала <tt class="docutils literal"><span class="pre">find</span></tt> (версия из раздела 7.10), с третьим
+параметром, для того, чтобы найти новые вхождения нужной буквы.</p>
+</li>
+<li><p class="first">Как вы думаете, какая из версий <tt class="docutils literal"><span class="pre">is_lower</span></tt> будет самой быстрой? Можете ли
+назвать другие причины, кроме скорости, чтобы предпочесть одну версию другой?</p>
+</li>
+<li><p class="first">Создайте файл с именем <tt class="docutils literal"><span class="pre">stringtools.py</span></tt> и поместите в него следующее:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">reverse</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; reverse(&#39;happy&#39;)</span>
+<span class="sd">      &#39;yppah&#39;</span>
+<span class="sd">      &gt;&gt;&gt; reverse(&#39;Python&#39;)</span>
+<span class="sd">      &#39;nohtyP&#39;</span>
+<span class="sd">      &gt;&gt;&gt; reverse(&quot;&quot;)</span>
+<span class="sd">      &#39;&#39;</span>
+<span class="sd">      &gt;&gt;&gt; reverse(&quot;P&quot;)</span>
+<span class="sd">      &#39;P&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Напишите тело функции <tt class="docutils literal"><span class="pre">reverse</span></tt> (англ.: перевернуть) так, чтобы доктесты
+успешно прошли.</p>
+</li>
+<li><p class="first">Напишите функцию <tt class="docutils literal"><span class="pre">mirror</span></tt> (англ.: зеркало, отражать) в файле <tt class="docutils literal"><span class="pre">stringtools.py</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">mirror</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; mirror(&quot;good&quot;)</span>
+<span class="sd">      &#39;gooddoog&#39;</span>
+<span class="sd">      &gt;&gt;&gt; mirror(&quot;yes&quot;)</span>
+<span class="sd">      &#39;yessey&#39;</span>
+<span class="sd">      &gt;&gt;&gt; mirror(&#39;Python&#39;)</span>
+<span class="sd">      &#39;PythonnohtyP&#39;</span>
+<span class="sd">      &gt;&gt;&gt; mirror(&quot;&quot;)</span>
+<span class="sd">      &#39;&#39;</span>
+<span class="sd">      &gt;&gt;&gt; mirror(&quot;a&quot;)</span>
+<span class="sd">      &#39;aa&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Напишите тело функции так, чтобы доктесты успешно прошли.</p>
+</li>
+<li><p class="first">Добавьте функцию <tt class="docutils literal"><span class="pre">remove_letter</span></tt> (англ.: удалить букву) в файл <tt class="docutils literal"><span class="pre">stringtools.py</span></tt> .</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">remove_letter</span><span class="p">(</span><span class="n">letter</span><span class="p">,</span> <span class="n">strng</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; remove_letter(&#39;a&#39;, &#39;apple&#39;)</span>
+<span class="sd">      &#39;pple&#39;</span>
+<span class="sd">      &gt;&gt;&gt; remove_letter(&#39;a&#39;, &#39;banana&#39;)</span>
+<span class="sd">      &#39;bnn&#39;</span>
+<span class="sd">      &gt;&gt;&gt; remove_letter(&#39;z&#39;, &#39;banana&#39;)</span>
+<span class="sd">      &#39;banana&#39;</span>
+<span class="sd">      &gt;&gt;&gt; remove_letter(&#39;i&#39;, &#39;Mississippi&#39;)</span>
+<span class="sd">      &#39;Msssspp&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Напишите тело функции так, чтобы доктесты успешно прошли.</p>
+</li>
+<li><p class="first">Напишите тела следующих функций, по одной за раз, убеждаясь, что
+доктесты успешно проходят:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">is_palindrome</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; is_palindrome(&#39;abba&#39;)</span>
+<span class="sd">      True</span>
+<span class="sd">      &gt;&gt;&gt; is_palindrome(&#39;abab&#39;)</span>
+<span class="sd">      False</span>
+<span class="sd">      &gt;&gt;&gt; is_palindrome(&#39;tenet&#39;)</span>
+<span class="sd">      True</span>
+<span class="sd">      &gt;&gt;&gt; is_palindrome(&#39;banana&#39;)</span>
+<span class="sd">      False</span>
+<span class="sd">      &gt;&gt;&gt; is_palindrome(&#39;straw warts&#39;)</span>
+<span class="sd">      True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="n">sub</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; count(&#39;is&#39;, &#39;Mississippi&#39;)</span>
+<span class="sd">      2</span>
+<span class="sd">      &gt;&gt;&gt; count(&#39;an&#39;, &#39;banana&#39;)</span>
+<span class="sd">      2</span>
+<span class="sd">      &gt;&gt;&gt; count(&#39;ana&#39;, &#39;banana&#39;)</span>
+<span class="sd">      2</span>
+<span class="sd">      &gt;&gt;&gt; count(&#39;nana&#39;, &#39;banana&#39;)</span>
+<span class="sd">      1</span>
+<span class="sd">      &gt;&gt;&gt; count(&#39;nanan&#39;, &#39;banana&#39;)</span>
+<span class="sd">      0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="n">sub</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; remove(&#39;an&#39;, &#39;banana&#39;)</span>
+<span class="sd">      &#39;bana&#39;</span>
+<span class="sd">      &gt;&gt;&gt; remove(&#39;cyc&#39;, &#39;bicycle&#39;)</span>
+<span class="sd">      &#39;bile&#39;</span>
+<span class="sd">      &gt;&gt;&gt; remove(&#39;iss&#39;, &#39;Mississippi&#39;)</span>
+<span class="sd">      &#39;Missippi&#39;</span>
+<span class="sd">      &gt;&gt;&gt; remove(&#39;egg&#39;, &#39;bicycle&#39;)</span>
+<span class="sd">      &#39;bicycle&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">remove_all</span><span class="p">(</span><span class="n">sub</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; remove_all(&#39;an&#39;, &#39;banana&#39;)</span>
+<span class="sd">      &#39;ba&#39;</span>
+<span class="sd">      &gt;&gt;&gt; remove_all(&#39;cyc&#39;, &#39;bicycle&#39;)</span>
+<span class="sd">      &#39;bile&#39;</span>
+<span class="sd">      &gt;&gt;&gt; remove_all(&#39;iss&#39;, &#39;Mississippi&#39;)</span>
+<span class="sd">      &#39;Mippi&#39;</span>
+<span class="sd">      &gt;&gt;&gt; remove_all(&#39;eggs&#39;, &#39;bicycle&#39;)</span>
+<span class="sd">      &#39;bicycle&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Попробуйте выполнить каждую из следующих операций форматирования строки в
+интерактивном режиме Python и объясните результаты:</p>
+<ol class="arabic simple">
+<li><tt class="docutils literal"><span class="pre">&quot;%s</span> <span class="pre">%d</span> <span class="pre">%f&quot;</span> <span class="pre">%</span> <span class="pre">(5,</span> <span class="pre">5,</span> <span class="pre">5)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">&quot;%-.2f&quot;</span> <span class="pre">%</span> <span class="pre">3</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">&quot;%-10.2f%-10.2f&quot;</span> <span class="pre">%</span> <span class="pre">(7,</span> <span class="pre">1.0/2)</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">print</span> <span class="pre">&quot;</span> <span class="pre">$%5.2f\n</span> <span class="pre">$%5.2f\n</span> <span class="pre">$%5.2f&quot;</span> <span class="pre">%</span> <span class="pre">(3,</span> <span class="pre">4.5,</span> <span class="pre">11.2)</span></tt></li>
+</ol>
+</li>
+<li><p class="first">Форматируемые строки в следующих операциях содержат ошибки. Исправьте их:</p>
+<ol class="arabic simple">
+<li><tt class="docutils literal"><span class="pre">&quot;%s</span> <span class="pre">%s</span> <span class="pre">%s</span> <span class="pre">%s&quot;</span> <span class="pre">%</span> <span class="pre">('this',</span> <span class="pre">'that',</span> <span class="pre">'something')</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">&quot;%s</span> <span class="pre">%s</span> <span class="pre">%s&quot;</span> <span class="pre">%</span> <span class="pre">('yes',</span> <span class="pre">'no',</span> <span class="pre">'up',</span> <span class="pre">'down')</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">&quot;%d</span> <span class="pre">%f</span> <span class="pre">%f&quot;</span> <span class="pre">%</span> <span class="pre">(3,</span> <span class="pre">3,</span> <span class="pre">'three')</span></tt></li>
+</ol>
+</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             >словарь</a></li>
+        <li class="right" >
+          <a href="ch08.html" title="8. Списки"
+             >следующий</a> |</li>
+        <li class="right" >
+          <a href="ch06.html" title="6. Итерации"
+             >предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="copyright.html">Copyright</a> 2009, 2012, Джеффри Элкнер, Аллен Б. Дауни, Крис Мейерс, Андрей Трофимов.
+      При создании использован <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

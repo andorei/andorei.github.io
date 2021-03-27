@@ -1,0 +1,1073 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>8. Списки &mdash; Учимся с Python</title>
+    
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2nd Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="Учимся с Python" href="index.html" />
+    <link rel="next" title="9. Модули и файлы" href="ch09.html" />
+    <link rel="prev" title="7. Строки" href="ch07.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             accesskey="I">словарь</a></li>
+        <li class="right" >
+          <a href="ch09.html" title="9. Модули и файлы"
+             accesskey="N">следующий</a> |</li>
+        <li class="right" >
+          <a href="ch07.html" title="7. Строки"
+             accesskey="P">предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>8. Списки<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
+<div class="section" id="list">
+<span id="index-0"></span><h2>8.1. Встроенный тип <tt class="docutils literal"><span class="pre">list</span></tt><a class="headerlink" href="#list" title="Ссылка на этот заголовок">¶</a></h2>
+<p><strong>Список</strong> (англ.: list) есть упорядоченный набор значений, где каждое значение доступно по индексу. Значения, входящие в список, называются <strong>элементами</strong>.</p>
+<p>Списки похожи на строки, так как строки тоже являются упорядоченными наборами элементов &#8212; символов. Но в отличие от строк, элементы списка могут быть любых типов. Списки и строки, а также другие типы, являющиеся упорядоченными наборами, называются <strong>последовательностями</strong>.</p>
+</div>
+<div class="section" id="index-1">
+<span id="id2"></span><h2>8.2. Списочные значения<a class="headerlink" href="#index-1" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Есть несколько способов создать новый список, простейший из них &#8212; заключить элементы в квадратные скобки, <tt class="docutils literal"><span class="pre">[</span></tt> и <tt class="docutils literal"><span class="pre">]</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">]</span>
+<span class="p">[</span><span class="s">&quot;spam&quot;</span><span class="p">,</span> <span class="s">&quot;bungee&quot;</span><span class="p">,</span> <span class="s">&quot;swallow&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>В первом примере у нас список из четырех целых чисел. Во втором &#8212; список из трех строк. Элементы списка не обязательно относятся к одному типу. Следующий список содержит строку, число с плавающей точкой, целое число и... еще один список:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="s">&quot;hello&quot;</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>Список внутри другого списка называют <strong>вложенным</strong>.</p>
+<p>Наконец, список может вовсе не содержать элементов. Такой список называют пустым и обозначают <tt class="docutils literal"><span class="pre">[]</span></tt>.</p>
+<p>В логическом выражении пустой список, так же, как 0 или пустая строка, считается ложью:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="p">[]:</span>
+<span class="gp">... </span>   <span class="k">print</span> <span class="s">&#39;This is true.&quot;</span><span class="gp">... </span>
+<span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>   <span class="k">print</span> <span class="s">&#39;This is false.&quot;</span><span class="gp">...</span>
+
+<span class="go">This is false.</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Мы можем присваивать списочные значения переменным и передавать списки в качестве аргументов при вызове функций:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">vocabulary</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;ameliorate&quot;</span><span class="p">,</span> <span class="s">&quot;castigate&quot;</span><span class="p">,</span> <span class="s">&quot;defenestrate&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">17</span><span class="p">,</span> <span class="mi">123</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">empty</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">vocabulary</span><span class="p">,</span> <span class="n">numbers</span><span class="p">,</span> <span class="n">empty</span>
+<span class="go">[&#39;ameliorate&#39;, &#39;castigate&#39;, &#39;defenestrate&#39;] [17, 123] []</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="index-2">
+<span id="id3"></span><h2>8.3. Доступ к элементам<a class="headerlink" href="#index-2" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Для доступа к элементам списка используется тот же оператор <tt class="docutils literal"><span class="pre">[]</span></tt>, что и для доступа к символам строки. Выражение в квадратных скобках задает индекс. Не забывайте, что индексы начинаются с 0:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">numbers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">17</span>
+</pre></div>
+</div>
+<p>В качестве индекса можно использовать любое целочисленное выражение:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">numbers</span><span class="p">[</span><span class="mi">9</span><span class="o">-</span><span class="mi">8</span><span class="p">]</span>
+<span class="go">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">numbers</span><span class="p">[</span><span class="mf">1.0</span><span class="p">]</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">TypeError</span>: <span class="n">list indices must be integers</span>
+</pre></div>
+</div>
+<p>Если попытаться получить доступ к несуществующему элементу, то получим ошибку выполнения:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">numbers</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">IndexError</span>: <span class="n">list index out of range</span>
+</pre></div>
+</div>
+<p>Если индекс отрицательный, то счет идет от конца списка:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">numbers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="go">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">numbers</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+<span class="go">17</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">numbers</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">IndexError</span>: <span class="n">list index out of range</span>
+</pre></div>
+</div>
+<p>Выражение <tt class="docutils literal"><span class="pre">numbers[-1]</span></tt> дает последний элемент списка, <tt class="docutils literal"><span class="pre">numbers[-2]</span></tt> &#8212; второй от конца, а элемента <tt class="docutils literal"><span class="pre">numbers[-3]</span></tt> не существует.</p>
+<p>Часто в качестве индекса используется переменная цикла.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">horsemen</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;war&quot;</span><span class="p">,</span> <span class="s">&quot;famine&quot;</span><span class="p">,</span> <span class="s">&quot;pestilence&quot;</span><span class="p">,</span> <span class="s">&quot;death&quot;</span><span class="p">]</span>
+
+<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">horsemen</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>Этот цикл <tt class="docutils literal"><span class="pre">while</span></tt> считает от 0 до 4. Когда переменная цикла <tt class="docutils literal"><span class="pre">i</span></tt> становится равна 4, условие становится ложным и цикл завершается. Таким образом, тело цикла выполняется для <tt class="docutils literal"><span class="pre">i</span></tt> со значениями 0, 1, 2 и 3.</p>
+<p>В каждой итерации переменная <tt class="docutils literal"><span class="pre">i</span></tt> используется как индекс для списка, чтобы вывести <tt class="docutils literal"><span class="pre">i</span></tt>-тый элемент. Этот прием называется <strong>обход списка</strong>.</p>
+</div>
+<div class="section" id="id4">
+<h2>8.4. Длина списка<a class="headerlink" href="#id4" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Функция <tt class="docutils literal"><span class="pre">len</span></tt> возвращает длину списка, то есть, количество элементов в списке. В качестве верхней границы в цикле удобно использовать возвращаемое этой функцией значение, а не константу. При этом, если размер списка изменится, вам не придется просматривать программу и вносить изменения во все циклы, работающие с этим списком; они будут работать корректно со списком любого размера:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">horsemen</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;war&quot;</span><span class="p">,</span> <span class="s">&quot;famine&quot;</span><span class="p">,</span> <span class="s">&quot;pestilence&quot;</span><span class="p">,</span> <span class="s">&quot;death&quot;</span><span class="p">]</span>
+
+<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">num</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">horsemen</span><span class="p">)</span>
+<span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">horsemen</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>В последней итерации <tt class="docutils literal"><span class="pre">i</span></tt> равно <tt class="docutils literal"><span class="pre">len(horsemen)</span> <span class="pre">-</span> <span class="pre">1</span></tt>, то есть, индексу последнего элемента списка. Когда <tt class="docutils literal"><span class="pre">i</span></tt> становится равным <tt class="docutils literal"><span class="pre">len(horsemen)</span></tt>, условие цикла становится ложным и тело цикла не выполняется. И это правильно, поскольку <tt class="docutils literal"><span class="pre">len(horsemen)</span></tt> недопустимый для данного списка индекс.</p>
+<p>Хотя список может содержать другой список, вложенный список считается одним элементом. Длина этого списка равна 4:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="s">&#39;spam!&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;Brie&#39;</span><span class="p">,</span> <span class="s">&#39;Roquefort&#39;</span><span class="p">,</span> <span class="s">&#39;Pol le Veq&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="index-3">
+<span id="id5"></span><h2>8.5. Проверка вхождения в список<a class="headerlink" href="#index-3" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Оператор <tt class="docutils literal"><span class="pre">in</span></tt> проверяет вхождение элемента в последовательность и дает в результате логическое значение. Мы уже использовали его со строками, но он также работает со списками и другими последовательностями:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">horsemen</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;war&#39;</span><span class="p">,</span> <span class="s">&#39;famine&#39;</span><span class="p">,</span> <span class="s">&#39;pestilence&#39;</span><span class="p">,</span> <span class="s">&#39;death&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s">&#39;pestilence&#39;</span> <span class="ow">in</span> <span class="n">horsemen</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s">&#39;debauchery&#39;</span> <span class="ow">in</span> <span class="n">horsemen</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>Поскольку &#8216;pestilence&#8217; входит в список <tt class="docutils literal"><span class="pre">horsemen</span></tt>, то оператор <tt class="docutils literal"><span class="pre">in</span></tt> возвращает <tt class="docutils literal"><span class="pre">True</span></tt>. Поскольку &#8216;debauchery&#8217; не входит в список, <tt class="docutils literal"><span class="pre">in</span></tt> возвращает <tt class="docutils literal"><span class="pre">False</span></tt>.</p>
+<p>Используя <tt class="docutils literal"><span class="pre">not</span></tt> вместе с <tt class="docutils literal"><span class="pre">in</span></tt>, можно проверить, что элемент не является элементом списка:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="s">&#39;debauchery&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">horsemen</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="index-4">
+<span id="id6"></span><h2>8.6. Операции над списками<a class="headerlink" href="#index-4" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Оператор <tt class="docutils literal"><span class="pre">+</span></tt> конкатенирует списки:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">c</span>
+<span class="go">[1, 2, 3, 4, 5, 6]</span>
+</pre></div>
+</div>
+<p>Оператор <tt class="docutils literal"><span class="pre">*</span></tt> повторяет элементы списка заданное число раз:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span>
+<span class="go">[0, 0, 0, 0]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span>
+<span class="go">[1, 2, 3, 1, 2, 3, 1, 2, 3]</span>
+</pre></div>
+</div>
+<p>В первом примере <tt class="docutils literal"><span class="pre">0</span></tt> повторяется четыре раза. Во втором три раза повторяются элементы <tt class="docutils literal"><span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3</span></tt>.</p>
+</div>
+<div class="section" id="index-5">
+<span id="id7"></span><h2>8.7. Срезы списков<a class="headerlink" href="#index-5" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Мы выполняли срезы строк, но срезы также работают для списков:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">,</span> <span class="s">&#39;f&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a_list</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<span class="go">[&#39;b&#39;, &#39;c&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a_list</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span>
+<span class="go">[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a_list</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span>
+<span class="go">[&#39;d&#39;, &#39;e&#39;, &#39;f&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a_list</span><span class="p">[:]</span>
+<span class="go">[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;, &#39;f&#39;]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="range">
+<h2>8.8. Функция <tt class="docutils literal"><span class="pre">range</span></tt><a class="headerlink" href="#range" title="Ссылка на этот заголовок">¶</a></h2>
+<p>В программировании часто требуются списки последовательных целых чисел, и Python предоставляет простой способ для их создания:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="go">[1, 2, 3, 4]</span>
+</pre></div>
+</div>
+<p>Функция <tt class="docutils literal"><span class="pre">range</span></tt> принимает два аргумента и возвращает список целых, начиная от числа, заданного первым аргументом, и до числа, заданного вторым аргументом, <em>не включая последнее</em>.</p>
+<p>Можно вызывать <tt class="docutils literal"><span class="pre">range</span></tt> и по-другому. При вызове с единственным аргументом функция возвращает список, начинающийся с 0:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="go">[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</span>
+</pre></div>
+</div>
+<p>Третий аргумент, если он указан, задает <strong>шаг</strong> между соседними значениями в списке. Получим список чисел от 1 до 10 с шагом 2:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">[1, 3, 5, 7, 9]</span>
+</pre></div>
+</div>
+<p>Если шаг задан отрицательным числом, то начальное число должно быть больше конечного:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">[20, 15, 10, 5]</span>
+</pre></div>
+</div>
+<p>Иначе результатом будет пустой список:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">[]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="index-6">
+<span id="id8"></span><h2>8.9. Списки изменяемы<a class="headerlink" href="#index-6" title="Ссылка на этот заголовок">¶</a></h2>
+<p>В отличие от строк, списки <strong>изменяемы</strong>. Это означает, мы можем изменять их элементы. Используя оператор <tt class="docutils literal"><span class="pre">[]</span></tt> в левой части присваивания, можно избирательно обновить один из элементов:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fruit</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;banana&quot;</span><span class="p">,</span> <span class="s">&quot;apple&quot;</span><span class="p">,</span> <span class="s">&quot;quince&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fruit</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;pear&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fruit</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;orange&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">fruit</span>
+<span class="go">[&#39;pear&#39;, &#39;apple&#39;, &#39;orange&#39;]</span>
+</pre></div>
+</div>
+<p>Оператор <tt class="docutils literal"><span class="pre">[]</span></tt> может использоваться со списком в любом месте выражения. Если он появляется слева от оператора присваивания, он изменяет элемент списка. В приведенном примере первый элемент списка <tt class="docutils literal"><span class="pre">fruit</span></tt> изменяется с <tt class="docutils literal"><span class="pre">'banana'</span></tt> на <tt class="docutils literal"><span class="pre">'pear'</span></tt>, а последний &#8212; с <tt class="docutils literal"><span class="pre">'quince'</span></tt> на <tt class="docutils literal"><span class="pre">'orange'</span></tt>. Присваивание отдельному элементу не работает для строк:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">my_string</span> <span class="o">=</span> <span class="s">&#39;TEST&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_string</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;X&#39;</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">TypeError</span>: <span class="n">&#39;str&#39; object does not support item assignment</span>
+</pre></div>
+</div>
+<p>Но работает для списков:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;T&#39;</span><span class="p">,</span> <span class="s">&#39;E&#39;</span><span class="p">,</span> <span class="s">&#39;S&#39;</span><span class="p">,</span> <span class="s">&#39;T&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;X&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span>
+<span class="go">[&#39;T&#39;, &#39;E&#39;, &#39;X&#39;, &#39;T&#39;]</span>
+</pre></div>
+</div>
+<p>Используя срез, можно изменить несколько элементов сразу:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">,</span> <span class="s">&#39;f&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a_list</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="s">&#39;y&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">a_list</span>
+<span class="go">[&#39;a&#39;, &#39;x&#39;, &#39;y&#39;, &#39;d&#39;, &#39;e&#39;, &#39;f&#39;]</span>
+</pre></div>
+</div>
+<p>Можно также удалить элементы из списка, присвоив им пустой список:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">,</span> <span class="s">&#39;f&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a_list</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">a_list</span>
+<span class="go">[&#39;a&#39;, &#39;d&#39;, &#39;e&#39;, &#39;f&#39;]</span>
+</pre></div>
+</div>
+<p>А можно добавить элементы в список, втиснув их в пустой срез в нужном месте:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="s">&#39;f&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a_list</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">a_list</span>
+<span class="go">[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;f&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a_list</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;e&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">a_list</span>
+<span class="go">[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;, &#39;f&#39;]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="index-7">
+<span id="id9"></span><h2>8.10. Удаление списка<a class="headerlink" href="#index-7" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Удаление элементов с помощью присваивания срезов довольно вычурно, и потому чревато ошибками. Python предлагает альтернативный способ, более легкий для чтения и понимания, и, к тому же, более универсальный.</p>
+<p><tt class="docutils literal"><span class="pre">del</span></tt> удаляет элемент из списка:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;one&#39;</span><span class="p">,</span> <span class="s">&#39;two&#39;</span><span class="p">,</span> <span class="s">&#39;three&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">del</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
+<span class="go">[&#39;one&#39;, &#39;three&#39;]</span>
+</pre></div>
+</div>
+<p>Как и следовало ожидать, <tt class="docutils literal"><span class="pre">del</span></tt> работает с отрицательными индексами, и генерирует ошибку выполнения, если заданный индекс выходит за границы разрешенного диапазона.</p>
+<p>С <tt class="docutils literal"><span class="pre">del</span></tt> можно использовать срез:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">,</span> <span class="s">&#39;f&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">del</span> <span class="n">a_list</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">a_list</span>
+<span class="go">[&#39;a&#39;, &#39;f&#39;]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="index-8">
+<span id="id10"></span><h2>8.11. Объекты и значения<a class="headerlink" href="#index-8" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Выполним предложения присваивания:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">a</span> <span class="o">=</span> <span class="s">&quot;banana&quot;</span>
+<span class="n">b</span> <span class="o">=</span> <span class="s">&quot;banana&quot;</span>
+</pre></div>
+</div>
+<p>Теперь мы знаем, что и <tt class="docutils literal"><span class="pre">a</span></tt> и <tt class="docutils literal"><span class="pre">b</span></tt> указывают на строку <tt class="docutils literal"><span class="pre">&quot;banana&quot;</span></tt>. Но мы не можем сказать, указывают ли они на <em>одну и ту же</em> строку.</p>
+<p>Есть два варианта:</p>
+<img alt="Иллюстрация a и b" src="_images/ch8-1.png" />
+<p>В первом случае <tt class="docutils literal"><span class="pre">a</span></tt> и <tt class="docutils literal"><span class="pre">b</span></tt> указывают на два разных <strong>объекта</strong> с одинаковыми значениями. Во втором случае они ссылаются на один и тот же объект. Объект &#8212; это что-то, с чем может быть связано имя переменной.</p>
+<p>У каждого объекта имеется уникальный <strong>идентификатор</strong>, который можно получить с помощью функции <tt class="docutils literal"><span class="pre">id</span></tt>. Отобразив идентификаторы объектов, на которые указывают <tt class="docutils literal"><span class="pre">a</span></tt> и <tt class="docutils literal"><span class="pre">b</span></tt>, мы узнаем, связаны ли эти переменные с одним и тем же объектом:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">id</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">135044008</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">id</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="go">135044008</span>
+</pre></div>
+</div>
+<p>Мы два раза получили один и тот же идентификатор, а это значит, что Python создал только одну строку, и обе переменные, <tt class="docutils literal"><span class="pre">a</span></tt> и <tt class="docutils literal"><span class="pre">b</span></tt>, связаны с ней. Вы, вероятно, получите другое значение идентификатора.</p>
+<p>Интересно, что списки ведут себя иначе. Если создать два списка, то мы получим два объекта:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">id</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">135045528</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">id</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="go">135041704</span>
+</pre></div>
+</div>
+<p>На диаграмме это выглядит так:</p>
+<img alt="Иллюстрация списков" src="_images/ch8-2.png" />
+<p>Переменные <tt class="docutils literal"><span class="pre">a</span></tt> и <tt class="docutils literal"><span class="pre">b</span></tt> ссылаются на разные объекты, имеющие одинаковые значения.</p>
+</div>
+<div class="section" id="index-9">
+<span id="id11"></span><h2>8.12. Альтернативные имена<a class="headerlink" href="#index-9" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Поскольку переменные ссылаются на объекты, то, если мы присвоим одну переменную другой, обе переменные будут ссылаться на один и тот же объект:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">a</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">id</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">==</span> <span class="nb">id</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>На диаграмме это выглядит так:</p>
+<img alt="Иллюстрация списков" src="_images/ch8-3.png" />
+<p>Поскольку два разных имени, <tt class="docutils literal"><span class="pre">a</span></tt> и <tt class="docutils literal"><span class="pre">b</span></tt>, связаны с одним и тем же списком, будем называть их <strong>альтернативными именами</strong>. Изменения, сделанные с использованием одного имени, оказывают влияние и на другое:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">a</span>
+<span class="go">[5, 2, 3]</span>
+</pre></div>
+</div>
+<p>Хотя такое поведение может быть полезным, иногда оно оказывается нежелательным. Вообще говоря, лучше избегать альтернативных имен, работая с изменяемыми объектами. А вот для неизменяемых объектов альтернативные имена не представляют никаких проблем. Поэтому Python создает альтернативные имена для строк, когда представляется случай сэкономить память компьютера.</p>
+</div>
+<div class="section" id="index-10">
+<span id="id12"></span><h2>8.13. Клонирование списков<a class="headerlink" href="#index-10" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Если нужно изменить список и при этом сохранить копию оригинального списка, то понадобится сделать копию самого списка, а не ссылки на него. Этот процесс иногда называют <strong>клонированием</strong>.</p>
+<p>Простейший способ клонировать список &#8212; воспользоваться оператором среза:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="p">[:]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">b</span>
+<span class="go">[1, 2, 3]</span>
+</pre></div>
+</div>
+<p>Получение любого среза списка <tt class="docutils literal"><span class="pre">a</span></tt> приводит к созданию нового списка.  В данном случае срез включает весь список.</p>
+<p>Теперь можно изменять список <tt class="docutils literal"><span class="pre">b</span></tt>, не беспокоясь об <tt class="docutils literal"><span class="pre">a</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">a</span>
+<span class="go">[1, 2, 3]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="for">
+<span id="index-11"></span><h2>8.14. Списки и циклы <tt class="docutils literal"><span class="pre">for</span></tt><a class="headerlink" href="#for" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Цикл <tt class="docutils literal"><span class="pre">for</span></tt> также работает со списками. Синтаксис такой:</p>
+<div class="highlight-python"><pre>for &lt;переменная&gt; in &lt;список&gt;:
+    &lt;тело&gt;</pre>
+</div>
+<p>Это предложение эквивалентно следующему фрагменту кода:</p>
+<div class="highlight-python"><pre>i = 0
+while i &lt; len(&lt;список&gt;):
+    &lt;переменная&gt; = &lt;список&gt;[i]
+    &lt;тело&gt;
+    i += 1</pre>
+</div>
+<p>Цикл <tt class="docutils literal"><span class="pre">for</span></tt> более лаконичен, поскольку мы можем обойтись без переменной цикла <tt class="docutils literal"><span class="pre">i</span></tt>. Вот рассмотренный выше цикл, переписанный с помощью <tt class="docutils literal"><span class="pre">for</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">horseman</span> <span class="ow">in</span> <span class="n">horsemen</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">horseman</span>
+</pre></div>
+</div>
+<p>Он читается почти по-английски: для (каждого) horseman (англ.: всадник) в (списке) horsemen (англ.: всадники) напечатать horseman.</p>
+<p>Любое списочное выражение может быть использовано в цикле <tt class="docutils literal"><span class="pre">for</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">number</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">print</span>  <span class="n">number</span>
+
+<span class="k">for</span> <span class="n">fruit</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;banana&quot;</span><span class="p">,</span> <span class="s">&quot;apple&quot;</span><span class="p">,</span> <span class="s">&quot;quince&quot;</span><span class="p">]:</span>
+    <span class="k">print</span> <span class="s">&quot;I like to eat &quot;</span> <span class="o">+</span> <span class="n">fruit</span> <span class="o">+</span> <span class="s">&quot;s!&quot;</span>
+</pre></div>
+</div>
+<p>В первом примере выводятся все числа, кратные 3, между 0 и 19. Во втором примере выражается энтузиазм по поводу разных видов фруктов.</p>
+<p>Поскольку списки изменяемы, часто выполняется обход списка с изменением каждого из его элементов. Следующий пример возводит в квадрат все числа в списке от <tt class="docutils literal"><span class="pre">1</span></tt> до <tt class="docutils literal"><span class="pre">5</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">numbers</span><span class="p">)):</span>
+    <span class="n">numbers</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">numbers</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
+</pre></div>
+</div>
+<p>Подумайте над выражением <tt class="docutils literal"><span class="pre">range(len(numbers))</span></tt> и разберитесь, как оно работает. В данном случае нам нужно как <em>значение</em>, так и <em>индекс</em> элемента списка для того, чтобы мы могли присвоить ему новое значение.</p>
+<p>Такой прием довольно распространен в программировании, поэтому Python предлагает более красивый способ реализовать его:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">numbers</span><span class="p">):</span>
+    <span class="n">numbers</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="o">**</span><span class="mi">2</span>
+</pre></div>
+</div>
+<p>Здесь функция <tt class="docutils literal"><span class="pre">enumerate</span></tt> в каждой итерации возвращает очередной индекс и связанное с ним значение. Еще один пример того, как работает <tt class="docutils literal"><span class="pre">enumerate</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s">&#39;banana&#39;</span><span class="p">,</span> <span class="s">&#39;apple&#39;</span><span class="p">,</span> <span class="s">&#39;pear&#39;</span><span class="p">,</span> <span class="s">&#39;quince&#39;</span><span class="p">]):</span>
+<span class="gp">... </span>   <span class="k">print</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span>
+<span class="gp">...</span>
+<span class="go">0 banana</span>
+<span class="go">1 apple</span>
+<span class="go">2 pear</span>
+<span class="go">3 quince</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="index-12">
+<span id="id13"></span><h2>8.15. Списочные параметры<a class="headerlink" href="#index-12" title="Ссылка на этот заголовок">¶</a></h2>
+<p>При передаче списка в качестве аргумента передается ссылка на список, а не его копия. А поскольку списки изменяемы, то изменение параметра внутри функции означает также и изменение аргумента. Например, функция ниже принимает список в качестве аргумента и умножает каждый элемент списка на 2:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">double_stuff</span><span class="p">(</span><span class="n">a_list</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">a_list</span><span class="p">):</span>
+        <span class="n">a_list</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">value</span>
+</pre></div>
+</div>
+<p>Если поместить функцию <tt class="docutils literal"><span class="pre">double_stuff</span></tt> в файл <tt class="docutils literal"><span class="pre">ch08.py</span></tt>, то сможем так протестировать ее:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ch08</span> <span class="kn">import</span> <span class="n">double_stuff</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">things</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s">&#39;Spam&#39;</span><span class="p">,</span> <span class="mf">9.5</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">double_stuff</span><span class="p">(</span><span class="n">things</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">things</span>
+<span class="go">[4, 10, &#39;SpamSpam&#39;, 19.0]</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Параметр <tt class="docutils literal"><span class="pre">a_list</span></tt> и переменная <tt class="docutils literal"><span class="pre">things</span></tt> являются альтернативными именами одного и того же объекта.</p>
+<p>Если функция модифицирует списочный параметр, изменения будут видны в вызывающем коде.</p>
+</div>
+<div class="section" id="pure-func-mod">
+<span id="index-13"></span><span id="id14"></span><h2>8.16. Чистые и модифицирующие функции<a class="headerlink" href="#pure-func-mod" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Функции, которые принимают списки как аргументы и изменяют эти списки в ходе выполнения, называются <strong>модифицирующими</strong>, а изменения, которые они делают, называются <strong>побочным эффектом</strong>.</p>
+<p><strong>Чистая функция</strong> не производит побочных эффектов. Все ее связи с вызывающей программой сводятся к параметрам, которых она не изменяет, и возвращаемому значению. Вот чистая функция <tt class="docutils literal"><span class="pre">double_stuff</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">double_stuff</span><span class="p">(</span><span class="n">a_list</span><span class="p">):</span>
+    <span class="n">new_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">a_list</span><span class="p">:</span>
+        <span class="n">new_list</span> <span class="o">+=</span> <span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">value</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">new_list</span>
+</pre></div>
+</div>
+<p>Эта версия <tt class="docutils literal"><span class="pre">double_stuff</span></tt> не изменяет своих аргументов:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ch08</span> <span class="kn">import</span> <span class="n">double_stuff</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">things</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s">&#39;Spam&#39;</span><span class="p">,</span> <span class="mf">9.5</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">double_stuff</span><span class="p">(</span><span class="n">things</span><span class="p">)</span>
+<span class="go">[4, 10, &#39;SpamSpam&#39;, 19.0]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">things</span>
+<span class="go">[2, 5, &#39;Spam&#39;, 9.5]</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>При использовании чистой функции <tt class="docutils literal"><span class="pre">double_stuff</span></tt>, для изменения <tt class="docutils literal"><span class="pre">things</span></tt> вам понадобится присвоить возвращаемое значение <tt class="docutils literal"><span class="pre">things</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">things</span> <span class="o">=</span> <span class="n">double_stuff</span><span class="p">(</span><span class="n">things</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">things</span>
+<span class="go">[4, 10, &#39;SpamSpam&#39;, 19.0]</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id15">
+<h2>8.17. Какая функция лучше?<a class="headerlink" href="#id15" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Все, что можно сделать с помощью модифицирующих функций, может быть сделано и при помощи чистых функций. На самом деле, некоторые языки программирования поддерживают только чистые функции. Есть мнение, что программы, использующие только чистые функции, быстрее разрабатывать и в них закрадывается меньше ошибок. И все же, иногда модифицирующие функции удобны, а в отдельных случаях программы с чистыми функциями менее эффективны.</p>
+<p>Вообще, мы рекомендуем писать чистые функции всегда, когда это разумно, и прибегать к модифицирующим только в случаях, когда их использование дает несомненное преимущество.</p>
+</div>
+<div class="section" id="index-14">
+<span id="id16"></span><h2>8.18. Вложенные списки<a class="headerlink" href="#index-14" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Вложенный список &#8212; это список, являющийся элементом другого списка. В следующем списке элемент с индексом 3 есть вложенный список:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">nested</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;hello&quot;</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>Если ввести <tt class="docutils literal"><span class="pre">nested[3]</span></tt>, то получим <tt class="docutils literal"><span class="pre">[10,</span> <span class="pre">20]</span></tt>. Извлечь элемент из вложенного списка можно за два шага:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">elem</span> <span class="o">=</span> <span class="n">nested</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">elem</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">10</span>
+</pre></div>
+</div>
+<p>А можно объединить эти два шага в выражение:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">nested</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+<span class="go">20</span>
+</pre></div>
+</div>
+<p>Оператор квадратная скобка вычисляется слева направо, так что это выражение берет 3-й элемент списка <tt class="docutils literal"><span class="pre">nested</span></tt> и извлекает из него 1-ый элемент.</p>
+</div>
+<div class="section" id="index-15">
+<span id="id17"></span><h2>8.19. Матрицы<a class="headerlink" href="#index-15" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Вложенные списки часто используют для того, чтобы представлять матрицы. Например, матрицу</p>
+<img alt="Матрица" src="_images/ch8-4.png" />
+<p>можно представить так:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">matrix</span></tt> есть список из трех элементов, в котором каждый элемент задает строку матрицы. Можно получить целую строку матрицы, как обычно:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="go">[4, 5, 6]</span>
+</pre></div>
+</div>
+<p>Также можно извлечь отдельный элемент матрицы, используя два индекса:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+<span class="go">5</span>
+</pre></div>
+</div>
+<p>Первый индекс выбирает строку, а второй &#8212; столбец. Хотя этот способ представления матриц самый распространенный, он не является единственным. Его вариацией является список столбцов вместо списка строк. Позднее мы увидим более радикальную альтернативу, использующую <em>словарь</em>.</p>
+</div>
+<div class="section" id="index-16">
+<span id="id18"></span><h2>8.20. Разработка через тестирование<a class="headerlink" href="#index-16" title="Ссылка на этот заголовок">¶</a></h2>
+<p><strong>Разработка через тестирование</strong> (англ.: Test-driven development, TDD) &#8212; это практика разработки программ, в которой программа создается серией небольших итераций, в каждой из которых <em>сначала</em> пишутся автоматические тесты, а затем код, реализующий тестируемую функциональность. От итерации к итерации растет реализованная и оттестированная функциональность.</p>
+<p>Продемонстрируем разработку через тестирование с помощью доктестов. Скажем, нам нужна функция, которая создает матрицу с <tt class="docutils literal"><span class="pre">rows</span></tt> строк и <tt class="docutils literal"><span class="pre">columns</span></tt> столбцов, принимая аргументы для <tt class="docutils literal"><span class="pre">rows</span></tt> и <tt class="docutils literal"><span class="pre">columns</span></tt>.</p>
+<p>Сначала подготовим тест для этой функции в файле <tt class="docutils literal"><span class="pre">matrices.py</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">make_matrix</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">columns</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; make_matrix(3, 5)</span>
+<span class="sd">      [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Выполнив скрипт, видим, что тест не прошел:</p>
+<div class="highlight-python"><pre>**********************************************************************
+File "matrices.py", line 3, in __main__.make_matrix
+Failed example:
+    make_matrix(3, 5)
+Expected:
+    [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
+Got nothing
+**********************************************************************
+1 items had failures:
+   1 of   1 in __main__.make_matrix
+***Test Failed*** 1 failures.</pre>
+</div>
+<p>Тест не проходит, поскольку тело функции не содержит ничего, кроме строки в тройных кавычках, и поэтому возвращает <tt class="docutils literal"><span class="pre">None</span></tt>. Наш тест требует, чтобы функция возвращала матрицу 3 x 5, заполненную нулями.</p>
+<p>Правила разработки через тестирование говорят, что для начала нужно написать <em>самый простой вариант</em>, который бы удовлетворял тест. Так что, в этом случае, просто вернем ожидаемый результат:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">make_matrix</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">columns</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; make_matrix(3, 5)</span>
+<span class="sd">      [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>Теперь при выполнении скрипта тест успешно проходит, но наша реализация <tt class="docutils literal"><span class="pre">make_matrix</span></tt> всегда возвращает один и тот же результат, а это явно не то, что имелось в виду. В качестве мотивации дальнейших улучшений добавим тест:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">make_matrix</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">columns</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; make_matrix(3, 5)</span>
+<span class="sd">      [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]</span>
+<span class="sd">      &gt;&gt;&gt; make_matrix(4, 2)</span>
+<span class="sd">      [[0, 0], [0, 0], [0, 0], [0, 0]]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>Как и следовало ожидать, тест не проходит:</p>
+<div class="highlight-python"><pre>**********************************************************************
+File "matrices.py", line 5, in __main__.make_matrix
+Failed example:
+    make_matrix(4, 2)
+Expected:
+    [[0, 0], [0, 0], [0, 0], [0, 0]]
+Got:
+    [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
+**********************************************************************
+1 items had failures:
+   1 of   2 in __main__.make_matrix
+***Test Failed*** 1 failures.</pre>
+</div>
+<p>Этот процесс называется разработкой <em>через</em> тестирование, потому что код пишется только тогда, когда имеется тест, который не проходит. Мотивированные последним тестом, теперь напишем более общее решение:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">make_matrix</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">columns</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; make_matrix(3, 5)</span>
+<span class="sd">      [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]</span>
+<span class="sd">      &gt;&gt;&gt; make_matrix(4, 2)</span>
+<span class="sd">      [[0, 0], [0, 0], [0, 0], [0, 0]]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">columns</span><span class="p">]</span> <span class="o">*</span> <span class="n">rows</span>
+</pre></div>
+</div>
+<p>Это решение, похоже, работает, поскольку тесты проходят. Однако, начав пользоваться новой функцией, быстро обнаружим баг:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">matrices</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">make_matrix</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span>
+<span class="go">[[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span>
+<span class="go">[[0, 0, 7], [0, 0, 7], [0, 0, 7], [0, 0, 7]]</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Мы хотели присвоить значение 7 элементу во второй строке и третьем столбце, но, вместо этого, значение 7 получили <em>все</em> элементы третьего столбца!</p>
+<p>По размышлении становится ясно, что в нашем текущем решении каждая строка матрицы &#8212; всего лишь ссылка на один и тот же список. Это определенно не то, что нам нужно. Приступая к исправлению бага, <em>сначала напишем тест</em>, демонстрирующий наличие этого бага:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">make_matrix</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">columns</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; make_matrix(3, 5)</span>
+<span class="sd">      [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]</span>
+<span class="sd">      &gt;&gt;&gt; make_matrix(4, 2)</span>
+<span class="sd">      [[0, 0], [0, 0], [0, 0], [0, 0]]</span>
+<span class="sd">      &gt;&gt;&gt; m = make_matrix(4, 2)</span>
+<span class="sd">      &gt;&gt;&gt; m[1][1] = 7</span>
+<span class="sd">      &gt;&gt;&gt; m</span>
+<span class="sd">      [[0, 0], [0, 7], [0, 0], [0, 0]]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">columns</span><span class="p">]</span> <span class="o">*</span> <span class="n">rows</span>
+</pre></div>
+</div>
+<p>Теперь, имея тест, который демонстрирует баг в программе, мы должны найти лучшее решение:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">make_matrix</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">columns</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; make_matrix(3, 5)</span>
+<span class="sd">      [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]</span>
+<span class="sd">      &gt;&gt;&gt; make_matrix(4, 2)</span>
+<span class="sd">      [[0, 0], [0, 0], [0, 0], [0, 0]]</span>
+<span class="sd">      &gt;&gt;&gt; m = make_matrix(4, 2)</span>
+<span class="sd">      &gt;&gt;&gt; m[1][1] = 7</span>
+<span class="sd">      &gt;&gt;&gt; m</span>
+<span class="sd">      [[0, 0], [0, 7], [0, 0], [0, 0]]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">matrix</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span><span class="p">):</span>
+        <span class="n">matrix</span> <span class="o">+=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">columns</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">matrix</span>
+</pre></div>
+</div>
+<p>Процесс разработки через тестирование имеет ряд преимуществ. Этот процесс:</p>
+<ul class="simple">
+<li>заставляет конкретно думать о задаче, которую нужно решить, <em>прежде</em> чем
+пытаться ее решить,</li>
+<li>поощряет разбивать сложные задачи на более мелкие и простые, и пошагово
+приближаться к решению задачи в целом,</li>
+<li>дает набор автоматических тестов для программы, облегчая внесение в нее
+изменений и дополнений в дальнейшем.</li>
+</ul>
+</div>
+<div class="section" id="id19">
+<h2>8.21. Строки и списки<a class="headerlink" href="#id19" title="Ссылка на этот заголовок">¶</a></h2>
+<p>В Python есть функция <tt class="docutils literal"><span class="pre">list</span></tt>, которая принимает значение некоторой последовательности как аргумент и создает список из ее элементов.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="s">&quot;Crunchy Frog&quot;</span><span class="p">)</span>
+<span class="go">[&#39;C&#39;, &#39;r&#39;, &#39;u&#39;, &#39;n&#39;, &#39;c&#39;, &#39;h&#39;, &#39;y&#39;, &#39; &#39;, &#39;F&#39;, &#39;r&#39;, &#39;o&#39;, &#39;g&#39;]</span>
+</pre></div>
+</div>
+<p>Также существует функция <tt class="docutils literal"><span class="pre">str</span></tt>, которая берет любое значение Python как аргумент и возвращает его строковое представление.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">&#39;5&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+<span class="go">&#39;None&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="s">&quot;nope&quot;</span><span class="p">))</span>
+<span class="go">&quot;[&#39;n&#39;, &#39;o&#39;, &#39;p&#39;, &#39;e&#39;]&quot;</span>
+</pre></div>
+</div>
+<p>Как видно из последнего примера, с помощью <tt class="docutils literal"><span class="pre">str</span></tt> не удается соединить вместе элементы списка символов. Это можно сделать с помощью функции <tt class="docutils literal"><span class="pre">join</span></tt> из модуля <tt class="docutils literal"><span class="pre">string</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">string</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">char_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="s">&quot;Frog&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">char_list</span>
+<span class="go">[&#39;F&#39;, &#39;r&#39;, &#39;o&#39;, &#39;g&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">string</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">char_list</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+<span class="go">&#39;Frog&#39;</span>
+</pre></div>
+</div>
+<p>Две очень полезные функции модуля <tt class="docutils literal"><span class="pre">string</span></tt> имеют дело со списками строк. Функция <tt class="docutils literal"><span class="pre">split</span></tt> разбивает строку на слова, возвращая список слов.  По умолчанию считается, что слова отделяются друг от друга одним или более пробельными символами:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">string</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">song</span> <span class="o">=</span> <span class="s">&quot;The rain in Spain...&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">song</span><span class="p">)</span>
+<span class="go">[&#39;The&#39;, &#39;rain&#39;, &#39;in&#39;, &#39;Spain...&#39;]</span>
+</pre></div>
+</div>
+<p>Необязательный аргумент позволяет указать, какие символы считать разделителями слов. В следующем примере в качестве разделителя указана последовательность двух символов <tt class="docutils literal"><span class="pre">ai</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">song</span><span class="p">,</span> <span class="s">&#39;ai&#39;</span><span class="p">)</span>
+<span class="go">[&#39;The r&#39;, &#39;n in Sp&#39;, &#39;n...&#39;]</span>
+</pre></div>
+</div>
+<p>Заметьте, что <tt class="docutils literal"><span class="pre">ai</span></tt> не попадает в список.</p>
+<p>Функция <tt class="docutils literal"><span class="pre">string.join</span></tt> делает обратное функции <tt class="docutils literal"><span class="pre">string.split</span></tt>. Она принимает два аргумента: список строк и <em>разделитель</em>, который будет разделять элементы списка в результирующей строке.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">string</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;crunchy&#39;</span><span class="p">,</span> <span class="s">&#39;raw&#39;</span><span class="p">,</span> <span class="s">&#39;unboned&#39;</span><span class="p">,</span> <span class="s">&#39;real&#39;</span><span class="p">,</span> <span class="s">&#39;dead&#39;</span><span class="p">,</span> <span class="s">&#39;frog&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">string</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="s">&#39; &#39;</span><span class="p">)</span>
+<span class="go">&#39;crunchy raw unboned real dead frog&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">string</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="s">&#39;**&#39;</span><span class="p">)</span>
+<span class="go">&#39;crunchy**raw**unboned**real**dead**frog&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id20">
+<h2>8.22. Глоссарий<a class="headerlink" href="#id20" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="glossary docutils">
+<dt id="term-">альтернативные имена</dt>
+<dd>Имена нескольких переменных, ссылающиеся на один и тот же объект.</dd>
+<dt id="term-1">вложенный список</dt>
+<dd>Список, являющийся элементом другого списка.</dd>
+<dt id="term-2">изменяемый тип данных</dt>
+<dd>Тип данных, элементы которого могут быть изменены. Все изменяемые типы
+являются составными типами. Список является изменяемым типом данных;
+строка &#8212; неизменяемым.</dd>
+<dt id="term-3">индекс</dt>
+<dd>Целочисленное выражение, указывающее на элемент последовательности (например,
+строки или списка).</dd>
+<dt id="term-4">клонирование</dt>
+<dd>Создание нового объекта, имеющего то же значение, что и существующий.
+В отличие от клонирования, присваивание одной переменной другой создает
+альтернативное имя, а не копию объекта.</dd>
+<dt id="term-5">модифицирующая функция</dt>
+<dd>Функция, которая изменяет свои параметры. Только изменяемые типы могут
+изменяться модифицирующей функцией.</dd>
+<dt id="term-6">обход списка</dt>
+<dd>Последовательная работа с каждым элементом списка.</dd>
+<dt id="term-7">объект</dt>
+<dd>Нечто, с чем может быть связано имя переменной.</dd>
+<dt id="term-8">побочный эффект</dt>
+<dd>Изменение в состоянии программы, сделанное вызванной функцией, иное,
+чем возврат функцией значения. Побочные эффекты производят только
+модифицирующие функции.</dd>
+<dt id="term-9">последовательность</dt>
+<dd>Тип данных, представляющий собой упорядоченный набор элементов, каждый
+из которых выбирается по индексу.</dd>
+<dt id="term-10">разработка через тестирование</dt>
+<dd>Техника программирования, при которой автоматические модульные тесты
+для программы пишутся раньше самой программы и,
+по существу, управляют её разработкой. (см. статью в Википедии
+<a class="reference external" href="http://ru.wikipedia.org/wiki/%D0%A0%D0%B0%D0%B7%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B0_%D1%87%D0%B5%D1%80%D0%B5%D0%B7_%D1%82%D0%B5%D1%81%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5">Разработка через тестирование</a>.)</dd>
+<dt id="term-11">список</dt>
+<dd>Именованный набор элементов, в котором каждый элемент выбирается по
+индексу.</dd>
+<dt id="term-12">чистая функция</dt>
+<dd>Функция без побочных эффектов. Чистая функция влияет на вызывающий код
+только через возвращаемое значение.</dd>
+<dt id="term-13">шаг последовательности</dt>
+<dd>Интервал между значениями элементов линейной последовательности. Третий
+(необязательный) аргумент функции <tt class="docutils literal"><span class="pre">range</span></tt>; если не указан, то по
+умолчанию получает значение 1.</dd>
+<dt id="term-14">элемент</dt>
+<dd>Одно из значений в списке (или другой последовательности). Оператор
+<tt class="docutils literal"><span class="pre">[]</span></tt> выбирает элемент списка.</dd>
+</dl>
+</div>
+<div class="section" id="id21">
+<h2>8.23. Упражнения<a class="headerlink" href="#id21" title="Ссылка на этот заголовок">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Напишите цикл, который обходит список</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="s">&#39;spam!&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;Brie&#39;</span><span class="p">,</span> <span class="s">&#39;Roquefort&#39;</span><span class="p">,</span> <span class="s">&#39;Pol le Veq&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>и выводит длину каждого элемента. Что происходит, когда вы передаете целое
+число функции <tt class="docutils literal"><span class="pre">len</span></tt>? Замените <tt class="docutils literal"><span class="pre">1</span></tt> на <tt class="docutils literal"><span class="pre">'one'</span></tt> и выполните вашу
+программу снова.</p>
+</li>
+<li><p class="first">Создайте файл <tt class="docutils literal"><span class="pre">ch08e02.py</span></tt> следующего содержания:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#  Add your doctests here:</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c"># Write your Python code here:</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Добавляйте следующие наборы доктестов в докстроку в начале файла и пишите
+код Python, который обеспечит прохождение доктестов. Добавляйте по одному
+набору доктестов за один раз.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">   &gt;&gt;&gt; a_list[3]</span>
+<span class="sd">   42</span>
+<span class="sd">   &gt;&gt;&gt; a_list[6]</span>
+<span class="sd">   &#39;Ni!&#39;</span>
+<span class="sd">   &gt;&gt;&gt; len(a_list)</span>
+<span class="sd">   8</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">   &gt;&gt;&gt; b_list[1:]</span>
+<span class="sd">   [&#39;Stills&#39;, &#39;Nash&#39;]</span>
+<span class="sd">   &gt;&gt;&gt; group = b_list + c_list</span>
+<span class="sd">   &gt;&gt;&gt; group[-1]</span>
+<span class="sd">   &#39;Young&#39;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">   &gt;&gt;&gt; &#39;war&#39; in mystery_list</span>
+<span class="sd">   False</span>
+<span class="sd">   &gt;&gt;&gt; &#39;peace&#39; in mystery_list</span>
+<span class="sd">   True</span>
+<span class="sd">   &gt;&gt;&gt; &#39;justice&#39; in mystery_list</span>
+<span class="sd">   True</span>
+<span class="sd">   &gt;&gt;&gt; &#39;oppression&#39; in mystery_list</span>
+<span class="sd">   False</span>
+<span class="sd">   &gt;&gt;&gt; &#39;equality&#39; in mystery_list</span>
+<span class="sd">   True</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">   &gt;&gt;&gt; range(a, b, c)</span>
+<span class="sd">   [5, 9, 13, 17]</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Не добавляйте новый набор доктестов до тех пор, пока все предыдущие
+не будут проходить успешно.</p>
+</li>
+<li><p class="first">Что скажет интерпретатор Python на следующее предложение?</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Три аргумента функции <em>range</em> &#8212; это <em>start</em>, <em>stop</em> и <em>step</em>,
+соответственно. В этом примере <tt class="docutils literal"><span class="pre">start</span></tt> больше, чем <tt class="docutils literal"><span class="pre">stop</span></tt>. А что
+произойдет, если <tt class="docutils literal"><span class="pre">start</span> <span class="pre">&lt;</span> <span class="pre">stop</span></tt> и <tt class="docutils literal"><span class="pre">step</span> <span class="pre">&lt;</span> <span class="pre">0</span></tt>? Сформулируйте
+правило о том, как соотносятся <tt class="docutils literal"><span class="pre">start</span></tt>, <tt class="docutils literal"><span class="pre">stop</span></tt> и <tt class="docutils literal"><span class="pre">step</span></tt>.</p>
+</li>
+<li><div class="first highlight-python"><div class="highlight"><pre><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="p">[:]</span>
+<span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
+</pre></div>
+</div>
+<p>Нарисуйте диаграмму для <tt class="docutils literal"><span class="pre">a</span></tt> и <tt class="docutils literal"><span class="pre">b</span></tt> до и после выполнения
+третьей строки.</p>
+</li>
+<li><p class="first">Что выведет следующая программа?</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">this</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;I&#39;</span><span class="p">,</span> <span class="s">&#39;am&#39;</span><span class="p">,</span> <span class="s">&#39;not&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;crook&#39;</span><span class="p">]</span>
+<span class="n">that</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;I&#39;</span><span class="p">,</span> <span class="s">&#39;am&#39;</span><span class="p">,</span> <span class="s">&#39;not&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;crook&#39;</span><span class="p">]</span>
+<span class="k">print</span> <span class="s">&quot;Test 1: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">this</span><span class="p">)</span> <span class="o">==</span> <span class="nb">id</span><span class="p">(</span><span class="n">that</span><span class="p">))</span>
+<span class="n">that</span> <span class="o">=</span> <span class="n">this</span>
+<span class="k">print</span> <span class="s">&quot;Test 2: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">this</span><span class="p">)</span> <span class="o">==</span> <span class="nb">id</span><span class="p">(</span><span class="n">that</span><span class="p">))</span>
+</pre></div>
+</div>
+<p><em>Подробно</em> объясните результаты.</p>
+</li>
+<li><p class="first">Создайте файл <tt class="docutils literal"><span class="pre">ch08e06.py</span></tt> и, следуя процедуре, описанной в упражнении 2,
+добейтесь прохождения следующих доктестов:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">   &gt;&gt;&gt; 13 in junk</span>
+<span class="sd">   True</span>
+<span class="sd">   &gt;&gt;&gt; del junk[4]</span>
+<span class="sd">   &gt;&gt;&gt; junk</span>
+<span class="sd">   [3, 7, 9, 10, 17, 21, 24, 27]</span>
+<span class="sd">   &gt;&gt;&gt; del junk[a:b]</span>
+<span class="sd">   &gt;&gt;&gt; junk</span>
+<span class="sd">   [3, 7, 27]</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">   &gt;&gt;&gt; nlist[2][1]</span>
+<span class="sd">   0</span>
+<span class="sd">   &gt;&gt;&gt; nlist[0][2]</span>
+<span class="sd">   17</span>
+<span class="sd">   &gt;&gt;&gt; nlist[1][1]</span>
+<span class="sd">   5</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">   &gt;&gt;&gt; import string</span>
+<span class="sd">   &gt;&gt;&gt; string.split(message, &#39;??&#39;)</span>
+<span class="sd">   [&#39;this&#39;, &#39;and&#39;, &#39;that&#39;]</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Напишите функцию <tt class="docutils literal"><span class="pre">add_lists(a,</span> <span class="pre">b)</span></tt>, которая берет два списка чисел
+одинаковой длины и возвращает новый список с суммами соответствующих
+элементов этих списков.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">add_lists</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; add_lists([1, 1], [1, 1])</span>
+<span class="sd">      [2, 2]</span>
+<span class="sd">      &gt;&gt;&gt; add_lists([1, 2], [1, 4])</span>
+<span class="sd">      [2, 6]</span>
+<span class="sd">      &gt;&gt;&gt; add_lists([1, 2, 1], [1, 4, 3])</span>
+<span class="sd">      [2, 6, 4]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Приведенные тесты для <tt class="docutils literal"><span class="pre">add_lists</span></tt> должны успешно пройти.</p>
+</li>
+<li><p class="first">Напишите функцию <tt class="docutils literal"><span class="pre">mult_lists(a,</span> <span class="pre">b)</span></tt>, которая берет два списка чисел
+одинаковой длины и возвращает сумму произведений соответствующих элементов
+этих списков.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">mult_lists</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; mult_lists([1, 1], [1, 1])</span>
+<span class="sd">      2</span>
+<span class="sd">      &gt;&gt;&gt; mult_lists([1, 2], [1, 4])</span>
+<span class="sd">      9</span>
+<span class="sd">      &gt;&gt;&gt; mult_lists([1, 2, 1], [1, 4, 3])</span>
+<span class="sd">      12</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Убедитесь, что приведенные доктесты для <tt class="docutils literal"><span class="pre">mult_lists</span></tt> проходит успешно.</p>
+</li>
+<li><p class="first">Добавьте следующие две функции в файл <tt class="docutils literal"><span class="pre">matrices.py</span></tt>, созданный в разделе
+о разработке через тестирование:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">add_row</span><span class="p">(</span><span class="n">matrix</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; m = [[0, 0], [0, 0]]</span>
+<span class="sd">      &gt;&gt;&gt; add_row(m)</span>
+<span class="sd">      [[0, 0], [0, 0], [0, 0]]</span>
+<span class="sd">      &gt;&gt;&gt; n = [[3, 2, 5], [1, 4, 7]]</span>
+<span class="sd">      &gt;&gt;&gt; add_row(n)</span>
+<span class="sd">      [[3, 2, 5], [1, 4, 7], [0, 0, 0]]</span>
+<span class="sd">      &gt;&gt;&gt; n</span>
+<span class="sd">      [[3, 2, 5], [1, 4, 7]]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">add_column</span><span class="p">(</span><span class="n">matrix</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; m = [[0, 0], [0, 0]]</span>
+<span class="sd">      &gt;&gt;&gt; add_column(m)</span>
+<span class="sd">      [[0, 0, 0], [0, 0, 0]]</span>
+<span class="sd">      &gt;&gt;&gt; n = [[3, 2], [5, 1], [4, 7]]</span>
+<span class="sd">      &gt;&gt;&gt; add_column(n)</span>
+<span class="sd">      [[3, 2, 0], [5, 1, 0], [4, 7, 0]]</span>
+<span class="sd">      &gt;&gt;&gt; n</span>
+<span class="sd">      [[3, 2], [5, 1], [4, 7]]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Ваши новые функции должны пройти доктесты. Заметьте, что последний из
+доктестов для каждой функции проверяет, что <tt class="docutils literal"><span class="pre">add_row</span></tt> и <tt class="docutils literal"><span class="pre">add_column</span></tt>
+являются чистыми функциями.</p>
+<p>Подсказка:* в Python имеется модуль <tt class="docutils literal"><span class="pre">copy</span></tt>
+с функцией <tt class="docutils literal"><span class="pre">deepcopy</span></tt>, которая может облегчить вам задачу. Мы подробнее
+поговорим о <tt class="docutils literal"><span class="pre">deepcopy</span></tt> позднее, но, если хотите попробовать эту функцию
+сейчас, погуглите <em>python copy module</em>.</p>
+</li>
+<li><p class="first">Напишите функцию <tt class="docutils literal"><span class="pre">add_matrices(m1,</span> <span class="pre">m2)</span></tt>, которая складывает <tt class="docutils literal"><span class="pre">m1</span></tt> и <tt class="docutils literal"><span class="pre">m2</span></tt>
+и возвращает новую матрицу, содержащую их сумму. Мы сделаем допущение, что
+<tt class="docutils literal"><span class="pre">m1</span></tt> и <tt class="docutils literal"><span class="pre">m2</span></tt> одинакового размера, и будем складывать матрицы, складывая
+соответствующие их значения.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">add_matrices</span><span class="p">(</span><span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; a = [[1, 2], [3, 4]]</span>
+<span class="sd">      &gt;&gt;&gt; b = [[2, 2], [2, 2]]</span>
+<span class="sd">      &gt;&gt;&gt; add_matrices(a, b)</span>
+<span class="sd">      [[3, 4], [5, 6]]</span>
+<span class="sd">      &gt;&gt;&gt; c = [[8, 2], [3, 4], [5, 7]]</span>
+<span class="sd">      &gt;&gt;&gt; d = [[3, 2], [9, 2], [10, 12]]</span>
+<span class="sd">      &gt;&gt;&gt; add_matrices(c, d)</span>
+<span class="sd">      [[11, 4], [12, 6], [15, 19]]</span>
+<span class="sd">      &gt;&gt;&gt; c</span>
+<span class="sd">      [[8, 2], [3, 4], [5, 7]]</span>
+<span class="sd">      &gt;&gt;&gt; d</span>
+<span class="sd">      [[3, 2], [9, 2], [10, 12]]</span>
+<span class="sd">   &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Добавьте эту новую функцию в <tt class="docutils literal"><span class="pre">matrices.py</span></tt> и убедитесь, что она проходит
+приведенные выше тесты. Два последних доктеста проверяют, что
+<tt class="docutils literal"><span class="pre">add_matrices</span></tt> является чистой функцией.</p>
+</li>
+<li><p class="first">Напишите функцию <tt class="docutils literal"><span class="pre">scalar_mult(n,</span> <span class="pre">m)</span></tt>, которая умножает матрицу <tt class="docutils literal"><span class="pre">m</span></tt>
+на число <tt class="docutils literal"><span class="pre">n</span></tt>. Убедитесь, что ваша функция проходит приведенные доктесты:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">scalar_mult</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; a = [[1, 2], [3, 4]]</span>
+<span class="sd">      &gt;&gt;&gt; scalar_mult(3, a)</span>
+<span class="sd">      [[3, 6], [9, 12]]</span>
+<span class="sd">      &gt;&gt;&gt; b = [[3, 5, 7], [1, 1, 1], [0, 2, 0], [2, 2, 3]]</span>
+<span class="sd">      &gt;&gt;&gt; scalar_mult(10, b)</span>
+<span class="sd">      [[30, 50, 70], [10, 10, 10], [0, 20, 0], [20, 20, 30]]</span>
+<span class="sd">      &gt;&gt;&gt; b</span>
+<span class="sd">      [[3, 5, 7], [1, 1, 1], [0, 2, 0], [2, 2, 3]]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Добавьте новые функции в <tt class="docutils literal"><span class="pre">matrices.py</span></tt>, удовлетворяющие приведенным доктестам:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">row_times_column</span><span class="p">(</span><span class="n">m1</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">m2</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; row_times_column([[1, 2], [3, 4]], 0, [[5, 6], [7, 8]], 0)</span>
+<span class="sd">      19</span>
+<span class="sd">      &gt;&gt;&gt; row_times_column([[1, 2], [3, 4]], 0, [[5, 6], [7, 8]], 1)</span>
+<span class="sd">      22</span>
+<span class="sd">      &gt;&gt;&gt; row_times_column([[1, 2], [3, 4]], 1, [[5, 6], [7, 8]], 0)</span>
+<span class="sd">      43</span>
+<span class="sd">      &gt;&gt;&gt; row_times_column([[1, 2], [3, 4]], 1, [[5, 6], [7, 8]], 1)</span>
+<span class="sd">      50</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">matrix_mult</span><span class="p">(</span><span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">):</span>
+   <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; matrix_mult([[1, 2], [3,  4]], [[5, 6], [7, 8]])</span>
+<span class="sd">      [[19, 22], [43, 50]]</span>
+<span class="sd">      &gt;&gt;&gt; matrix_mult([[1, 2, 3], [4,  5, 6]], [[7, 8], [9, 1], [2, 3]])</span>
+<span class="sd">      [[31, 19], [85, 55]]</span>
+<span class="sd">      &gt;&gt;&gt; matrix_mult([[7, 8], [9, 1], [2, 3]], [[1, 2, 3], [4, 5, 6]])</span>
+<span class="sd">      [[39, 54, 69], [13, 23, 33], [14, 19, 24]]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">В режиме интерпретатора Python введите:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">string</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">song</span> <span class="o">=</span> <span class="s">&quot;The rain in Spain...&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">string</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">song</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Опишите, как соотносятся <tt class="docutils literal"><span class="pre">string.join(string.split(song))</span></tt> и <tt class="docutils literal"><span class="pre">song</span></tt>.
+Верно ли это соотношение для любых строк? В каком случае строки получатся
+разные?</p>
+</li>
+<li><p class="first">Напишите функцию <tt class="docutils literal"><span class="pre">replace(s,</span> <span class="pre">old,</span> <span class="pre">new)</span></tt>, которая заменяет все вхождения
+<tt class="docutils literal"><span class="pre">old</span></tt> на <tt class="docutils literal"><span class="pre">new</span></tt> в строке <tt class="docutils literal"><span class="pre">s</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">replace</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; replace(&#39;Mississippi&#39;, &#39;i&#39;, &#39;I&#39;)</span>
+<span class="sd">      &#39;MIssIssIppI&#39;</span>
+<span class="sd">      &gt;&gt;&gt; s = &#39;I love spom!  Spom is my favorite food.  Spom, spom, spom, yum!&#39;</span>
+<span class="sd">      &gt;&gt;&gt; replace(s, &#39;om&#39;, &#39;am&#39;)</span>
+<span class="sd">      &#39;I love spam!  Spam is my favorite food.  Spam, spam, spam, yum!&#39;</span>
+<span class="sd">      &gt;&gt;&gt; replace(s, &#39;o&#39;, &#39;a&#39;)</span>
+<span class="sd">      &#39;I lave spam!  Spam is my favarite faad.  Spam, spam, spam, yum!&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Ваша программа должна удовлетворять приведенным доктестам. Подсказка:
+воспользуйтесь <tt class="docutils literal"><span class="pre">string.split</span></tt> и <tt class="docutils literal"><span class="pre">string.join</span></tt>.</p>
+</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             >словарь</a></li>
+        <li class="right" >
+          <a href="ch09.html" title="9. Модули и файлы"
+             >следующий</a> |</li>
+        <li class="right" >
+          <a href="ch07.html" title="7. Строки"
+             >предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="copyright.html">Copyright</a> 2009, 2012, Джеффри Элкнер, Аллен Б. Дауни, Крис Мейерс, Андрей Трофимов.
+      При создании использован <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,347 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>16. Связные списки &mdash; Учимся с Python</title>
+    
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2nd Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="Учимся с Python" href="index.html" />
+    <link rel="next" title="17. Стеки" href="ch17.html" />
+    <link rel="prev" title="15. Наследование" href="ch15.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             accesskey="I">словарь</a></li>
+        <li class="right" >
+          <a href="ch17.html" title="17. Стеки"
+             accesskey="N">следующий</a> |</li>
+        <li class="right" >
+          <a href="ch15.html" title="15. Наследование"
+             accesskey="P">предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>16. Связные списки<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
+<div class="section" id="index-0">
+<span id="id2"></span><h2>16.1. Знакомьтесь: связный список<a class="headerlink" href="#index-0" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Мы уже видели примеры атрибутов, которые ссылаются на другие объекты. Ссылки на объекты использует и широко известная структура данных <strong>связный список</strong>.</p>
+<p><a class="reference external" href="http://ru.wikipedia.org/wiki/%D0%A1%D0%B2%D1%8F%D0%B7%D0%BD%D1%8B%D0%B9_%D1%81%D0%BF%D0%B8%D1%81%D0%BE%D0%BA">Связные списки</a> состоят из <strong>узлов</strong>, каждый из которых содержит ссылку на следующий узел в списке. Кроме того, каждый узел содержит какие-то полезные данные.</p>
+<p>Связный список относится к <strong>рекурсивным структурам данных</strong>, поскольку его определение рекурсивно.</p>
+<p>Связный список представляет собой либо</p>
+<ul class="simple">
+<li>пустой список, представленный значением <tt class="docutils literal"><span class="pre">None</span></tt>, либо</li>
+<li>узел, содержащий данные и ссылку на связный список.</li>
+</ul>
+<p>Рекурсивные структуры данных могут обрабатываться рекурсивными методами.</p>
+</div>
+<div class="section" id="node">
+<h2>16.2. Класс <tt class="docutils literal"><span class="pre">Node</span></tt><a class="headerlink" href="#node" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Как обычно при определении нового класса, мы начнем с инициализирующего метода и метода <tt class="docutils literal"><span class="pre">__str__</span></tt>, обеспечив возможность создания и отображения объектов нового класса:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cargo</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="nb">next</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cargo</span> <span class="o">=</span> <span class="n">cargo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span>  <span class="o">=</span> <span class="nb">next</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cargo</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Параметры инициализирующего метода опциональны. По умолчанию и данные, <tt class="docutils literal"><span class="pre">cargo</span></tt>, и ссылка, <tt class="docutils literal"><span class="pre">next</span></tt>, получают значения <tt class="docutils literal"><span class="pre">None</span></tt>.</p>
+<p>Строковым представлением узла будет строковое представление данных этого узла. Поскольку функции <tt class="docutils literal"><span class="pre">str</span></tt> можно передать любое значение, в нашем узле можно хранить любое значение.</p>
+<p>Для тестирования создадим объект <tt class="docutils literal"><span class="pre">Node</span></tt> и выведем его на печать:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">node</span>
+<span class="go">test</span>
+</pre></div>
+</div>
+<p>Чтобы было интереснее, нам нужен список с более чем одним узлом:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">node1</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node2</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node3</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Этот код создает три узла, но у нас нет списка, так как ни один узел не связан с другим. Посмотрите на рисунок:</p>
+<img alt="Три не связанных узла" src="_images/ch16-1.png" />
+<p>Чтобы связать узлы, нам нужно заставить первый узел ссылаться на второй, а второй &#8212; на третий:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">node1</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">node2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node2</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">node3</span>
+</pre></div>
+</div>
+<p>Ссылка в третьем узле имеет значение <tt class="docutils literal"><span class="pre">None</span></tt>, что означает конец списка.</p>
+<img alt="Три связанных узла" src="_images/ch16-2.png" />
+<p>Теперь вы знаете, как создавать узлы и связывать их в списки. Но, возможно, пока не понимаете, зачем это нужно.</p>
+</div>
+<div class="section" id="index-1">
+<span id="id3"></span><h2>16.3. Списки как коллекции<a class="headerlink" href="#index-1" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Списки полезны, поскольку дают возможность собрать многочисленные объекты в единую сущность, иногда называемую <strong>коллекцией</strong>. В примере выше, первый узел списка может служить ссылкой на весь список.</p>
+<p>Чтобы передать связный список в качестве аргумента, достаточно передать ссылку на первый узел. Например, функция <tt class="docutils literal"><span class="pre">print_list</span></tt> принимает один узел в качестве аргумента. Начиная с первого узла списка, она выводит на печать каждый узел, пока не достигнет конца списка:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">print_list</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+    <span class="k">while</span> <span class="n">node</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">node</span><span class="p">,</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">next</span>
+    <span class="k">print</span>
+</pre></div>
+</div>
+<p>Вызовем функцию, передав ей ссылку на первый узел:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">print_list</span><span class="p">(</span><span class="n">node1</span><span class="p">)</span>
+<span class="go">1 2 3</span>
+</pre></div>
+</div>
+<p>Хотя у <tt class="docutils literal"><span class="pre">print_list</span></tt> есть ссылка на первый узел списка, внутри функции нет переменных, ссылающихся на другие узлы. Функция получает ссылку на следующий узел, используя значение атрибута <tt class="docutils literal"><span class="pre">next</span></tt> каждого узла.</p>
+<img alt="Обход списка" src="_images/ch16-3.png" />
+<p>Чтобы пройти весь связный список, обычно используют переменную цикла вроде <tt class="docutils literal"><span class="pre">node</span></tt>, которая последовательно получает значения, ссылающиеся на узлы списка.</p>
+</div>
+<div class="section" id="index-2">
+<span id="id4"></span><h2>16.4. Списки и рекурсия<a class="headerlink" href="#index-2" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Многие операции над списком естественно реализовать с помощью рекурсивных методов. Вот рекурсивный алгоритм для вывода на печать списка в обратном порядке:</p>
+<ol class="arabic simple">
+<li>Разделить список на две части: первый узел (голова) и все остальные (хвост).</li>
+<li>Распечатать хвост в обратном порядке.</li>
+<li>Распечатать голову.</li>
+</ol>
+<p>Разумеется, шаг 2, рекурсивный вызов, предполагает, что у нас имеется способ распечатать список в обратном порядке. Но если мы примем, что рекурсивный вызов работает &#8211; нужно в это поверить &#8211; то мы можем убедиться в том, что алгоритм работает.</p>
+<p>Все, что нам нужно, это простейший случай списка (базовый случай) и доказательство того, что, какой бы список мы ни взяли, наш алгоритм в конце концов приведет нас к этому базовому случаю. Имея рекурсивное определение списка, приведенное выше, в качестве базового случая возьмем пустой список, представленный значением <tt class="docutils literal"><span class="pre">None</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">print_backward</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">list</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span> <span class="k">return</span>
+    <span class="n">head</span> <span class="o">=</span> <span class="nb">list</span>
+    <span class="n">tail</span> <span class="o">=</span> <span class="nb">list</span><span class="o">.</span><span class="n">next</span>
+    <span class="n">print_backward</span><span class="p">(</span><span class="n">tail</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">head</span><span class="p">,</span>
+</pre></div>
+</div>
+<p>Первая строка обрабатывает базовый случай. Две следующие строки кода разделяют список на <tt class="docutils literal"><span class="pre">head</span></tt> (англ.: голова) и <tt class="docutils literal"><span class="pre">tail</span></tt> (англ.: хвост). Две последние строки кода выводят список на печать. Запятая в конце последней строки удерживает Python от перевода строки после печати каждого узла.</p>
+<p>Вызовем функцию так же, как вызывали <tt class="docutils literal"><span class="pre">print_list</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">print_backward</span><span class="p">(</span><span class="n">node1</span><span class="p">)</span>
+<span class="go">3 2 1</span>
+</pre></div>
+</div>
+<p>В результате на печать выведен список в обратном порядке.</p>
+<p>Возможно, вы недоумеваете, почему <tt class="docutils literal"><span class="pre">print_list</span></tt> и <tt class="docutils literal"><span class="pre">print_backward</span></tt> являются функциями, а не методами класса  <tt class="docutils literal"><span class="pre">Node</span></tt>. Причина в том, что мы используем <tt class="docutils literal"><span class="pre">None</span></tt> для представления пустого списка, а вызвать метод для <tt class="docutils literal"><span class="pre">None</span></tt> нельзя. Это ограничение не позволяет написать чистый объектно-ориентированный код для манипулирования списком.</p>
+<p>Но можем ли мы доказать, что <tt class="docutils literal"><span class="pre">print_backward</span></tt> всегда завершится? Другими словами, всегда ли алгоритм приведет нас к базовому случаю? На самом деле, ответ отрицательный. Некоторые списки сломают наш метод.</p>
+</div>
+<div class="section" id="index-3">
+<span id="id5"></span><h2>16.5. Бесконечные списки<a class="headerlink" href="#index-3" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Нет ничего, что помешало бы некоторому узлу ссылаться на узел, который идет в списке раньше этого узла, или ссылаться на самого себя. Например, этот рисунок показывает список с двумя узлами, один из которых ссылается на себя!</p>
+<img alt="Узел списка ссылается сам на себя" src="_images/ch16-4.png" />
+<p>Если вызвать <tt class="docutils literal"><span class="pre">print_list</span></tt> с этим списком, функция зациклится. Если вызвать <tt class="docutils literal"><span class="pre">print_backward</span></tt>, возникнет бесконечная рекурсия. Таким образом, работа с бесконечными списками сопряжена с определенными сложностями.</p>
+<p>Тем не менее, иногда бесконечные списки полезны. Например, можно представить число как список цифр, и воспользоваться бесконечным списком для представления дробного периода этого числа.</p>
+<p>И все же тот факт, что мы не можем доказать, что <tt class="docutils literal"><span class="pre">print_list</span></tt> и <tt class="docutils literal"><span class="pre">print_backward</span></tt> завершатся, представляет проблему. Лучшее, что мы можем сделать, это выдвинуть гипотезу: Если список не содержит циклов, то эти методы завершатся. Такого рода утверждения называются <strong>предусловием</strong>. Предусловие налагает ограничение на параметры и описывает поведение функции в случае, когда это ограничение выполняется. Вскоре мы встретимся с другими примерами предусловий.</p>
+</div>
+<div class="section" id="index-4">
+<span id="id6"></span><h2>16.6. Неоднозначность ссылки на узел списка<a class="headerlink" href="#index-4" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Следующий фрагмент <tt class="docutils literal"><span class="pre">print_backward</span></tt> может вызвать удивление:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">head</span> <span class="o">=</span> <span class="nb">list</span>
+<span class="n">tail</span> <span class="o">=</span> <span class="nb">list</span><span class="o">.</span><span class="n">next</span>
+</pre></div>
+</div>
+<p>После выполнения первого предложения присваивания <tt class="docutils literal"><span class="pre">head</span></tt> и <tt class="docutils literal"><span class="pre">list</span></tt> имеют один и тот же тип и одно и то же значение. В таком случае, зачем мы создаем новую переменную?</p>
+<p>Причина в том, что эти две переменные играют разные роли. Мы думаем о <tt class="docutils literal"><span class="pre">head</span></tt> как о ссылке на один узел, а о <tt class="docutils literal"><span class="pre">list</span></tt> &#8211; как о ссылке на первый узел списка. Эти роли не являются частью программы; они существуют в уме программиста.</p>
+<p>В общем случае, глядя на код программы, мы не можем сказать, какую роль играет та или иная переменная. Эта неоднозначность может быть полезной, но также может затруднить чтение программы. Часто, чтобы подчеркнуть роль, которую играет переменная, мы используем переменные с &#8220;говорящими&#8221; именами, например, <tt class="docutils literal"><span class="pre">node</span></tt> и <tt class="docutils literal"><span class="pre">list</span></tt>, а иногда создаем дополнительные переменные с этой целью.</p>
+<p>Можно переписать <tt class="docutils literal"><span class="pre">print_backward</span></tt> без переменных <tt class="docutils literal"><span class="pre">head</span></tt> и <tt class="docutils literal"><span class="pre">tail</span></tt>, что сделает функцию более компактной, но менее ясной:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">print_backward</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span> <span class="p">:</span>
+    <span class="k">if</span> <span class="nb">list</span> <span class="o">==</span> <span class="bp">None</span> <span class="p">:</span> <span class="k">return</span>
+    <span class="n">print_backward</span><span class="p">(</span><span class="nb">list</span><span class="o">.</span><span class="n">next</span><span class="p">)</span>
+    <span class="k">print</span> <span class="nb">list</span><span class="p">,</span>
+</pre></div>
+</div>
+<p>Глядя на два вызова функции, нужно помнить, что <tt class="docutils literal"><span class="pre">print_backward</span></tt> рассматривает свой аргумент как коллекцию, а <tt class="docutils literal"><span class="pre">print</span></tt> &#8211; как единичный объект.</p>
+<p>Если же взять ссылку на узел связного списка вне контекста, то ее семантика неоднозначна. <em>Ссылка на узел связного списка может рассматриваться как ссылка на один узел или как ссылка на список.</em></p>
+</div>
+<div class="section" id="index-5">
+<span id="id7"></span><h2>16.7. Изменение списков<a class="headerlink" href="#index-5" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Можно изменить список двумя способами. Очевидно, что мы можем изменить данные одного из узлов. Но более интересны операции по добавлению, удалению и перестановке узлов.</p>
+<p>В качестве примера давайте напишем функцию, которая удаляет второй узел из списка и возвращает ссылку на удаленный узел:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">remove_second</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">list</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span> <span class="k">return</span>
+    <span class="n">first</span> <span class="o">=</span> <span class="nb">list</span>
+    <span class="n">second</span> <span class="o">=</span> <span class="nb">list</span><span class="o">.</span><span class="n">next</span>
+    <span class="c"># make the first node refer to the third</span>
+    <span class="n">first</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">second</span><span class="o">.</span><span class="n">next</span>
+    <span class="c"># separate the second node from the rest of the list</span>
+    <span class="n">second</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">return</span> <span class="n">second</span>
+</pre></div>
+</div>
+<p>Здесь мы вновь используем временные переменные для того, чтобы сделать код яснее. Воспользуемся этой функцией:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">print_list</span><span class="p">(</span><span class="n">node1</span><span class="p">)</span>
+<span class="go">1 2 3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">removed</span> <span class="o">=</span> <span class="n">remove_second</span><span class="p">(</span><span class="n">node1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print_list</span><span class="p">(</span><span class="n">removed</span><span class="p">)</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print_list</span><span class="p">(</span><span class="n">node1</span><span class="p">)</span>
+<span class="go">1 3</span>
+</pre></div>
+</div>
+<p>Следующий рисунок иллюстрирует результат работы функции <tt class="docutils literal"><span class="pre">remove_second</span></tt>:</p>
+<img alt="Удаление второго узла из списка" src="_images/ch16-5.png" />
+<p>А что случится, если вызвать эту функцию со списком из одного элемента? С пустым списком? Существует ли предусловие для этой функции? Если да, то добавьте в функцию проверку предусловия и обработку его нарушения.</p>
+</div>
+<div class="section" id="index-6">
+<span id="id8"></span><h2>16.8. Обертки и помощники<a class="headerlink" href="#index-6" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Если нам понадобится вывести связный список в обратном порядке, заключенный в квадратные скобки, то, как вариант, мы можем воспользоваться функцией <tt class="docutils literal"><span class="pre">print_backward</span></tt> чтобы вывести <tt class="docutils literal"><span class="pre">3</span> <span class="pre">2</span> <span class="pre">1</span></tt>, и отдельно вывести открывающую и закрывающую скобки. Назовем новую функцию <tt class="docutils literal"><span class="pre">print_backward_nicely</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">print_backward_nicely</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span> <span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;[&quot;</span><span class="p">,</span>
+    <span class="n">print_backward</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&quot;]&quot;</span><span class="p">,</span>
+</pre></div>
+</div>
+<p>В любом месте программы можно вызвать функцию <tt class="docutils literal"><span class="pre">print_backward_nicely</span></tt>, а она, в свою очередь, вызовет <tt class="docutils literal"><span class="pre">print_backward</span></tt>. Здесь <tt class="docutils literal"><span class="pre">print_backward_nicely</span></tt> работает как <strong>обертка</strong>, используя функцию <tt class="docutils literal"><span class="pre">print_backward</span></tt> в качестве <strong>помощника</strong>.</p>
+</div>
+<div class="section" id="linkedlist">
+<h2>16.9. Класс <tt class="docutils literal"><span class="pre">LinkedList</span></tt><a class="headerlink" href="#linkedlist" title="Ссылка на этот заголовок">¶</a></h2>
+<p>У нашей реализации связных списков есть одна проблема, неочевидная на первый взгляд. Поменяв местами причину и следствие, предложим вначале альтернативную реализацию, а затем рассмотрим, какую проблему она решает.</p>
+<p>Создадим новый класс <tt class="docutils literal"><span class="pre">LinkedList</span></tt>. Его атрибутами будут целое число, представляющее длину списка, и ссылка на первый узел списка. С помощью объектов <tt class="docutils literal"><span class="pre">LinkedList</span></tt> удобно манипулировать списками объектов <tt class="docutils literal"><span class="pre">Node</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">LinkedList</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">head</span>   <span class="o">=</span> <span class="bp">None</span>
+</pre></div>
+</div>
+<p>Класс <tt class="docutils literal"><span class="pre">LinkedList</span></tt> оказывается удобным местом для помещения в него таких функций, как <tt class="docutils literal"><span class="pre">print_backward_nicely</span></tt>, и превращения их в методы этого класса:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">LinkedList</span><span class="p">:</span>
+    <span class="o">...</span>
+    <span class="k">def</span> <span class="nf">print_backward</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;[&quot;</span><span class="p">,</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">print_backward</span><span class="p">()</span>
+        <span class="k">print</span> <span class="s">&quot;]&quot;</span><span class="p">,</span>
+
+<span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
+    <span class="o">...</span>
+    <span class="k">def</span> <span class="nf">print_backward</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">tail</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">next</span>
+            <span class="n">tail</span><span class="o">.</span><span class="n">print_backward</span><span class="p">()</span>
+        <span class="k">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">cargo</span><span class="p">,</span>
+</pre></div>
+</div>
+<p>Мы переименовали <tt class="docutils literal"><span class="pre">print_backward_nicely</span></tt>, и теперь у нас два метода с именами <tt class="docutils literal"><span class="pre">print_backward</span></tt>: один в классе <tt class="docutils literal"><span class="pre">Node</span></tt> (помощник), и один в классе <tt class="docutils literal"><span class="pre">LinkedList</span></tt> (обертка). Когда метод-обертка вызывает <tt class="docutils literal"><span class="pre">self.head.print_backward</span></tt>, он вызывает метод-помощник, поскольку <tt class="docutils literal"><span class="pre">self.head</span></tt> ссылается на объект <tt class="docutils literal"><span class="pre">Node</span></tt>.</p>
+<p>Еще один плюс класса <tt class="docutils literal"><span class="pre">LinkedList</span></tt> состоит в том, что он облегчает добавление и удаление первого элемента списка. Например, следующий метод <tt class="docutils literal"><span class="pre">add_first</span></tt> класса <tt class="docutils literal"><span class="pre">LinkedList</span></tt> принимает в качестве аргумента данные для узла и помещает новый узел с этими данными в начало списка:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">LinkedList</span><span class="p">:</span>
+    <span class="o">...</span>
+    <span class="k">def</span> <span class="nf">add_first</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cargo</span><span class="p">):</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">cargo</span><span class="p">)</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="n">node</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>Создадим связный список, добавим в него три узла и выведем его на печать в обратном порядке:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">linkedlist</span> <span class="o">=</span> <span class="n">LinkedList</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">linkedlist</span><span class="o">.</span><span class="n">add_first</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">linkedlist</span><span class="o">.</span><span class="n">add_first</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">linkedlist</span><span class="o">.</span><span class="n">add_first</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">linkedlist</span><span class="o">.</span><span class="n">print_backward</span><span class="p">()</span>
+<span class="go">[ 1 2 3 ]</span>
+</pre></div>
+</div>
+<p>Поскольку каждый раз новый узел добавляется в начало списка, то последовательно добавленные нами узлы со значениями <tt class="docutils literal"><span class="pre">1</span></tt>, <tt class="docutils literal"><span class="pre">2</span></tt>, <tt class="docutils literal"><span class="pre">3</span></tt> расположились в обратном порядке, и метод <tt class="docutils literal"><span class="pre">print_backward</span></tt> вывел узлы в порядке их добавления.</p>
+<p>В качестве упражнений вам будет предложено добавить другие полезные методы в класс <tt class="docutils literal"><span class="pre">LinkedList</span></tt> и поэкспериментировать с ними.</p>
+</div>
+<div class="section" id="index-7">
+<span id="id9"></span><h2>16.10. Инварианты<a class="headerlink" href="#index-7" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Некоторые списки построены правильно; другие нет. Например, если список содержит цикл, он сломает многие из наших методов. Поэтому мы можем потребовать, чтобы списки не содержали циклов. Другое разумное требование состоит в том, чтобы значение <tt class="docutils literal"><span class="pre">length</span></tt> в объекте <tt class="docutils literal"><span class="pre">LinkedList</span></tt> всегда равнялось реальному числу узлов в списке.</p>
+<p>Требования, подобные этим, называются <strong>инвариантами</strong>, поскольку, в идеале, они должны выполняться для каждого объекта в любой момент времени. Указание инвариантов для объектов &#8212; полезный прием программирования. Он облегчает доказательство корректности кода, проверку целостности структур данных, и способствует обнаружению ошибок.</p>
+<p>Заметим, что в отдельные моменты времени инварианты все же не выполняются. Например, в середине метода <tt class="docutils literal"><span class="pre">addFirst</span></tt>, после того, как мы добавили узел, но перед тем, как мы увеличили <tt class="docutils literal"><span class="pre">length</span></tt>, инвариант оказывается нарушенным. Такого рода нарушение приемлемо; действительно, часто невозможно изменить объект, не нарушая инвариант хотя бы ненадолго. Достаточно потребовать, чтобы метод, который нарушает инвариант, восстанавливал его.</p>
+<p>Если имеется значительный участок кода, в котором инвариант нарушен, важно отразить это в комментариях. Чтобы операции, зависящие от инварианта, не выполнялись, пока инвариант не восстановлен.</p>
+</div>
+<div class="section" id="id10">
+<h2>16.11. Глоссарий<a class="headerlink" href="#id10" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="glossary docutils">
+<dt id="term-">инвариант</dt>
+<dd>Утверждение, которое должно выполняться для объекта в любое время (за
+исключением того времени, когда объект изменяется).</dd>
+<dt id="term-1">обертка</dt>
+<dd>Метод, который выступает посредником между вызывающим кодом и методом-помощником;
+способствует упрощению и повышению надежности кода.</dd>
+<dt id="term-2">помощник</dt>
+<dd>Метод, не вызываемый непосредственно, а используемый вызываемым методом для выполнения
+части работы.</dd>
+<dt id="term-3">предусловие</dt>
+<dd>Утверждение, которое должно быть справедливым, для того чтобы функция выполнялась корректно.</dd>
+<dt id="term-4">связный список</dt>
+<dd>Структура данных, реализующая коллекцию, используя последовательность связанных узлов.</dd>
+<dt id="term-5">узел списка</dt>
+<dd>Элемент списка, обычно реализуемый как объект, содержащий ссылку на
+объект того же типа и некоторые полезные данные.</dd>
+</dl>
+</div>
+<div class="section" id="id11">
+<h2>16.12. Упражнения<a class="headerlink" href="#id11" title="Ссылка на этот заголовок">¶</a></h2>
+<ol class="arabic simple">
+<li>Традиционно списки выводятся на печать в скобках, с запятыми между элементами, например: <tt class="docutils literal"><span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3]</span></tt>.
+Добавьте в класс <tt class="docutils literal"><span class="pre">LinkedList</span></tt> метод <tt class="docutils literal"><span class="pre">print_list</span></tt> так, чтобы он возвращал список в таком формате.</li>
+<li>Добавьте в класс <tt class="docutils literal"><span class="pre">LinkedList</span></tt> метод <tt class="docutils literal"><span class="pre">last</span></tt>, который вернет последний узел в списке или <tt class="docutils literal"><span class="pre">None</span></tt>
+в случае, когда список пуст. Протестируйте работу метода для пустого и непустого списков.</li>
+<li>Добавьте в класс <tt class="docutils literal"><span class="pre">LinkedList</span></tt> метод <tt class="docutils literal"><span class="pre">append(self,</span> <span class="pre">cargo)</span></tt> для добавления узла в конец списка.
+Используйте метод <tt class="docutils literal"><span class="pre">list</span></tt> из предыдущего упражнения для получения узла, к которому будет добавляться
+новый узел. Протестируйте работу метода.</li>
+<li>Добавьте в класс <tt class="docutils literal"><span class="pre">LinkedList</span></tt> метод <tt class="docutils literal"><span class="pre">find(self,</span> <span class="pre">cargo)</span></tt> для поиска в списке узла с <tt class="docutils literal"><span class="pre">cargo</span></tt>,
+ближайшего к началу списка. Протестируйте метод для пустого списка, списка, содержащего узел с искомым
+<tt class="docutils literal"><span class="pre">cargo</span></tt>, и для списка, не содержащего такого узла.</li>
+<li>Добавьте в класс <tt class="docutils literal"><span class="pre">LinkedList</span></tt> метод <tt class="docutils literal"><span class="pre">__contains__(self,</span> <span class="pre">cargo)</span></tt> чтобы реализовать оператор <tt class="docutils literal"><span class="pre">in</span></tt>
+для <tt class="docutils literal"><span class="pre">LinkedList</span></tt>. Используйте метод <tt class="docutils literal"><span class="pre">find</span></tt> из предыдущего упражнения в методе <tt class="docutils literal"><span class="pre">__contains__</span></tt>.
+Протестируйте работу оператора <tt class="docutils literal"><span class="pre">in</span></tt> для пустого списка, списка, содержащего узел с <tt class="docutils literal"><span class="pre">cargo</span></tt>, и
+списка, не содержащего такого узла.</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             >словарь</a></li>
+        <li class="right" >
+          <a href="ch17.html" title="17. Стеки"
+             >следующий</a> |</li>
+        <li class="right" >
+          <a href="ch15.html" title="15. Наследование"
+             >предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="copyright.html">Copyright</a> 2009, 2012, Джеффри Элкнер, Аллен Б. Дауни, Крис Мейерс, Андрей Трофимов.
+      При создании использован <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

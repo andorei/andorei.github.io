@@ -1,0 +1,904 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>10. Рекурсия и исключения &mdash; Учимся с Python</title>
+    
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2nd Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="Учимся с Python" href="index.html" />
+    <link rel="next" title="11. Словари" href="ch11.html" />
+    <link rel="prev" title="9. Модули и файлы" href="ch09.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             accesskey="I">словарь</a></li>
+        <li class="right" >
+          <a href="ch11.html" title="11. Словари"
+             accesskey="N">следующий</a> |</li>
+        <li class="right" >
+          <a href="ch09.html" title="9. Модули и файлы"
+             accesskey="P">предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>10. Рекурсия и исключения<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
+<div class="section" id="index-0">
+<span id="id2"></span><h2>10.1. Кортежи и изменяемость<a class="headerlink" href="#index-0" title="Ссылка на этот заголовок">¶</a></h2>
+<p>До сих пор мы встречались с двумя составными типами: строки, состоящие из символов, и списки, состоящие из элементов любого типа. Одно из отмеченных нами различий между этими типами состоит в том, что элементы списка можно изменять, а символы строки - нельзя. Другими словами, строки являются <strong>неизменяемыми</strong>, а списки - <strong>изменяемыми</strong>.</p>
+<p><strong>Кортеж</strong> (англ.: tuple), как и список, представляет собой последовательность элементов любого типа. Но, в отличие от списков, кортежи неизменяемы. Синтаксически, кортеж - это последовательность разделенных запятыми значений:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tup</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span>
+</pre></div>
+</div>
+<p>Хотя это не является обязательным, принято заключать кортежи в скобки:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tup</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Для того, чтобы создать кортеж с единственным элементом, нужно поставить запятую после единственного элемента:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tup</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">tup</span><span class="p">)</span>
+<span class="go">&lt;type &#39;tuple&#39;&gt;</span>
+</pre></div>
+</div>
+<p>Без запятой Python считает, что <tt class="docutils literal"><span class="pre">(5)</span></tt> - это целое число в скобках:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tup</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">tup</span><span class="p">)</span>
+<span class="go">&lt;type &#39;int&#39;&gt;</span>
+</pre></div>
+</div>
+<p>Оставляя в стороне синтаксис, кортежи поддерживают те же самые операции для последовательностей, что строки и списки. Оператор индекс выбирает элемент кортежа.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tup</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tup</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">&#39;a&#39;</span>
+</pre></div>
+</div>
+<p>Оператор срез выбирает диапазон элементов.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tup</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<span class="go">(&#39;b&#39;, &#39;c&#39;)</span>
+</pre></div>
+</div>
+<p>Однако, если попробовать выполнить присваивание элементу кортежа, то получим ошибку:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tup</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;X&#39;</span>
+<span class="go">TypeError: &#39;tuple&#39; object does not support item assignment</span>
+</pre></div>
+</div>
+<p>И, разумеется, хотя мы и не можем изменить отдельный элемент кортежа, мы можем заменить кортеж на другой кортеж:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tup</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;X&#39;</span><span class="p">,)</span> <span class="o">+</span> <span class="n">tup</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tup</span>
+<span class="go">(&#39;X&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;)</span>
+</pre></div>
+</div>
+<p>Или, вместо этого, мы могли бы сначала преобразовать кортеж в список, изменить список, и затем преобразовать его обратно в кортеж:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tup</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;X&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tup</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">tup</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tup</span>
+<span class="go">[&#39;X&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tup</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;a&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tup</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">tup</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tup</span>
+<span class="go">(&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="index-1">
+<span id="id3"></span><h2>10.2. Присваивание кортежей<a class="headerlink" href="#index-1" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Время от времени возникает необходимость обменять значения двух переменных. Пользуясь традиционными предложениями присваивания, мы должны использовать временную переменную. Например, чтобы обменять значения переменных <tt class="docutils literal"><span class="pre">a</span></tt> и <tt class="docutils literal"><span class="pre">b</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">temp</span> <span class="o">=</span> <span class="n">a</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">b</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">temp</span>
+</pre></div>
+</div>
+<p>Если нам придется делать это часто, такой подход покажется громоздким. Python предоставляет возможность <strong>присваивания кортежей</strong>, которая элегантно решает эту задачу:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span>
+</pre></div>
+</div>
+<p>В левой части у нас кортеж из двух переменных; в правой - кортеж из двух значений. Каждое значение присваивается соответствующей ему переменной. Все выражения в правой части вычисляются до того, как выполняется первое присваивание. Это свойство делает присваивание кортежа очень полезным инструментом.</p>
+<p>Само собой разумеется, что количество переменных в левой части и количество значений в правой должны быть одинаковы:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span>
+<span class="go">ValueError: need more than 3 values to unpack</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="index-2">
+<span id="id4"></span><h2>10.3. Кортежи как возвращаемые значения<a class="headerlink" href="#index-2" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Функции могут возвращать кортежи. Например, мы могли бы написать такую функцию, которая обменивает значения двух параметров:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">swap</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span>
+</pre></div>
+</div>
+<p>После чего мы сможем присвоить возвращаемое значение кортежу из двух переменных:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">swap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>В данном случае мы не получаем никаких преимуществ, реализовав обмен значений с помощью функции <tt class="docutils literal"><span class="pre">swap</span></tt>. Кроме того, пытаясь реализовать обмен значений как функцию <tt class="docutils literal"><span class="pre">swap</span></tt>, есть опасность совершить ошибку:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">swap</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>      <span class="c"># incorrect version</span>
+     <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span>
+</pre></div>
+</div>
+<p>Если вызвать эту функцию так:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">swap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>то <tt class="docutils literal"><span class="pre">a</span></tt> и <tt class="docutils literal"><span class="pre">x</span></tt> будут альтернативными именами для одного и того же значения. Изменение <tt class="docutils literal"><span class="pre">x</span></tt> в функции <tt class="docutils literal"><span class="pre">swap</span></tt> приводит к тому, что <tt class="docutils literal"><span class="pre">x</span></tt> указывает на другое значение, но это никак не отразится на переменной <tt class="docutils literal"><span class="pre">a</span></tt> в <tt class="docutils literal"><span class="pre">__main__</span></tt>. Аналогично, изменение <tt class="docutils literal"><span class="pre">y</span></tt> никак не повлияет на <tt class="docutils literal"><span class="pre">b</span></tt>.</p>
+<p>Функция выполняется без сообщений об ошибке, но она не делает того, что от нее ожидается. Это пример семантической ошибки.</p>
+</div>
+<div class="section" id="index-3">
+<span id="id5"></span><h2>10.4. Еще раз о чистых и модифицирующих функциях<a class="headerlink" href="#index-3" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Ранее в разделе <a class="reference internal" href="ch08.html#pure-func-mod"><em>Чистые и модифицирующие функции</em></a> мы обсуждали <em>чистые функции</em> и <em>модифицирующие функции</em> в связи со списками. Поскольку кортежи неизменяемы, нельзя написать функцию, модифицирующую кортеж.</p>
+<p>Пример модифицирующей функции, вставляющей новое значение в середину списка:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#</span>
+<span class="c"># seqtools.py</span>
+<span class="c">#</span>
+
+<span class="k">def</span> <span class="nf">insert_in_middle</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">lst</span><span class="p">):</span>
+    <span class="n">middle</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+    <span class="n">lst</span><span class="p">[</span><span class="n">middle</span><span class="p">:</span><span class="n">middle</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">val</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Убедимся, что она работает:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">seqtools</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">insert_in_middle</span><span class="p">(</span><span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="n">my_list</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span>
+<span class="go">[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;]</span>
+</pre></div>
+</div>
+<p>Но если мы попробуем вызвать ее с кортежем, то получим ошибку:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">my_tuple</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">insert_in_middle</span><span class="p">(</span><span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="n">my_tuple</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+  File <span class="nb">&quot;seqtools.py&quot;</span>, line <span class="m">7</span>, in <span class="n">insert_in_middle</span>
+    <span class="n">lst</span><span class="p">[</span><span class="n">middle</span><span class="p">:</span><span class="n">middle</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">val</span><span class="p">]</span>
+<span class="gr">TypeError</span>: <span class="n">&#39;tuple&#39; object does not support item assignment</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Проблема в том, что кортежи неизменяемы, и не поддерживают присваивание срезу. Простое решение заключается в том, чтобы сделать <tt class="docutils literal"><span class="pre">insert_in_middle</span></tt> чистой функцией:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">insert_in_middle</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">tup</span><span class="p">):</span>
+    <span class="n">middle</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tup</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+    <span class="k">return</span> <span class="n">tup</span><span class="p">[:</span><span class="n">middle</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">val</span><span class="p">,)</span> <span class="o">+</span> <span class="n">tup</span><span class="p">[</span><span class="n">middle</span><span class="p">:]</span>
+</pre></div>
+</div>
+<p>Эта версия работает для кортежей, но не для списков или строк. Если нам необходима версия, работающая с любыми последовательностями встроенных типов, то нам нужен способ завернуть значение в корректный последовательностный тип. Это делает небольшая вспомогательная функция:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">encapsulate</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">seq</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span> <span class="o">==</span> <span class="nb">type</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span> <span class="o">==</span> <span class="nb">type</span><span class="p">([]):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">val</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">val</span><span class="p">,)</span>
+</pre></div>
+</div>
+<p>Теперь можно написать версию <tt class="docutils literal"><span class="pre">insert_in_middle</span></tt>, работающую с последовательностями всех встроенных типов:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">insert_in_middle</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">seq</span><span class="p">):</span>
+    <span class="n">middle</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+    <span class="k">return</span> <span class="n">seq</span><span class="p">[:</span><span class="n">middle</span><span class="p">]</span> <span class="o">+</span> <span class="n">encapsulate</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">seq</span><span class="p">)</span> <span class="o">+</span> <span class="n">seq</span><span class="p">[</span><span class="n">middle</span><span class="p">:]</span>
+</pre></div>
+</div>
+<p>Две последние версии <tt class="docutils literal"><span class="pre">insert_in_middle</span></tt> являются чистыми функциями. У них нет побочных эффектов. Добавив <tt class="docutils literal"><span class="pre">encapsulate</span></tt> и последнюю версию <tt class="docutils literal"><span class="pre">insert_in_middle</span></tt> в модуль <tt class="docutils literal"><span class="pre">seqtools.py</span></tt>, мы сможем протестировать функцию:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">seqtools</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_string</span> <span class="o">=</span> <span class="s">&#39;abde&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_tuple</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">insert_in_middle</span><span class="p">(</span><span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="n">my_string</span><span class="p">)</span>
+<span class="go">&#39;abcde&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">insert_in_middle</span><span class="p">(</span><span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="n">my_list</span><span class="p">)</span>
+<span class="go">[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">insert_in_middle</span><span class="p">(</span><span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="n">my_tuple</span><span class="p">)</span>
+<span class="go">(&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_string</span>
+<span class="go">&#39;abde&#39;</span>
+</pre></div>
+</div>
+<p>Значения <tt class="docutils literal"><span class="pre">my_string</span></tt>, <tt class="docutils literal"><span class="pre">my_list</span></tt> и <tt class="docutils literal"><span class="pre">my_tuple</span></tt> не изменились. Если мы захотим использовать <tt class="docutils literal"><span class="pre">insert_in_middle</span></tt> для их изменения, нам придется присваивать возвращаемое функцией значение обратно переменной:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">my_string</span> <span class="o">=</span> <span class="n">insert_in_middle</span><span class="p">(</span><span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="n">my_string</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_string</span>
+<span class="go">&#39;abcde&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="index-4">
+<span id="id6"></span><h2>10.5. Рекурсивные структуры данных<a class="headerlink" href="#index-4" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Все типы данных Python, с которыми мы встречались, могут быть сгруппированы внутри списков и кортежей многими способами. Списки и кортежи могут быть вложенными, тем самым предоставляя огромные возможности для организации данных. С целью облегчения работы с данными их организуют в <strong>структуры данных</strong>.</p>
+<p>Предположим, что проводятся выборы и мы помогаем подсчитывать голоса по мере их поступления. Данные о голосовании, поступающие из городских районов, муниципалитетов, краев и областей, иногда имеют форму итоговых сумм всех голосов, а иногда приходят в форме списка промежуточных сумм. Поразмыслив, как лучше хранить подсчитанные голоса, мы остановились на <em>вложенном списке чисел</em>, который определили следующим образом:</p>
+<p><em>Вложенный список чисел</em> - это список, элементы которого относятся к одному из двух типов:</p>
+<ol class="loweralpha simple">
+<li>числа</li>
+<li>вложенные списки чисел</li>
+</ol>
+<p>Заметьте, что термин &#8216;вложенный список чисел&#8217; использован в его собственном определении. <strong>Рекурсивные определения</strong>, подобные этому, довольно распространены в математике и программировании. Они предоставляют краткий и мощный способ описать <strong>рекурсивные структуры данных</strong>, частично состоящие из меньших и более простых экземпляров самих себя. Структура не циклична, поскольку рано или поздно мы достигаем списка, который не содержит других списков в качестве элементов.</p>
+<p>Теперь предположим, что наша задача - написать функцию, которая просуммирует голоса во вложенном списке чисел. В Python имеется встроенная функция, которая вычисляет сумму последовательности чисел:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">])</span>
+<span class="go">11</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">8.5</span><span class="p">))</span>
+<span class="go">16.5</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Для нашего <em>вложенного списка чисел</em>, однако, функция <tt class="docutils literal"><span class="pre">sum</span></tt> не работает:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">],</span> <span class="mi">8</span><span class="p">])</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">TypeError: unsupported operand type(s) for +</span>: <span class="n">&#39;int&#39; and &#39;list&#39;</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Проблема в том, что третий элемент этого списка, <tt class="docutils literal"><span class="pre">[11,</span> <span class="pre">13]</span></tt>, сам является списком, а список не может быть просуммирован с целыми числами <tt class="docutils literal"><span class="pre">1</span></tt>, <tt class="docutils literal"><span class="pre">2</span></tt> и <tt class="docutils literal"><span class="pre">8</span></tt>.</p>
+</div>
+<div class="section" id="index-5">
+<span id="id7"></span><h2>10.6. Рекурсия<a class="headerlink" href="#index-5" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Для того, чтобы просуммировать все числа в нашем вложенном списке чисел, нам нужно обойти список, обработав каждый элемент его многоуровневой структуры. Числовые элементы будем складывать, а для списочных элементов <em>повторять этот же обход</em>.</p>
+<p>Современные языки программирования, в основном, поддерживают <strong>рекурсию</strong>, что означает, функции могут <em>вызывать себя</em> внутри своего определения. Благодаря рекурсии, код на Python для суммирования всех чисел вложенного списка чисел оказывается на удивление коротким:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">recursive_sum</span><span class="p">(</span><span class="n">nested_num_list</span><span class="p">):</span>
+    <span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">nested_num_list</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="o">==</span> <span class="nb">type</span><span class="p">([]):</span>
+            <span class="nb">sum</span> <span class="o">+=</span> <span class="n">recursive_sum</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">sum</span> <span class="o">+=</span> <span class="n">element</span>
+    <span class="k">return</span> <span class="nb">sum</span>
+</pre></div>
+</div>
+<p>Тело функции <tt class="docutils literal"><span class="pre">recursive_sum</span></tt> содержит цикл <tt class="docutils literal"><span class="pre">for</span></tt>, который реализует обход <tt class="docutils literal"><span class="pre">nested_num_list</span></tt>. Если <tt class="docutils literal"><span class="pre">element</span></tt> оказывается числом (ветка <tt class="docutils literal"><span class="pre">else</span></tt>), он прибавляется к <tt class="docutils literal"><span class="pre">sum</span></tt>. Если  <tt class="docutils literal"><span class="pre">element</span></tt> - список, то вновь вызывается <tt class="docutils literal"><span class="pre">recursive_sum</span></tt> с этим элементом в качестве аргумента. Предложение внутри определения функции, которое вызывает эту же функцию, называют <strong>рекурсивным вызовом функции</strong>.</p>
+<p>Рекурсия поистине один из самых красивых и элегантных инструментов в программировании.</p>
+<p>Несколько более сложной задачей является нахождение самого большого числа в нашем вложенном списке чисел:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">recursive_max</span><span class="p">(</span><span class="n">nested_num_list</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; recursive_max([2, 9, [1, 13], 8, 6])</span>
+<span class="sd">      13</span>
+<span class="sd">      &gt;&gt;&gt; recursive_max([2, [[100, 7], 90], [1, 13], 8, 6])</span>
+<span class="sd">      100</span>
+<span class="sd">      &gt;&gt;&gt; recursive_max([2, [[13, 7], 90], [1, 100], 8, 6])</span>
+<span class="sd">      100</span>
+<span class="sd">      &gt;&gt;&gt; recursive_max([[[13, 7], 90], 2, [1, 100], 8, 6])</span>
+<span class="sd">      100</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">largest</span> <span class="o">=</span> <span class="n">nested_num_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">while</span> <span class="nb">type</span><span class="p">(</span><span class="n">largest</span><span class="p">)</span> <span class="o">==</span> <span class="nb">type</span><span class="p">([]):</span>
+        <span class="n">largest</span> <span class="o">=</span> <span class="n">largest</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">nested_num_list</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="o">==</span> <span class="nb">type</span><span class="p">([]):</span>
+            <span class="n">max_of_elem</span> <span class="o">=</span> <span class="n">recursive_max</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">largest</span> <span class="o">&lt;</span> <span class="n">max_of_elem</span><span class="p">:</span>
+                <span class="n">largest</span> <span class="o">=</span> <span class="n">max_of_elem</span>
+        <span class="k">else</span><span class="p">:</span>                           <span class="c"># element is not a list</span>
+            <span class="k">if</span> <span class="n">largest</span> <span class="o">&lt;</span> <span class="n">element</span><span class="p">:</span>
+                <span class="n">largest</span> <span class="o">=</span> <span class="n">element</span>
+
+    <span class="k">return</span> <span class="n">largest</span>
+</pre></div>
+</div>
+<p>Приведенные доктесты демонстрируют <tt class="docutils literal"><span class="pre">recursive_max</span></tt> в работе.</p>
+<p>Дополнительная хитрость потребовалась для нахождения числового значения для инициализации переменной <tt class="docutils literal"><span class="pre">largest</span></tt>. Мы не можем просто использовать <tt class="docutils literal"><span class="pre">nested_num_list[0]</span></tt>, так как это может быть либо число, либо список. Для решения этой задачи мы воспользовались циклом while, в котором присваиваем <tt class="docutils literal"><span class="pre">largest</span></tt> первое из найденных числовых значений, и неважно, насколько глубоко оно вложено.</p>
+<p>Два приведенных примера оба имеют <strong>базовый случай</strong> который не приводит к рекурсивному вызову: случай, когда элемент является числом, а не списком. Без базового случая мы получили бы <strong>бесконечную рекурсию</strong>, и программа бы не работала. Python бы прекратил выполнение программы, достигнув максимально разрешенной глубины рекурсии, и возвратил ошибку выполнения.</p>
+<p>Создайте файл <tt class="docutils literal"><span class="pre">infinite_recursion.py</span></tt> со следующим кодом:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#</span>
+<span class="c"># infinite_recursion.py</span>
+<span class="c">#</span>
+<span class="k">def</span> <span class="nf">recursion_depth</span><span class="p">(</span><span class="n">number</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;Recursion depth number </span><span class="si">%d</span><span class="s">.&quot;</span> <span class="o">%</span> <span class="n">number</span>
+    <span class="n">recursion_depth</span><span class="p">(</span><span class="n">number</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">recursion_depth</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Перейдя в каталог, где вы сохранили файл, введите в командной строке:</p>
+<div class="highlight-python"><pre>$ python infinite_recursion.py</pre>
+</div>
+<p>После того, как промелькнут и остановятся сообщения, вы увидите конец длинной последовательности сообщений об ошибках - распечатки стека вызовов:</p>
+<div class="highlight-python"><div class="highlight"><pre>  <span class="o">...</span>
+  <span class="n">File</span> <span class="s">&quot;infinite_recursion.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">3</span><span class="p">,</span> <span class="ow">in</span> <span class="n">recursion_depth</span>
+    <span class="n">recursion_depth</span><span class="p">(</span><span class="n">number</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="ne">RuntimeError</span><span class="p">:</span> <span class="n">maximum</span> <span class="n">recursion</span> <span class="n">depth</span> <span class="n">exceeded</span>
+</pre></div>
+</div>
+<p>Мы, конечно же, не хотим, чтобы что-то подобное получил пользователь, запустив одну из наших программ. Поэтому, прежде чем завершить обсуждение рекурсии, давайте посмотрим, как в Python обрабатываются ошибки, подобные этой.</p>
+</div>
+<div class="section" id="index-6">
+<span id="id8"></span><h2>10.7. Исключения<a class="headerlink" href="#index-6" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Каждый раз, когда происходит ошибка выполнения, создается <strong>исключение</strong> (англ.: exception). Программа прекращает выполняться и Python распечатывает стек вызовов, где в конце идет сообщение о возникшем исключении.</p>
+<p>Например, деление на ноль создает исключение:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="mi">55</span><span class="o">/</span><span class="mi">0</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">ZeroDivisionError</span>: <span class="n">integer division or modulo by zero</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Так же, как и попытка прочитать несуществующий элемент списка:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">a</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">IndexError</span>: <span class="n">list index out of range</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Или попытка присвоить значение элементу кортежа:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tup</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tup</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;c&#39;</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">TypeError</span>: <span class="n">&#39;tuple&#39; object does not support item assignment</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Во всех случаях сообщение об ошибке на последней строке состоит из двух частей: тип ошибки перед двоеточием, и конкретное описание ошибки после него.</p>
+<p>Иногда необходимо выполнить операцию, которая может вызвать исключение, но мы не хотим, чтобы программа останавливалась. В этом случае можно организовать <strong>обработку исключений</strong>, используя предложения <tt class="docutils literal"><span class="pre">try</span></tt> и <tt class="docutils literal"><span class="pre">except</span></tt>.</p>
+<p>Например, мы можем попросить пользователя ввести имя файла, и затем попробовать открыть его. Но мы не хотим, чтобы программа сломалась, если файл не существует; мы хотим обработать вероятное исключение:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">filename</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&#39;Enter a file name: &#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span> <span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;There is no file named&#39;</span><span class="p">,</span> <span class="n">filename</span>
+</pre></div>
+</div>
+<p>Предложение <tt class="docutils literal"><span class="pre">try</span></tt> выполняет предложения в первом блоке. Если исключения не происходит, предложение <tt class="docutils literal"><span class="pre">except</span></tt> игнорируется. Если же возникает исключение, то выполняются предложения блока <tt class="docutils literal"><span class="pre">except</span></tt>, после чего выполнение программы продолжается.</p>
+<p>Можно встроить эту конструкцию в функцию <tt class="docutils literal"><span class="pre">exists</span></tt> (англ.: существует), которая принимает в качестве параметра имя файла и возвращает <tt class="docutils literal"><span class="pre">True</span></tt>, если файл существует, и <tt class="docutils literal"><span class="pre">False</span></tt>, если он не существует:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">True</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">False</span>
+</pre></div>
+</div>
+<p>Можно использовать несколько блоков <tt class="docutils literal"><span class="pre">except</span></tt> для того, чтобы обрабатывать различные исключения (см. урок <a class="reference external" href="http://docs.python.org/tut/node10.html">Errors and Exceptions</a> в учебнике <a class="reference external" href="http://docs.python.org/tut/tut.html">Python Tutorial</a> от создателя Python Гвидо ван Россума).</p>
+<p>Если ваша программа обнаруживает ошибочную ситуацию, то она может <strong>возбудить</strong> (англ.: raise) исключение. Вот пример, в котором принимается ввод от пользователя и проверяется, что введенное число неотрицательно.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#</span>
+<span class="c"># learn_exceptions.py</span>
+<span class="c">#</span>
+<span class="k">def</span> <span class="nf">get_age</span><span class="p">():</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s">&#39;Please enter your age: &#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">age</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s"> is not a valid age&#39;</span> <span class="o">%</span> <span class="n">age</span>
+    <span class="k">return</span> <span class="n">age</span>
+</pre></div>
+</div>
+<p>Предложение <tt class="docutils literal"><span class="pre">raise</span></tt> принимает два аргумента: тип исключения, и конкретное описание ошибки. <tt class="docutils literal"><span class="pre">ValueError</span></tt> является встроенным типом исключения, который лучше всего подходит в данной ситуации. Полный список встроенных исключений можно найти в <a class="reference external" href="http://docs.python.org/lib/module-exceptions.html">разделе 2.3</a> <a class="reference external" href="http://docs.python.org/lib/">Справочника по библиотеке Python</a>, также написанного создателем Python Гвидо ван Россумом.</p>
+<p>Если функция, вызывающая <tt class="docutils literal"><span class="pre">get_age</span></tt>, обрабатывает ошибку, то программа может продолжить выполняться. Иначе Python распечатывает стек вызовов и завершается:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">get_age</span><span class="p">()</span>
+<span class="go">Please enter your age: 42</span>
+<span class="go">42</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_age</span><span class="p">()</span>
+<span class="go">Please enter your age: -2</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+  File <span class="nb">&quot;learn_exceptions.py&quot;</span>, line <span class="m">4</span>, in <span class="n">get_age</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s"> is not a valid age&#39;</span> <span class="o">%</span> <span class="n">age</span>
+<span class="gr">ValueError</span>: <span class="n">-2 is not a valid age</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Сообщение об ошибке включает тип ошибки и дополнительную информацию, которую вы указали.</p>
+<p>Воспользовавшись обработкой исключений, теперь мы можем изменить функцию <tt class="docutils literal"><span class="pre">infinite_recursion.py</span></tt> так, чтобы она останавливалась по достижении максимально допустимой глубины рекурсии:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#</span>
+<span class="c"># infinite_recursion.py</span>
+<span class="c">#</span>
+<span class="k">def</span> <span class="nf">recursion_depth</span><span class="p">(</span><span class="n">number</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;Recursion depth number </span><span class="si">%d</span><span class="s">.&quot;</span> <span class="o">%</span> <span class="n">number</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">recursion_depth</span><span class="p">(</span><span class="n">number</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;Maximum recursion depth exceeded.&quot;</span>
+
+<span class="n">recursion_depth</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Запустите эту версию и посмотрите на результат.</p>
+</div>
+<div class="section" id="index-7">
+<span id="id9"></span><h2>10.8. Хвостовая рекурсия<a class="headerlink" href="#index-7" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Когда рекурсивный вызов является последним предложением в определении функции, такую рекурсию называют <strong>хвостовой рекурсией</strong>.</p>
+<p>Вот версия функции <tt class="docutils literal"><span class="pre">countdown</span></tt> из главы 6, написанная с использованием хвостовой рекурсии:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">countdown</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;Go!&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">n</span>
+        <span class="n">countdown</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Все вычисления, которые делаются с использованием итераций, могут быть сделаны также с использованием рекурсии.</p>
+<p>Рекурсивно определяются некоторые из хорошо известных математических функций. Например, <a class="reference external" href="http://ru.wikipedia.org/wiki/%D0%A4%D0%B0%D0%BA%D1%82%D0%BE%D1%80%D0%B8%D0%B0%D0%BB">факториал</a>, для которого имеется собственный оператор, <tt class="docutils literal"><span class="pre">!</span></tt>, определяется так:</p>
+<div class="highlight-python"><pre>0! = 1
+n! = n(n-1)</pre>
+</div>
+<p>Можно легко закодировать это на Python:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Другой пример, хорошо известный из математики &#8212; это <a class="reference external" href="http://ru.wikipedia.org/wiki/%D0%A7%D0%B8%D1%81%D0%BB%D0%B0_%D0%A4%D0%B8%D0%B1%D0%BE%D0%BD%D0%B0%D1%87%D1%87%D0%B8">последовательность Фибоначчи</a>, определяемая так:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">fibonacci</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">fibonacci</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">=</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Это тоже можно с легкостью записать на языке Python:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">fibonacci</span> <span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Обе функции, и <tt class="docutils literal"><span class="pre">factorial</span></tt> и <tt class="docutils literal"><span class="pre">fibonacci</span></tt>, демонстрируют хвостовую рекурсию.</p>
+<p>Однако, хвостовая рекурсия считается плохой практикой в таких языках, как Python, так как она требует больше системных ресурсов, чем эквивалентное решение, использующее итерацию.</p>
+<p>Вызов <tt class="docutils literal"><span class="pre">factorial(1000)</span></tt> превысит максимально допустимую глубину рекурсии. Также попробуйте выполнить <tt class="docutils literal"><span class="pre">fibonacci(35)</span></tt> и посмотрите, сколько времени на это понадобится (будьте терпеливы, вы получите результат).</p>
+<p>Вам будет предложено написать итеративную версию функции <tt class="docutils literal"><span class="pre">factorial</span></tt> в качестве упражнения. А в следующей главе вы увидите более эффективный способ реализации <tt class="docutils literal"><span class="pre">fibonacci</span></tt>.</p>
+</div>
+<div class="section" id="index-8">
+<span id="id10"></span><h2>10.9. Списочное включение<a class="headerlink" href="#index-8" title="Ссылка на этот заголовок">¶</a></h2>
+<p><strong>Списочное включение</strong> (англ.: list comprehension) - это синтаксическая конструкция, которая позволяет создавать списки из других списков, используя компактную математическую нотацию:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">]</span>
+<span class="go">[1, 4, 9, 16]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">numbers</span> <span class="k">if</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">&gt;</span> <span class="mi">8</span><span class="p">]</span>
+<span class="go">[9, 16]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">]</span>
+<span class="go">[(1, 1, 1), (2, 4, 8), (3, 9, 27), (4, 16, 64)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;bin&#39;</span><span class="p">,</span> <span class="s">&#39;Data&#39;</span><span class="p">,</span> <span class="s">&#39;Desktop&#39;</span><span class="p">,</span> <span class="s">&#39;.bashrc&#39;</span><span class="p">,</span> <span class="s">&#39;.ssh&#39;</span><span class="p">,</span> <span class="s">&#39;.vimrc&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">files</span> <span class="k">if</span> <span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&#39;.&#39;</span><span class="p">]</span>
+<span class="go">[&#39;bin&#39;, &#39;Data&#39;, &#39;Desktop&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">letters</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">n</span><span class="o">*</span><span class="n">letter</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">numbers</span> <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">letters</span><span class="p">]</span>
+<span class="go">[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;aa&#39;, &#39;bb&#39;, &#39;cc&#39;, &#39;aaa&#39;, &#39;bbb&#39;, &#39;ccc&#39;, &#39;aaaa&#39;, &#39;bbbb&#39;, &#39;cccc&#39;]</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Обобщенный синтаксис для выражения, генерирующего список, таков:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">expr</span> <span class="k">for</span>  <span class="n">item1</span> <span class="ow">in</span>  <span class="n">seq1</span> <span class="k">for</span> <span class="n">item2</span> <span class="ow">in</span> <span class="n">seq2</span> <span class="o">...</span> <span class="k">for</span> <span class="n">itemx</span> <span class="ow">in</span> <span class="n">seqx</span> <span class="k">if</span> <span class="n">condition</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Выражение списочного включения имеет тот же эффект, что и следующий код:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">output_sequence</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">item1</span> <span class="ow">in</span> <span class="n">seq1</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">item2</span> <span class="ow">in</span> <span class="n">seq2</span><span class="p">:</span>
+        <span class="o">...</span>
+            <span class="k">for</span> <span class="n">itemx</span> <span class="ow">in</span> <span class="n">seqx</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">condition</span><span class="p">:</span>
+                    <span class="n">output_sequence</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Как видите, код, использующий списковое включение, гораздо компактнее.</p>
+</div>
+<div class="section" id="id11">
+<h2>10.10. Маленький учебный пример: дерево<a class="headerlink" href="#id11" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Следующий пример частично реализует поведение программы <a class="reference external" href="http://en.wikipedia.org/wiki/Tree_(Unix)">tree</a>, имеющейся в операционных системах Unix.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+
+<span class="k">def</span> <span class="nf">getroot</span><span class="p">():</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isabs</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="n">tree_root</span> <span class="o">=</span> <span class="n">path</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">tree_root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">path</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">tree_root</span>
+
+
+<span class="k">def</span> <span class="nf">getdirlist</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="n">dirlist</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">dirlist</span> <span class="o">=</span> <span class="p">[</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">dirlist</span> <span class="k">if</span> <span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&#39;.&#39;</span><span class="p">]</span>
+    <span class="n">dirlist</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">dirlist</span>
+
+
+<span class="k">def</span> <span class="nf">traverse</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&#39;|--&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="s">&#39;.</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="n">dirlist</span> <span class="o">=</span> <span class="n">getdirlist</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">num</span><span class="p">,</span> <span class="nb">file</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dirlist</span><span class="p">):</span>
+        <span class="n">lastprefix</span> <span class="o">=</span> <span class="n">prefix</span><span class="p">[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;``--&#39;</span>
+        <span class="n">dirsize</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dirlist</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">num</span> <span class="o">&lt;</span> <span class="n">dirsize</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="nb">file</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">lastprefix</span><span class="p">,</span> <span class="nb">file</span><span class="p">)</span>
+        <span class="n">path2file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">file</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path2file</span><span class="p">):</span>
+            <span class="n">d</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">getdirlist</span><span class="p">(</span><span class="n">path2file</span><span class="p">):</span>
+                <span class="n">s</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">traverse</span><span class="p">(</span><span class="n">path2file</span><span class="p">,</span> <span class="s">&#39;|   &#39;</span> <span class="o">+</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">s</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">d</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">root</span> <span class="o">=</span>  <span class="n">getroot</span><span class="p">()</span>
+    <span class="n">tree_str</span><span class="p">,</span> <span class="n">files</span><span class="p">,</span> <span class="n">dirs</span> <span class="o">=</span> <span class="n">traverse</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">dirs</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">dirstring</span> <span class="o">=</span> <span class="s">&#39;directory&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dirstring</span> <span class="o">=</span> <span class="s">&#39;directories&#39;</span>
+    <span class="k">if</span> <span class="n">files</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">filestring</span> <span class="o">=</span> <span class="s">&#39;file&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">filestring</span> <span class="o">=</span> <span class="s">&#39;files&#39;</span>
+
+    <span class="k">print</span> <span class="n">tree_str</span>
+    <span class="k">print</span> <span class="s">&#39;</span><span class="si">%d</span><span class="s"> </span><span class="si">%s</span><span class="s">, </span><span class="si">%d</span><span class="s"> </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">dirs</span><span class="p">,</span> <span class="n">dirstring</span><span class="p">,</span> <span class="n">files</span><span class="p">,</span> <span class="n">filestring</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Ниже вам будет предложено самостоятельно исследовать эту программу в качестве упражнений.</p>
+</div>
+<div class="section" id="id12">
+<h2>10.11. Глоссарий<a class="headerlink" href="#id12" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="glossary docutils">
+<dt id="term-">базовый случай</dt>
+<dd>Ветка условного выполнения в рекурсивной функции, которая не выполняет
+рекурсивного вызова.</dd>
+<dt id="term-1">бесконечная рекурсия</dt>
+<dd>Функция, которая вызывает саму себя рекурсивно, никогда не достигая
+базового случая. В конце концов бесконечная рекурсия приводит к ошибке
+выполнения.</dd>
+<dt id="term-2">возбуждение исключения</dt>
+<dd>Создание исключения при помощи предложения <tt class="docutils literal"><span class="pre">raise</span></tt>.</dd>
+<dt id="term-3">исключение</dt>
+<dd>Ошибка выполнения.</dd>
+<dt id="term-4">кортеж</dt>
+<dd>Тип данных, значения которого - последовательности элементов любого
+типа. В отличие от списка, кортеж неизменяем. Кортежи можно использовать
+всякий раз, когда требуется неизменяемый тип, например, в качестве ключа
+в словаре (см. следующую главу).</dd>
+<dt id="term-5">неизменяемый тип данных</dt>
+<dd>Значения такого типа нельзя изменить. Присваивания элементам или срезам
+неизменяемого типа вызывают ошибку выполнения.</dd>
+<dt id="term-6">обработка исключения</dt>
+<dd>Предотвращение завершения программы в случае возникновения исключения,
+с помощью предложений <tt class="docutils literal"><span class="pre">try</span></tt> и <tt class="docutils literal"><span class="pre">except</span></tt>.</dd>
+<dt id="term-7">присваивание кортежа</dt>
+<dd>Присваивание всем элементам кортежа, выполняемое одним предложением
+присваивания. Присваивание кортежу выполняется после вычисления всех
+значений в правой части присваивания, так что может использоваться для
+взаимного обмена значений переменных.</dd>
+<dt id="term-8">рекурсивное определение</dt>
+<dd>Определение, которое определяет нечто в терминах этого самого нечто.
+Чтобы иметь практическую пользу, оно должно включать <em>базовые случаи</em>,
+которые не являются рекурсивными. Этим рекурсивное определение
+отличается от <em>циклического определения</em>. Рекурсивные определения часто
+предоставляют элегантный способ построения сложных структур данных.</dd>
+<dt id="term-9">рекурсия</dt>
+<dd>Процесс вызова функцией самой себя, прямо или опосредованно.</dd>
+<dt id="term-10">рекурсивный вызов</dt>
+<dd>Вызов функцией самой себя.</dd>
+<dt id="term-11">структура данных</dt>
+<dd>Организация данных с целью с сделать их использование легче.</dd>
+<dt id="term-12">списочное включение</dt>
+<dd>Синтаксическая конструкция, которая позволяет порождать список из
+другого списка, используя нотацию, похожую на математическую.</dd>
+<dt id="term-13">хвостовая рекурсия</dt>
+<dd>Рекурсивный вызов в последнем предложении функции. Хвостовая рекурсия
+считается плохой практикой в программах Python, так как может быть
+написана логически эквивалентная функция, использующая <em>итерацию</em>, что
+более эффективно. См. статью в Википедии <a class="reference external" href="http://ru.wikipedia.org/wiki/%D0%A5%D0%B2%D0%BE%D1%81%D1%82%D0%BE%D0%B2%D0%B0%D1%8F_%D1%80%D0%B5%D0%BA%D1%83%D1%80%D1%81%D0%B8%D1%8F">Хвостовая рекурсия</a>.</dd>
+</dl>
+</div>
+<div class="section" id="id13">
+<h2>10.12. Упражнения<a class="headerlink" href="#id13" title="Ссылка на этот заголовок">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Выполните эту программу и объясните результаты:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">swap</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>      <span class="c"># incorrect version</span>
+     <span class="k">print</span>  <span class="s">&quot;before swap statement: id(x):&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s">&quot;id(y):&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+     <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span>
+     <span class="k">print</span>  <span class="s">&quot;after swap statement: id(x):&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s">&quot;id(y):&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+<span class="k">print</span>  <span class="s">&quot;before swap function call: id(a):&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="s">&quot;id(b):&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="n">swap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="k">print</span>  <span class="s">&quot;after swap function call: id(a):&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="s">&quot;id(b):&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Объясните, почему эта версия <tt class="docutils literal"><span class="pre">swap</span></tt> не работает, как задумано. Какими будут
+значения <tt class="docutils literal"><span class="pre">a</span></tt> и <tt class="docutils literal"><span class="pre">b</span></tt> после вызова <tt class="docutils literal"><span class="pre">swap</span></tt>?</p>
+</li>
+<li><p class="first">Создайте модуль с именем <tt class="docutils literal"><span class="pre">seqtools.py</span></tt>. Поместите в него функции
+<tt class="docutils literal"><span class="pre">encapsulate</span></tt> и <tt class="docutils literal"><span class="pre">insert_in_middle</span></tt> из этой главы. Добавьте доктесты,
+проверяющие, что эти функции работают правильно со всеми тремя встроенными
+типами последовательностей.</p>
+</li>
+<li><p class="first">Добавьте следующие функции в <tt class="docutils literal"><span class="pre">seqtools.py</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">make_empty</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; make_empty([1, 2, 3, 4])</span>
+<span class="sd">      []</span>
+<span class="sd">      &gt;&gt;&gt; make_empty((&#39;a&#39;, &#39;b&#39;, &#39;c&#39;))</span>
+<span class="sd">      ()</span>
+<span class="sd">      &gt;&gt;&gt; make_empty(&quot;No, not me!&quot;)</span>
+<span class="sd">      &#39;&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">insert_at_end</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">seq</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; insert_at_end(5, [1, 3, 4, 6])</span>
+<span class="sd">      [1, 3, 4, 6, 5]</span>
+<span class="sd">      &gt;&gt;&gt; insert_at_end(&#39;x&#39;, &#39;abc&#39;)</span>
+<span class="sd">      &#39;abcx&#39;</span>
+<span class="sd">      &gt;&gt;&gt; insert_at_end(5, (1, 3, 4, 6))</span>
+<span class="sd">      (1, 3, 4, 6, 5)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">insert_in_front</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">seq</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; insert_in_front(5, [1, 3, 4, 6])</span>
+<span class="sd">      [5, 1, 3, 4, 6]</span>
+<span class="sd">      &gt;&gt;&gt; insert_in_front(5, (1, 3, 4, 6))</span>
+<span class="sd">      (5, 1, 3, 4, 6)</span>
+<span class="sd">      &gt;&gt;&gt; insert_in_front(&#39;x&#39;, &#39;abc&#39;)</span>
+<span class="sd">      &#39;xabc&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">index_of</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">seq</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; index_of(9, [1, 7, 11, 9, 10])</span>
+<span class="sd">      3</span>
+<span class="sd">      &gt;&gt;&gt; index_of(5, (1, 2, 4, 5, 6, 10, 5, 5))</span>
+<span class="sd">      3</span>
+<span class="sd">      &gt;&gt;&gt; index_of(5, (1, 2, 4, 5, 6, 10, 5, 5), 4)</span>
+<span class="sd">      6</span>
+<span class="sd">      &gt;&gt;&gt; index_of(&#39;y&#39;, &#39;happy birthday&#39;)</span>
+<span class="sd">      4</span>
+<span class="sd">      &gt;&gt;&gt; index_of(&#39;banana&#39;, [&#39;apple&#39;, &#39;banana&#39;, &#39;cherry&#39;, &#39;date&#39;])</span>
+<span class="sd">      1</span>
+<span class="sd">      &gt;&gt;&gt; index_of(5, [2, 3, 4])</span>
+<span class="sd">      -1</span>
+<span class="sd">      &gt;&gt;&gt; index_of(&#39;b&#39;, [&#39;apple&#39;, &#39;banana&#39;, &#39;cherry&#39;, &#39;date&#39;])</span>
+<span class="sd">      -1</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">remove_at</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">seq</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; remove_at(3, [1, 7, 11, 9, 10])</span>
+<span class="sd">      [1, 7, 11, 10]</span>
+<span class="sd">      &gt;&gt;&gt; remove_at(5, (1, 4, 6, 7, 0, 9, 3, 5))</span>
+<span class="sd">      (1, 4, 6, 7, 0, 3, 5)</span>
+<span class="sd">      &gt;&gt;&gt; remove_at(2, &quot;Yomrktown&quot;)</span>
+<span class="sd">      &#39;Yorktown&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">remove_val</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">seq</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; remove_val(11, [1, 7, 11, 9, 10])</span>
+<span class="sd">      [1, 7, 9, 10]</span>
+<span class="sd">      &gt;&gt;&gt; remove_val(15, (1, 15, 11, 4, 9))</span>
+<span class="sd">      (1, 11, 4, 9)</span>
+<span class="sd">      &gt;&gt;&gt; remove_val(&#39;what&#39;, (&#39;who&#39;, &#39;what&#39;, &#39;when&#39;, &#39;where&#39;, &#39;why&#39;, &#39;how&#39;))</span>
+<span class="sd">      (&#39;who&#39;, &#39;when&#39;, &#39;where&#39;, &#39;why&#39;, &#39;how&#39;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">remove_all</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">seq</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; remove_all(11, [1, 7, 11, 9, 11, 10, 2, 11])</span>
+<span class="sd">      [1, 7, 9, 10, 2]</span>
+<span class="sd">      &gt;&gt;&gt; remove_all(&#39;i&#39;, &#39;Mississippi&#39;)</span>
+<span class="sd">      &#39;Msssspp&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">seq</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; count(5, (1, 5, 3, 7, 5, 8, 5))</span>
+<span class="sd">      3</span>
+<span class="sd">      &gt;&gt;&gt; count(&#39;s&#39;, &#39;Mississippi&#39;)</span>
+<span class="sd">      4</span>
+<span class="sd">      &gt;&gt;&gt; count((1, 2), [1, 5, (1, 2), 7, (1, 2), 8, 5])</span>
+<span class="sd">      2</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">reverse</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; reverse([1, 2, 3, 4, 5])</span>
+<span class="sd">      [5, 4, 3, 2, 1]</span>
+<span class="sd">      &gt;&gt;&gt; reverse((&#39;shoe&#39;, &#39;my&#39;, &#39;buckle&#39;, 2, 1))</span>
+<span class="sd">      (1, 2, &#39;buckle&#39;, &#39;my&#39;, &#39;shoe&#39;)</span>
+<span class="sd">      &gt;&gt;&gt; reverse(&#39;Python&#39;)</span>
+<span class="sd">      &#39;nohtyP&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">sort_sequence</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; sort_sequence([3, 4, 6, 7, 8, 2])</span>
+<span class="sd">      [2, 3, 4, 6, 7, 8]</span>
+<span class="sd">      &gt;&gt;&gt; sort_sequence((3, 4, 6, 7, 8, 2))</span>
+<span class="sd">      (2, 3, 4, 6, 7, 8)</span>
+<span class="sd">      &gt;&gt;&gt; sort_sequence(&quot;nothappy&quot;)</span>
+<span class="sd">      &#39;ahnoppty&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Как и прежде, напишите тела функций, проверяя их работу с помощью доктестов
+по готовности каждой новой функции.</p>
+</li>
+<li><p class="first">Напишите функцию <tt class="docutils literal"><span class="pre">recursive_min</span></tt>, которая возвращает наименьшее число из
+вложенного списка чисел:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">recursive_min</span><span class="p">(</span><span class="n">nested_num_list</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; recursive_min([2, 9, [1, 13], 8, 6])</span>
+<span class="sd">      1</span>
+<span class="sd">      &gt;&gt;&gt; recursive_min([2, [[100, 1], 90], [10, 13], 8, 6])</span>
+<span class="sd">      1</span>
+<span class="sd">      &gt;&gt;&gt; recursive_min([2, [[13, -7], 90], [1, 100], 8, 6])</span>
+<span class="sd">      -7</span>
+<span class="sd">      &gt;&gt;&gt; recursive_min([[[-13, 7], 90], 2, [1, 100], 8, 6])</span>
+<span class="sd">      -13</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Ваша функция должна успешно пройти доктесты.</p>
+</li>
+<li><p class="first">Напишите функцию <tt class="docutils literal"><span class="pre">recursive_count</span></tt>, которая возвращает количество вхождений
+<tt class="docutils literal"><span class="pre">target</span></tt> в <tt class="docutils literal"><span class="pre">nested_number_list</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">recursive_count</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">nested_num_list</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; recursive_count(2, [2, 9, [2, 1, 13, 2], 8, [2, 6]])</span>
+<span class="sd">      4</span>
+<span class="sd">      &gt;&gt;&gt; recursive_count(7, [[9, [7, 1, 13, 2], 8], [7, 6]])</span>
+<span class="sd">      2</span>
+<span class="sd">      &gt;&gt;&gt; recursive_count(15, [[9, [7, 1, 13, 2], 8], [2, 6]])</span>
+<span class="sd">      0</span>
+<span class="sd">      &gt;&gt;&gt; recursive_count(5, [[5, [5, [1, 5], 5], 5], [5, 6]])</span>
+<span class="sd">      6</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Ваша функция должна успешно пройти доктесты.</p>
+</li>
+<li><p class="first">Напишите функцию <tt class="docutils literal"><span class="pre">flatten</span></tt>, которая возвращает (невложенный) список чисел,
+содержащий все числа из <tt class="docutils literal"><span class="pre">nested_number_list</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">flatten</span><span class="p">(</span><span class="n">nested_num_list</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      &gt;&gt;&gt; flatten([2, 9, [2, 1, 13, 2], 8, [2, 6]])</span>
+<span class="sd">      [2, 9, 2, 1, 13, 2, 8, 2, 6]</span>
+<span class="sd">      &gt;&gt;&gt; flatten([[9, [7, 1, 13, 2], 8], [7, 6]])</span>
+<span class="sd">      [9, 7, 1, 13, 2, 8, 7, 6]</span>
+<span class="sd">      &gt;&gt;&gt; flatten([[9, [7, 1, 13, 2], 8], [2, 6]])</span>
+<span class="sd">      [9, 7, 1, 13, 2, 8, 2, 6]</span>
+<span class="sd">      &gt;&gt;&gt; flatten([[5, [5, [1, 5], 5], 5], [5, 6]])</span>
+<span class="sd">      [5, 5, 1, 5, 5, 5, 5, 6]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Убедитесь, что ваша функция успешно проходит доктесты.</p>
+</li>
+<li><p class="first">Напишите функцию <tt class="docutils literal"><span class="pre">readposint</span></tt>, которая просит пользователя ввести
+положительное целое число, и затем проверяет то, что ввел пользователь. Вот
+как можно работать с такой функцией:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">num</span> <span class="o">=</span> <span class="n">readposint</span><span class="p">()</span>
+<span class="go">Please enter a positive integer: yes</span>
+<span class="go">yes is not a positive integer.  Try again.</span>
+<span class="go">Please enter a positive integer: 3.14</span>
+<span class="go">3.14 is not a positive integer.  Try again.</span>
+<span class="go">Please enter a positive integer: -6</span>
+<span class="go">-6 is not a positive integer.  Try again.</span>
+<span class="go">Please enter a positive integer: 42</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">num</span>
+<span class="go">42</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">num2</span> <span class="o">=</span> <span class="n">readposint</span><span class="p">(</span><span class="s">&quot;Now enter another one: &quot;</span><span class="p">)</span>
+<span class="go">Now enter another one: 31</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">num2</span>
+<span class="go">31</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Используйте обработку исключений при проверке введенного пользователем значения.</p>
+</li>
+<li><p class="first">Предскажите, что выдаст Python в ответ на следующее:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">nums</span> <span class="k">if</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">nums</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">nums</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">nums</span> <span class="k">if</span> <span class="n">x</span> <span class="o">!=</span> <span class="n">y</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Вы должны предвидеть результаты, <em>прежде</em> чем попробуйте выполнить приведенные
+фрагменты кода в интерактивном режиме.</p>
+</li>
+<li><p class="first">Воспользовавшись <tt class="docutils literal"><span class="pre">pydoc</span></tt> или онлайновой документацией на сайте
+<a class="reference external" href="http://docs.python.org/">http://docs.python.org/</a>, выясните, что делают функции
+<tt class="docutils literal"><span class="pre">sys.getrecursionlimit()</span></tt> и <tt class="docutils literal"><span class="pre">sys.setrecursionlimit(n)</span></tt>. Проведите
+несколько <em>экспериментов</em>, подобных тому, который мы поставили с помощью
+<tt class="docutils literal"><span class="pre">infinite_recursion.py</span></tt>, чтобы убедиться в том, как работают эти функции.</p>
+</li>
+<li><p class="first">Перепишите функцию <tt class="docutils literal"><span class="pre">factorial</span></tt>, используя итерацию вместо рекурсии.
+Вызовите вашу новую функцию с аргументом 1000 и заметьте, как быстро она
+отработает.</p>
+</li>
+<li><p class="first">Напишите программу <tt class="docutils literal"><span class="pre">litter.py</span></tt>, которая создает пустой файл с именем
+<tt class="docutils literal"><span class="pre">trash.txt</span></tt> в каждом каталоге дерева каталогов. Корень дерева каталогов
+программа получает в качестве аргумента (или использует текущий каталог по
+умолчанию). После этого напишите программу <tt class="docutils literal"><span class="pre">cleanup.py</span></tt>, которая удаляет
+все эти файлы.
+<em>Подсказка:</em>  используйте программу <tt class="docutils literal"><span class="pre">tree</span></tt> из учебного примера в качестве
+основы для разработки этих двух рекурсивных программ.</p>
+</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             >словарь</a></li>
+        <li class="right" >
+          <a href="ch11.html" title="11. Словари"
+             >следующий</a> |</li>
+        <li class="right" >
+          <a href="ch09.html" title="9. Модули и файлы"
+             >предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="copyright.html">Copyright</a> 2009, 2012, Джеффри Элкнер, Аллен Б. Дауни, Крис Мейерс, Андрей Трофимов.
+      При создании использован <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

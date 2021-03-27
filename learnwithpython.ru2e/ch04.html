@@ -1,0 +1,611 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>4. Условные предложения &mdash; Учимся с Python</title>
+    
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2nd Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="Учимся с Python" href="index.html" />
+    <link rel="next" title="5. Функции, возвращающие значения" href="ch05.html" />
+    <link rel="prev" title="3. Функции" href="ch03.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             accesskey="I">словарь</a></li>
+        <li class="right" >
+          <a href="ch05.html" title="5. Функции, возвращающие значения"
+             accesskey="N">следующий</a> |</li>
+        <li class="right" >
+          <a href="ch03.html" title="3. Функции"
+             accesskey="P">предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>4. Условные предложения<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
+<div class="section" id="index-0">
+<span id="id2"></span><h2>4.1. Оператор деления по модулю<a class="headerlink" href="#index-0" title="Ссылка на этот заголовок">¶</a></h2>
+<p><strong>Оператор деления по модулю</strong> работает с целыми числами (и целочисленными выражениями) и дает остаток от деления первого операнда на второй. В Python оператор деления по модулю обозначается символом процента <tt class="docutils literal"><span class="pre">%</span></tt>, и используется так же, как и другие операторы:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">quotient</span> <span class="o">=</span> <span class="mi">7</span> <span class="o">/</span> <span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">quotient</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">remainder</span> <span class="o">=</span> <span class="mi">7</span> <span class="o">%</span> <span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">remainder</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+<p>7, деленное на 3, дает 2, да 1 в остатке.</p>
+<p>Оказывается, оператор деления по модулю может быть удивительно полезным. Например, можно проверить, делится ли одно число на другое &#8212; если <tt class="docutils literal"><span class="pre">x</span> <span class="pre">%</span> <span class="pre">y</span></tt> дает 0, то <tt class="docutils literal"><span class="pre">x</span></tt> делится на <tt class="docutils literal"><span class="pre">y</span></tt>.</p>
+<p>Можно также извлечь из числа самую правую цифру или несколько цифр. Например, <tt class="docutils literal"><span class="pre">x</span> <span class="pre">%</span> <span class="pre">10</span></tt> даст самую правую цифру числа <tt class="docutils literal"><span class="pre">x</span></tt>. Аналогично, <tt class="docutils literal"><span class="pre">x</span> <span class="pre">%</span> <span class="pre">100</span></tt> даст две последние цифры.</p>
+</div>
+<div class="section" id="index-1">
+<span id="id3"></span><h2>4.2. Логические значения и выражения<a class="headerlink" href="#index-1" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Тип Python для хранения значений <em>истина</em> и <em>ложь</em> называется <tt class="docutils literal"><span class="pre">bool</span></tt> в честь британского математика Джорджа Буля. Джордж Буль создал <em>булеву алгебру</em>, которая стала основой работы современных компьютеров.</p>
+<p>Существуют только два <strong>логических значения</strong>: <tt class="docutils literal"><span class="pre">True</span></tt> (англ.: истина) и <tt class="docutils literal"><span class="pre">False</span></tt> (англ.: ложь). Логические значения записываются с большой буквы, а <tt class="docutils literal"><span class="pre">true</span></tt> и <tt class="docutils literal"><span class="pre">false</span></tt> не являются логическими значениями.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">&lt;type &#39;bool&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">true</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">NameError</span>: <span class="n">name &#39;true&#39; is not defined</span>
+</pre></div>
+</div>
+<p><strong>Логическое выражение</strong> &#8212; это выражение, вычисление которого дает значение логического типа. Так, оператор <tt class="docutils literal"><span class="pre">==</span></tt> сравнивает два значения и производит логическое значение:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="mi">5</span> <span class="o">==</span> <span class="mi">5</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mi">5</span> <span class="o">==</span> <span class="mi">6</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>В первом предложении два операнда равны, поэтому выражение дает <tt class="docutils literal"><span class="pre">True</span></tt>. Во втором предложении 5 не равно 6, и потому получаем <tt class="docutils literal"><span class="pre">False</span></tt>.</p>
+<p>Оператор <tt class="docutils literal"><span class="pre">==</span></tt> &#8212; это один из <strong>операторов сравнения</strong>; другие перечислены ниже:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">x</span> <span class="o">!=</span> <span class="n">y</span>               <span class="c"># x не равно y</span>
+<span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span>                <span class="c"># x больше y</span>
+<span class="n">x</span> <span class="o">&lt;</span> <span class="n">y</span>                <span class="c"># x меньше y</span>
+<span class="n">x</span> <span class="o">&gt;=</span> <span class="n">y</span>               <span class="c"># x больше или равно y</span>
+<span class="n">x</span> <span class="o">&lt;=</span> <span class="n">y</span>               <span class="c"># x меньше или равно y</span>
+</pre></div>
+</div>
+<p>Хотя эти операторы, вероятно, вам знакомы, будьте внимательны при их использовании в Python. Распространенная ошибка &#8212; использование одного знака равенства <tt class="docutils literal"><span class="pre">=</span></tt> вместо двух <tt class="docutils literal"><span class="pre">==</span></tt>. Помните, что <tt class="docutils literal"><span class="pre">=</span></tt> &#8212; оператор присваивания, а <tt class="docutils literal"><span class="pre">==</span></tt> &#8212; оператор сравнения. А операторов <tt class="docutils literal"><span class="pre">=&lt;</span></tt> и <tt class="docutils literal"><span class="pre">=&gt;</span></tt> не существует.</p>
+</div>
+<div class="section" id="index-2">
+<span id="id4"></span><h2>4.3. Логические операторы<a class="headerlink" href="#index-2" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Есть три <strong>логических оператора</strong>: <tt class="docutils literal"><span class="pre">and</span></tt> (англ.: и), <tt class="docutils literal"><span class="pre">or</span></tt> (англ.: или) и <tt class="docutils literal"><span class="pre">not</span></tt> (англ.: не). Семантика этих операторов подобна значениям соответствующих слов в английском языке. Например, выражение <tt class="docutils literal"><span class="pre">x</span> <span class="pre">&gt;</span> <span class="pre">0</span> <span class="pre">and</span> <span class="pre">x</span> <span class="pre">&lt;</span> <span class="pre">10</span></tt> дает True, если <tt class="docutils literal"><span class="pre">x</span></tt> больше 0 <em>и</em> меньше 10.</p>
+<p>Выражение <tt class="docutils literal"><span class="pre">n</span> <span class="pre">%</span> <span class="pre">2</span> <span class="pre">==</span> <span class="pre">0</span> <span class="pre">or</span> <span class="pre">n</span> <span class="pre">%</span> <span class="pre">3</span> <span class="pre">==</span> <span class="pre">0</span></tt> дает True, если <em>хотя бы одно</em> из условий дает True, то есть, если число делится без остатка на 2 <em>или</em> на 3.</p>
+<p>Наконец, оператор <tt class="docutils literal"><span class="pre">not</span></tt> отрицает логическое выражение, так что <tt class="docutils literal"><span class="pre">not</span> <span class="pre">(x</span> <span class="pre">&gt;</span> <span class="pre">y)</span></tt> дает True, если <tt class="docutils literal"><span class="pre">(x</span> <span class="pre">&gt;</span> <span class="pre">y)</span></tt> дает False, то есть, если <tt class="docutils literal"><span class="pre">x</span></tt> меньше или равно <tt class="docutils literal"><span class="pre">y</span></tt>.</p>
+<span class="target" id="index-3"></span></div>
+<div class="section" id="index-4">
+<span id="id5"></span><h2>4.4. Условное выполнение<a class="headerlink" href="#index-4" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Для того, чтобы писать полезные программы, нужно уметь проверять условия и, в зависимости от результата проверки, поступать тем или иным образом. <strong>Условные предложения</strong> дают нам такую возможность. Самое простое из них &#8212; <strong>предложение ``if``</strong> (англ.: если):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;x is positive&quot;</span>
+</pre></div>
+</div>
+<p>Логическое выражение после <tt class="docutils literal"><span class="pre">if</span></tt> называется <strong>условием</strong>. Если условие истинно, то последующие предложения, имеющие отступ относительно <tt class="docutils literal"><span class="pre">if</span></tt>, выполняются. Если условие ложно, то не выполняются.</p>
+<p>Предложение <tt class="docutils literal"><span class="pre">if</span></tt> строится так:</p>
+<div class="highlight-python"><pre>if логическое_выражение:
+    предложение
+    ...</pre>
+</div>
+<p>Как и определение функции из предыдущей главы, и другие составные предложения, предложение <tt class="docutils literal"><span class="pre">if</span></tt> состоит из заголовка и тела. Заголовок начинается с ключевого слова <tt class="docutils literal"><span class="pre">if</span></tt>, за которым следует <em>логическое выражение</em> и двоеточие (:).</p>
+<p>Последовательность предложений, имеющих одинаковый отступ, называется <strong>блоком</strong>. Блок заканчивается, как только встречается предложение без отступа (или с другим отступом). Таким образом, тело составного предложения &#8212; это блок внутри составного предложения.</p>
+<p>Тело <tt class="docutils literal"><span class="pre">if</span></tt> выполняется, если вычисление логического выражения дает <tt class="docutils literal"><span class="pre">True</span></tt>. Тело пропускается, если логическое выражение дает <tt class="docutils literal"><span class="pre">False</span></tt>.</p>
+<p>В теле может быть сколь угодно много предложений, однако, не менее одного. Время от времени удобно писать тело без предложений, лишь обозначая место для кода, который пока не написан. В таком случае используют предложение <tt class="docutils literal"><span class="pre">pass</span></tt>, которое ничего не делает.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>Здесь условие всегда истинно, поэтому тело всегда выполняется. Но ничего не делает.</p>
+</div>
+<div class="section" id="index-5">
+<span id="id6"></span><h2>4.5. Альтернативное выполнение<a class="headerlink" href="#index-5" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Следующая форма предложения <tt class="docutils literal"><span class="pre">if</span></tt> реализует альтернативное выполнение блоков предложений, в зависимости от результата проверки условия. Это выглядит так:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">x</span><span class="p">,</span> <span class="s">&quot;is even&quot;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">x</span><span class="p">,</span> <span class="s">&quot;is odd&quot;</span>
+</pre></div>
+</div>
+<p>Если остаток от деления <tt class="docutils literal"><span class="pre">x</span></tt> на 2 равен 0, значит, <tt class="docutils literal"><span class="pre">x</span></tt> является четным числом, и программа выводит сообщение об этом. Если же условие оказывается ложным, то выполняется второй блок, следующий за <tt class="docutils literal"><span class="pre">else</span></tt> (англ.: иначе), и выводится сообщение о том, что число нечетное. Поскольку условие может быть либо истинным либо ложным, будет выполнена только одна из двух альтернатив. Альтернативы называют <strong>ветками</strong>, потому что они разветвляют поток выполнения.</p>
+<p>Маленькое отступление. Если вам понадобится часто проверять четность (нечетность) чисел, то вы можете <em>завернуть</em> этот код в функцию:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">print_parity</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">x</span><span class="p">,</span> <span class="s">&quot;is even&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">x</span><span class="p">,</span> <span class="s">&quot;is odd&quot;</span>
+</pre></div>
+</div>
+<p>Для произвольного значения <tt class="docutils literal"><span class="pre">x</span></tt> функция <tt class="docutils literal"><span class="pre">print_parity</span></tt> выведет соответствующее сообщение. При вызове функции, в качестве аргумента ей можно передать любое целочисленное выражение.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">print_parity</span><span class="p">(</span><span class="mi">17</span><span class="p">)</span>
+<span class="go">17 is odd.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="mi">41</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print_parity</span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">42 is even.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="index-6">
+<span id="id7"></span><h2>4.6. Сцепление условных предложений<a class="headerlink" href="#index-6" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Когда существуют более двух вариантов выбора, требуется более двух ветвей выполнения. В таком случае используется <strong>сцепление условных предложений</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">y</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">x</span><span class="p">,</span> <span class="s">&quot;is less than&quot;</span><span class="p">,</span> <span class="n">y</span>
+<span class="k">elif</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">x</span><span class="p">,</span> <span class="s">&quot;is greater than&quot;</span><span class="p">,</span> <span class="n">y</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">x</span><span class="p">,</span> <span class="s">&quot;and&quot;</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s">&quot;are equal&quot;</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">elif</span></tt> является сокращением от <tt class="docutils literal"><span class="pre">else</span> <span class="pre">if</span></tt> (англ.: иначе если). По-прежнему будет выполняться только одна ветка. Предложений <tt class="docutils literal"><span class="pre">elif</span></tt> может быть сколько угодно, но предложение <tt class="docutils literal"><span class="pre">else</span></tt> может быть только одно (или ни одного), в качестве самой последней ветки:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">choice</span> <span class="o">==</span> <span class="s">&#39;a&#39;</span><span class="p">:</span>
+    <span class="n">function_a</span><span class="p">()</span>
+<span class="k">elif</span> <span class="n">choice</span> <span class="o">==</span> <span class="s">&#39;b&#39;</span><span class="p">:</span>
+    <span class="n">function_b</span><span class="p">()</span>
+<span class="k">elif</span> <span class="n">choice</span> <span class="o">==</span> <span class="s">&#39;c&#39;</span><span class="p">:</span>
+    <span class="n">function_c</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;Invalid choice.&quot;</span>
+</pre></div>
+</div>
+<p>Условия проверяются в том порядке, в котором они написаны. Если первое ложно, то проверяется второе, и так далее. Если одно из условий оказывается истинным, то выполняется соответствующая ветка и составное предложение заканчивается. Даже если истинны более одного условия, будет выполнена только ветка, соответствующая первому из них.</p>
+</div>
+<div class="section" id="index-7">
+<span id="id8"></span><h2>4.7. Вложенные условные предложения<a class="headerlink" href="#index-7" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Одно условное предложение может быть <strong>вложено</strong> в другое. Выбор из трех вариантов может быть записан так:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="n">y</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">x</span><span class="p">,</span> <span class="s">&quot;and&quot;</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s">&quot;are equal&quot;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">y</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">x</span><span class="p">,</span> <span class="s">&quot;is less than&quot;</span><span class="p">,</span> <span class="n">y</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">x</span><span class="p">,</span> <span class="s">&quot;is greater than&quot;</span><span class="p">,</span> <span class="n">y</span>
+</pre></div>
+</div>
+<p>Внешнее условное предложение состоит из двух веток выполнения. Первая ветка содержит предложение print. Вторая ветка содержит предложение <tt class="docutils literal"><span class="pre">if</span></tt>, которое, в свою очередь, включает две ветки. Каждая из них содержит предложение print (хотя они также могли бы содержать вложенные условные предложения).</p>
+<p>Хотя отступы и делают структуру программы понятной, вложенные условные предложения все же затрудняют чтение программы. Поэтому стоит избегать их, когда возможно.</p>
+<p>Например, сравните следующие фрагменты кода:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">choice</span> <span class="o">==</span> <span class="s">&#39;a&#39;</span><span class="p">:</span>
+    <span class="n">function_a</span><span class="p">()</span>
+<span class="k">elif</span> <span class="n">choice</span> <span class="o">==</span> <span class="s">&#39;b&#39;</span><span class="p">:</span>
+    <span class="n">function_b</span><span class="p">()</span>
+<span class="k">elif</span> <span class="n">choice</span> <span class="o">==</span> <span class="s">&#39;c&#39;</span><span class="p">:</span>
+    <span class="n">function_c</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;Invalid choice.&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">choice</span> <span class="o">==</span> <span class="s">&#39;a&#39;</span><span class="p">:</span>
+    <span class="n">function_a</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">choice</span> <span class="o">==</span> <span class="s">&#39;b&#39;</span><span class="p">:</span>
+        <span class="n">function_b</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">choice</span> <span class="o">==</span> <span class="s">&#39;c&#39;</span><span class="p">:</span>
+            <span class="n">function_c</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Invalid choice.&quot;</span>
+</pre></div>
+</div>
+<p>Оба фрагмента содержат семантически равнозначный код, но второй фрагмент менее нагляден, чем первый, и его труднее читать.</p>
+<p>Логические операторы помогают избежать вложенных условных предложений, где это возможно. Например, следующий код может быть переписан с использованием только одного условного предложения:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">x</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;x is a positive single digit.&quot;</span>
+</pre></div>
+</div>
+<p>Предложение <tt class="docutils literal"><span class="pre">print</span></tt> выполняется, только если выполняются условия в двух условных предложениях, поэтому можно воспользоваться оператором <tt class="docutils literal"><span class="pre">and</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">x</span> <span class="ow">and</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;x is a positive single digit.&quot;</span>
+</pre></div>
+</div>
+<p>Такого типа условия довольно часто встречаются. Поэтому Python предоставляет специальную форму записи таких условий, похожую на математическую:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;x is a positive single digit.&quot;</span>
+</pre></div>
+</div>
+<p>Это условие семантически равнозначно составному логическому выражению и вложенным условным предложениям, приведенным выше.</p>
+</div>
+<div class="section" id="return">
+<span id="index-8"></span><h2>4.8. Предложение <tt class="docutils literal"><span class="pre">return</span></tt><a class="headerlink" href="#return" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Предложение <tt class="docutils literal"><span class="pre">return</span></tt> (англ.: возвращать(ся)) позволяет завершить выполнение функции раньше, чем достигнут ее конец. Это может понадобиться при обнаружении ошибки:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">print_square_root</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;Positive numbers only, please.&quot;</span>
+        <span class="k">return</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mf">0.5</span>
+    <span class="k">print</span> <span class="s">&quot;The square root of&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="s">&quot;is&quot;</span><span class="p">,</span> <span class="n">result</span>
+</pre></div>
+</div>
+<p>Функция <tt class="docutils literal"><span class="pre">print_square_root</span></tt> имеет параметр с именем <tt class="docutils literal"><span class="pre">x</span></tt>. Первое, что она делает, это проверяет, не является ли <tt class="docutils literal"><span class="pre">x</span></tt> меньше или равным 0, и, если да, то выводит сообщение об ошибке и завершается с помощью <tt class="docutils literal"><span class="pre">return</span></tt>. Поток выполнения продолжится в вызывающей программе, а остальные предложения функции не будут выполнены.</p>
+</div>
+<div class="section" id="index-9">
+<span id="id9"></span><h2>4.9. Ввод с клавиатуры<a class="headerlink" href="#index-9" title="Ссылка на этот заголовок">¶</a></h2>
+<p>В разделе <a class="reference internal" href="ch02.html#input"><em>Ввод</em></a> главы 2 мы встречались со встроенными функциями Python, которые получают ввод с клавиатуры: <tt class="docutils literal"><span class="pre">raw_input</span></tt> и <tt class="docutils literal"><span class="pre">input</span></tt>. Теперь давайте посмотрим на них внимательнее.</p>
+<p>Когда вызывается одна из этих функций, программа &#8220;останавливается&#8221; и ждет, чтобы пользователь что-нибудь ввел с клавиатуры. Когда пользователь нажимает клавишу Ввод, выполнение программы возобновляется и <tt class="docutils literal"><span class="pre">raw_input</span></tt> возвращает то, что ввел пользователь, как значение типа <tt class="docutils literal"><span class="pre">str</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">my_input</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">()</span>
+<span class="go">One two three</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">my_input</span>
+<span class="go">One two three</span>
+</pre></div>
+</div>
+<p>Прежде чем вызывать <tt class="docutils literal"><span class="pre">raw_input</span></tt>, было бы хорошо напечатать сообщение для пользователя о том, что требуется ввести. Такое сообщение называют <strong>приглашением</strong>. Можно указать приглашение в качестве аргумента <tt class="docutils literal"><span class="pre">raw_input</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">name</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&quot;What is your name? &quot;</span><span class="p">)</span>
+<span class="go">What is your name? Whinnie the Pooh</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">name</span>
+<span class="go">Whinnie the Pooh</span>
+</pre></div>
+</div>
+<p>В ответ на приглашение &#8220;Как вас зовут?&#8221; пользователь ввел &#8220;Винни Пух&#8221;. Обратите внимание, что приглашение является строкой, и поэтому должно быть заключено в кавычки.</p>
+<blockquote>
+<div>Замечание: Для того, чтобы в программе на языке Python вводить и выводить
+строковые значения на русском языке, необходимо предпринять некоторые
+дополнительные шаги. Подробности можно найти в
+<a class="reference external" href="app_a_russian.html">Приложении A. Как научить Python русскому языку</a>.</div></blockquote>
+<p>Если мы ожидаем, что пользователь в ответ на приглашение введет целое число, то можно воспользоваться функцией <tt class="docutils literal"><span class="pre">input</span></tt>. Она воспринимает ввод пользователя как выражение Python и возвращает вычисленное значение этого выражения:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">prompt</span> <span class="o">=</span> <span class="s">&quot;What...is the airspeed velocity of an unladen swallow?</span><span class="se">\n</span><span class="s">&quot;</span>
+<span class="n">speed</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Пользователю предлагается ввести скорость ласточки в полете. Если пользователь введет последовательность цифр, то введенное им значение будет преобразовано в целое число и присвоено переменной <tt class="docutils literal"><span class="pre">speed</span></tt>. К сожалению, если пользователь введет символы, которые не составляют допустимое выражение Python, возникнет ошибка:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">speed</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+<span class="go">What...is the airspeed velocity of an unladen swallow?</span>
+<span class="go">What do you mean, an African or a European swallow?</span>
+<span class="gp">...</span>
+<span class="go">SyntaxError: invalid syntax</span>
+</pre></div>
+</div>
+<p>Вместо ввода числа, пользователь ввел уточняющий вопрос, о какой именно ласточке, африканской или европейской, идет речь. В этом примере, если бы пользователь заключил свой вопрос в кавычки, тем самым сделав его допустимым выражением Python, ошибки бы не произошло:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">speed</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+<span class="go">What...is the airspeed velocity of an unladen swallow?</span>
+<span class="go">&#39;What do you mean, an African or a European swallow?&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">speed</span>
+<span class="go">&#39;What do you mean, an African or a European swallow?&#39;</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Чтобы избежать ошибок такого рода, лучше использовать <tt class="docutils literal"><span class="pre">raw_input</span></tt> для получения строки, а затем преобразовывать ее в значение нужного типа.</p>
+</div>
+<div class="section" id="index-10">
+<span id="id10"></span><h2>4.10. Преобразование типа<a class="headerlink" href="#index-10" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Каждый тип Python имеет соответствующую функцию, которая преобразует значение другого типа в значение данного типа.  Например, функция <tt class="docutils literal"><span class="pre">int(аргумент)</span></tt> принимает любое значение и, если возможно, преобразует его в целое, или, в противном случае, сообщает об ошибке:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">int</span><span class="p">(</span><span class="s">&quot;32&quot;</span><span class="p">)</span>
+<span class="go">32</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">int</span><span class="p">(</span><span class="s">&quot;Hello&quot;</span><span class="p">)</span>
+<span class="go">ValueError: invalid literal for int() with base 10: &#39;Hello&#39;</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">int</span></tt> может также преобразовывать числа с плавающей точкой в целые числа. Обратите внимание, однако, что при этом не происходит округления. Дробная часть просто отбрасывается:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">int</span><span class="p">(</span><span class="o">-</span><span class="mf">2.3</span><span class="p">)</span>
+<span class="go">-2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">int</span><span class="p">(</span><span class="mf">3.99999</span><span class="p">)</span>
+<span class="go">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">int</span><span class="p">(</span><span class="s">&quot;42&quot;</span><span class="p">)</span>
+<span class="go">42</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">int</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+<p>Функция <tt class="docutils literal"><span class="pre">float(аргумент)</span></tt> преобразует целые числа и строки в числа с плавающей точкой:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">float</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+<span class="go">32.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">float</span><span class="p">(</span><span class="s">&quot;3.14159&quot;</span><span class="p">)</span>
+<span class="go">3.14159</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">float</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+<p>Может показаться странным, что Python различает целочисленное значение <tt class="docutils literal"><span class="pre">1</span></tt> и значение с плавающей точкой <tt class="docutils literal"><span class="pre">1.0</span></tt>. Оба они представляют одно и то же число, но принадлежат разным типам. И потому они по разному представляются внутри компьютера.</p>
+<p>Функция <tt class="docutils literal"><span class="pre">str(аргумент)</span></tt> преобразует любой переданный ей аргумент в значение типа <tt class="docutils literal"><span class="pre">str</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+<span class="go">&#39;32&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="mf">3.14149</span><span class="p">)</span>
+<span class="go">&#39;3.14149&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">&#39;True&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">true</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">NameError</span>: <span class="n">name &#39;true&#39; is not defined</span>
+</pre></div>
+</div>
+<p>Как уже было сказано, <tt class="docutils literal"><span class="pre">True</span></tt> есть логическое значение, а <tt class="docutils literal"><span class="pre">true</span></tt> логическим значением не является.</p>
+<p>Особенно интересная ситуация с преобразованием в логические значения:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="s">&quot;Ni!&quot;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="mf">3.14159</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">bool</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>Python ассоциирует логические значения со значениями других типов. Для числовых типов нулевые значения считаются ложными, а ненулевые &#8212; истинными. Для строк, пустые строки считаются ложными, а непустые &#8212; истинными.</p>
+</div>
+<div class="section" id="id11">
+<h2>4.11. Глоссарий<a class="headerlink" href="#id11" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="glossary docutils">
+<dt id="term-">блок</dt>
+<dd>Группа предложений, идущих друг за другом и имеющих один и тот же отступ.</dd>
+<dt id="term-1">ветка</dt>
+<dd>Один из возможных путей потока выполнения, определяемых условным
+предложением.</dd>
+<dt id="term-2">вложенность</dt>
+<dd>Одна программная структура внутри другой, например, условное предложение
+внутри ветки другого условного предложения.</dd>
+<dt id="term-3">логический оператор</dt>
+<dd>Один из операторов, работающих с логическими выражениями:
+<tt class="docutils literal"><span class="pre">and</span></tt>, <tt class="docutils literal"><span class="pre">or</span></tt>, <tt class="docutils literal"><span class="pre">not</span></tt>.</dd>
+<dt id="term-4">логическое выражение</dt>
+<dd>Выражение, которое либо истинно либо ложно.</dd>
+<dt id="term-5">логическое значение</dt>
+<dd>Существуют ровно два логических значения: <tt class="docutils literal"><span class="pre">True</span></tt> и <tt class="docutils literal"><span class="pre">False</span></tt>.  Логические
+значения получаются в результате вычисления логических выражений.
+Они имеют тип <tt class="docutils literal"><span class="pre">bool</span></tt>.</dd>
+<dt id="term-6">оператор деления по модулю</dt>
+<dd>Оператор, обозначаемый знаком процента <tt class="docutils literal"><span class="pre">%</span></tt>, который работает с целыми
+числами и возвращает остаток от деления первого числа на второе.</dd>
+<dt id="term-7">оператор сравнения</dt>
+<dd>Один из операторов, сравнивающих два значения: <tt class="docutils literal"><span class="pre">==</span></tt>, <tt class="docutils literal"><span class="pre">!=</span></tt>, <tt class="docutils literal"><span class="pre">&gt;</span></tt>,
+<tt class="docutils literal"><span class="pre">&lt;</span></tt>, <tt class="docutils literal"><span class="pre">&gt;=</span></tt>, <tt class="docutils literal"><span class="pre">&lt;=</span></tt>.</dd>
+<dt id="term-8">преобразование типа</dt>
+<dd>Операция, которая берет значение одного типа, а возвращает
+соответствующее ему значение другого типа.</dd>
+<dt id="term-9">приглашение</dt>
+<dd>Подсказка, или сообщение для пользователя, предлагающее пользователю
+ввести данные.</dd>
+<dt id="term-10">сцепление условных предложений</dt>
+<dd>Условная конструкция с более чем двумя ветками выполнения. Цепочка
+условий и соответствующих им блоков в Python записывается с помощью
+ключевых слов <tt class="docutils literal"><span class="pre">if</span></tt>, <tt class="docutils literal"><span class="pre">elif</span></tt> и <tt class="docutils literal"><span class="pre">else</span></tt>.</dd>
+<dt id="term-11">тело составного предложения</dt>
+<dd>Блок предложений в составном предложении, следующий за заголовком.</dd>
+<dt id="term-12">условие</dt>
+<dd>Логическое выражение в условном предложении, которое определяет, какая
+ветка будет выполняться.</dd>
+<dt id="term-13">условное предложение</dt>
+<dd>Предложение, которое управляет потоком выполнения, проверяя
+некоторое условие. Для построения условных предложений Python использует
+ключевые слова <tt class="docutils literal"><span class="pre">if</span></tt>, <tt class="docutils literal"><span class="pre">elif</span></tt>, <tt class="docutils literal"><span class="pre">else</span></tt>.</dd>
+</dl>
+</div>
+<div class="section" id="id12">
+<h2>4.12. Упражнения<a class="headerlink" href="#id12" title="Ссылка на этот заголовок">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Попробуйте вычислить следующие числовые выражения в уме, затем проверьте ваши
+результаты с помощью интерпретатора Python:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">5</span> <span class="o">%</span> <span class="mi">2</span>
+<span class="mi">9</span> <span class="o">%</span> <span class="mi">5</span>
+<span class="mi">15</span> <span class="o">%</span> <span class="mi">12</span>
+<span class="mi">12</span> <span class="o">%</span> <span class="mi">15</span>
+<span class="mi">6</span> <span class="o">%</span> <span class="mi">6</span>
+<span class="mi">0</span> <span class="o">%</span> <span class="mi">7</span>
+<span class="mi">7</span> <span class="o">%</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>Что случилось с последним примером? Почему? Если вам удалось правильно
+предвидеть ответ компьютера во всех, кроме последнего, случаях, значит, время
+двигаться дальше. Если не удалось, то потратьте некоторое время на придумывание
+собственных примеров. Исследуйте оператор деления по модулю до тех пор, пока
+вы не почувствуете уверенность в работе с ним.</p>
+</li>
+<li><div class="first highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">y</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">x</span><span class="p">,</span> <span class="s">&quot;is less than&quot;</span><span class="p">,</span> <span class="n">y</span>
+<span class="k">elif</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">x</span><span class="p">,</span> <span class="s">&quot;is greater than&quot;</span><span class="p">,</span> <span class="n">y</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">x</span><span class="p">,</span> <span class="s">&quot;and&quot;</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s">&quot;are equal&quot;</span>
+</pre></div>
+</div>
+<p><em>Заверните</em> этот код в функцию с именем <tt class="docutils literal"><span class="pre">compare(x,</span> <span class="pre">y)</span></tt>. Вызовите <tt class="docutils literal"><span class="pre">compare</span></tt>
+три раза: с первым аргументом, меньшим, большим и равным второму.</p>
+</li>
+<li><p class="first">Чтобы лучше понять логические выражения, полезно построить таблицы истинности.
+Два логических выражения <em>логически эквивалентны</em> тогда, и только тогда, когда
+их таблицы истинности одинаковы.</p>
+<p>Следующий скрипт Python печатает таблицу истинности для любого логического
+выражения с двумя переменными p и q:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">expression</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&quot;Enter a boolean expression in two variables, p and q: &quot;</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&quot; p      q      </span><span class="si">%s</span><span class="s">&quot;</span>  <span class="o">%</span> <span class="n">expression</span>
+<span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span> <span class="s">&quot; p      q      </span><span class="si">%s</span><span class="s">&quot;</span>  <span class="o">%</span> <span class="n">expression</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">length</span><span class="o">*</span><span class="s">&quot;=&quot;</span>
+
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;</span><span class="si">%-7s</span><span class="s"> </span><span class="si">%-7s</span><span class="s"> </span><span class="si">%-7s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="nb">eval</span><span class="p">(</span><span class="n">expression</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Как работает этот скрипт, вы узнаете в следующих главах. А пока пользуйтесь
+им, чтобы исследовать логические выражения. Сохраните эту программу в файле
+<tt class="docutils literal"><span class="pre">p_and_q.py</span></tt>, запустите ее в командной строке и введите <tt class="docutils literal"><span class="pre">p</span> <span class="pre">or</span> <span class="pre">q</span></tt> в ответ
+на приглашение ввести логическое выражение. Вы получите следующее:</p>
+<div class="highlight-python"><pre> p      q      p or q
+=====================
+True    True    True
+True    False   True
+False   True    True
+False   False   False</pre>
+</div>
+<p>Теперь, когда вы убедились, что программа работает, оформите ее как
+функцию, чтобы пользоваться ей было удобнее:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">truth_table</span><span class="p">(</span><span class="n">expression</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot; p      q      </span><span class="si">%s</span><span class="s">&quot;</span>  <span class="o">%</span> <span class="n">expression</span>
+    <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span> <span class="s">&quot; p      q      </span><span class="si">%s</span><span class="s">&quot;</span>  <span class="o">%</span> <span class="n">expression</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">length</span><span class="o">*</span><span class="s">&quot;=&quot;</span>
+
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;</span><span class="si">%-7s</span><span class="s"> </span><span class="si">%-7s</span><span class="s"> </span><span class="si">%-7s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="nb">eval</span><span class="p">(</span><span class="n">expression</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Теперь можно импортировать функцию в интерактивный сеанс Python и вызвать
+<tt class="docutils literal"><span class="pre">truth_table</span></tt> со строкой, представляющей логическое выражение:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">p_and_q</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">truth_table</span><span class="p">(</span><span class="s">&quot;p or q&quot;</span><span class="p">)</span>
+<span class="go">p      q      p or q</span>
+<span class="go">=====================</span>
+<span class="go">True    True    True</span>
+<span class="go">True    False   True</span>
+<span class="go">False   True    True</span>
+<span class="go">False   False   False</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Вызовите функцию <tt class="docutils literal"><span class="pre">truth_table</span></tt> со следующими логическими выражениями,
+записывая таблицы истинности для каждого случая:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>not(p or q)</li>
+<li>p and q</li>
+<li>not(p and q)</li>
+<li>not(p) or not(q)</li>
+<li>not(p) and not(q)</li>
+</ol>
+</div></blockquote>
+<p>Какие из выражений логически эквивалентны?</p>
+</li>
+<li><p class="first">Введите следующие выражения в интерактивном режиме Python:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="bp">True</span> <span class="ow">or</span> <span class="bp">False</span>
+<span class="bp">True</span> <span class="ow">and</span> <span class="bp">False</span>
+<span class="ow">not</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">True</span>
+<span class="bp">True</span> <span class="ow">or</span> <span class="mi">7</span>
+<span class="bp">False</span> <span class="ow">or</span> <span class="mi">7</span>
+<span class="bp">True</span> <span class="ow">and</span> <span class="mi">0</span>
+<span class="bp">False</span> <span class="ow">or</span> <span class="mi">8</span>
+<span class="s">&quot;happy&quot;</span> <span class="ow">and</span> <span class="s">&quot;sad&quot;</span>
+<span class="s">&quot;happy&quot;</span> <span class="ow">or</span> <span class="s">&quot;sad&quot;</span>
+<span class="s">&quot;&quot;</span> <span class="ow">and</span> <span class="s">&quot;sad&quot;</span>
+<span class="s">&quot;happy&quot;</span> <span class="ow">and</span> <span class="s">&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Проанализируйте результаты. Какие наблюдения вы сделали относительно
+использования значений разных типов с логическими операторами? Можете
+записать эти наблюдения в форме простых <em>правил</em> для выражений с операторами
+<tt class="docutils literal"><span class="pre">and</span></tt> и <tt class="docutils literal"><span class="pre">or</span></tt>?</p>
+</li>
+<li><div class="first highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">choice</span> <span class="o">==</span> <span class="s">&#39;a&#39;</span><span class="p">:</span>
+    <span class="n">function_a</span><span class="p">()</span>
+<span class="k">elif</span> <span class="n">choice</span> <span class="o">==</span> <span class="s">&#39;b&#39;</span><span class="p">:</span>
+    <span class="n">function_b</span><span class="p">()</span>
+<span class="k">elif</span> <span class="n">choice</span> <span class="o">==</span> <span class="s">&#39;c&#39;</span><span class="p">:</span>
+    <span class="n">function_c</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;Invalid choice.&quot;</span>
+</pre></div>
+</div>
+<p>Заверните этот код в функцию <tt class="docutils literal"><span class="pre">dispatch(choice)</span></tt>. Затем определите функции
+<tt class="docutils literal"><span class="pre">function_a</span></tt>, <tt class="docutils literal"><span class="pre">function_b</span></tt> и <tt class="docutils literal"><span class="pre">function_c</span></tt>, такие, чтобы они выводили
+сообщение о том, что они вызваны. Например:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">function_a</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&quot;function_a was called&quot;</span>
+</pre></div>
+</div>
+<p>Поместите все четыре функции,``dispatch``, <tt class="docutils literal"><span class="pre">function_a</span></tt>, <tt class="docutils literal"><span class="pre">function_b</span></tt> и
+<tt class="docutils literal"><span class="pre">function_c</span></tt>, в скрипт с именем <tt class="docutils literal"><span class="pre">ch4prob4.py</span></tt>. В конце скрипта
+добавьте вызов <tt class="docutils literal"><span class="pre">dispatch('b')</span></tt>. Вы должны получить вывод:</p>
+<blockquote>
+<div><p>function_b was called...</p>
+</div></blockquote>
+<p>И, наконец, измените скрипт так, чтобы пользователь мог ввести &#8216;a&#8217;, &#8216;b&#8217; или
+&#8216;c&#8217;. Протестируйте работу измененного скрипта, импортировав его в
+интерактивный сеанс Python.</p>
+</li>
+<li><p class="first">Напишите функцию с именем <tt class="docutils literal"><span class="pre">is_divisible_by_3</span></tt>, которая принимает одно целое
+число в качестве аргумента и выводит &#8220;This number is divisible by three.&#8221;,
+если аргумент без остатка делится на 3, или &#8220;This number is not divisible by
+three.&#8221; в противном случае.</p>
+<p>Теперь напишите подобную предыдущей функцию <tt class="docutils literal"><span class="pre">is_divisible_by_5</span></tt>.</p>
+</li>
+<li><p class="first">Обобщите функции, разработанные в предыдущем упражнении, и напишите функцию
+<tt class="docutils literal"><span class="pre">is_divisible_by_n(x,</span> <span class="pre">n)</span></tt>, которая принимает два целых аргумента и
+сообщает, делится ли первый аргумент на второй. Сохраните эту функцию в файле
+<tt class="docutils literal"><span class="pre">ch04e06.py</span></tt>, импортируйте в интерактивный сеанс Python, и поработайте с
+ней. Пример работы с функцией:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ch04e06</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_divisible_by_n</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="go">Yes, 20 is divisible by 4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_divisible_by_n</span><span class="p">(</span><span class="mi">21</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="go">No, 21 is not divisible by 8</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Что выведет следующая программа?</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="s">&quot;Ni!&quot;</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;We are the Knights who say, &quot;Ni!&quot;&#39;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;Stop it! No more of this!&quot;</span>
+
+<span class="k">if</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;And now for something completely different...&quot;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;What&#39;s all this, then?&quot;</span>
+</pre></div>
+</div>
+<p>Объясните результат.</p>
+</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             >словарь</a></li>
+        <li class="right" >
+          <a href="ch05.html" title="5. Функции, возвращающие значения"
+             >следующий</a> |</li>
+        <li class="right" >
+          <a href="ch03.html" title="3. Функции"
+             >предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="copyright.html">Copyright</a> 2009, 2012, Джеффри Элкнер, Аллен Б. Дауни, Крис Мейерс, Андрей Трофимов.
+      При создании использован <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,426 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>11. Словари &mdash; Учимся с Python</title>
+    
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2nd Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="Учимся с Python" href="index.html" />
+    <link rel="next" title="12. Классы и объекты" href="ch12.html" />
+    <link rel="prev" title="10. Рекурсия и исключения" href="ch10.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             accesskey="I">словарь</a></li>
+        <li class="right" >
+          <a href="ch12.html" title="12. Классы и объекты"
+             accesskey="N">следующий</a> |</li>
+        <li class="right" >
+          <a href="ch10.html" title="10. Рекурсия и исключения"
+             accesskey="P">предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>11. Словари<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
+<div class="section" id="dict">
+<span id="index-0"></span><h2>11.1. Встроенный тип <tt class="docutils literal"><span class="pre">dict</span></tt><a class="headerlink" href="#dict" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Все изученные нами до сих пор составные типы данных &#8212; строки, списки и кортежи &#8212; это последовательности, использующие целые числа как индексы для доступа к их отдельным элементам.</p>
+<p><strong>Словарь</strong> (англ.: dictionary) &#8212; составной тип, отличающийся от последовательностей, и относящийся к встроенному типу Python <strong>отображение</strong>. Словари отображают <strong>ключи</strong>, которые могут быть любого из неизменяемых типов, на значения, которые могут быль любого типа, так же как значения элементов списка или кортежа.</p>
+<p>В качестве примера, создадим словарь для перевода английских слов на испанский. В этом словаре ключами будут строки.</p>
+<p>Один из способов создать словарь &#8212; это начать с пустого словаря и добавить в него нужные <strong>пары ключ-значение</strong>. Пустой словарь обозначается <tt class="docutils literal"><span class="pre">{}</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">eng2sp</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">eng2sp</span><span class="p">)</span>
+<span class="go">&lt;type &#39;dict&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">eng2sp</span><span class="p">[</span><span class="s">&#39;one&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;uno&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">eng2sp</span><span class="p">[</span><span class="s">&#39;two&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;dos&#39;</span>
+</pre></div>
+</div>
+<p>Первое предложение присваивания создает словарь с именем <tt class="docutils literal"><span class="pre">eng2sp</span></tt>. далее мы просим Python сообщить нам тип созданного объекта. Два следующих предложения присваивания добавляют в словарь пары ключ-значение. Можно напечатать текущее значение словаря уже привычным нам способом:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">eng2sp</span>
+<span class="go">{&#39;two&#39;: &#39;dos&#39;, &#39;one&#39;: &#39;uno&#39;}</span>
+</pre></div>
+</div>
+<p>Пары ключ-значение в словаре разделены запятыми. Каждая пара содержит разделенные двоеточием ключ и значение.</p>
+<p>Пары в словаре могут оказаться не в том порядке, как вы ожидали. Python использует сложный алгоритм, чтобы определить, где в словаре хранить каждую пару ключ-значение. Мы же просто можем считать, что пары в словаре хранятся в случайном порядке.</p>
+<p>Другой способ создать словарь &#8212; сразу задать список пар ключ-значение, воспользовавшись тем же синтаксисом, что мы видим при выводе словаря:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">eng2sp</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;one&#39;</span><span class="p">:</span> <span class="s">&#39;uno&#39;</span><span class="p">,</span> <span class="s">&#39;two&#39;</span><span class="p">:</span> <span class="s">&#39;dos&#39;</span><span class="p">,</span> <span class="s">&#39;three&#39;</span><span class="p">:</span> <span class="s">&#39;tres&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Не имеет значения, в каком порядке мы записываем пары. Значения извлекаются из словаря по ключу, а не по индексу, так что заботиться об упорядочении пар не нужно.</p>
+<p>Вот как получают значение с помощью ключа:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">eng2sp</span><span class="p">[</span><span class="s">&#39;two&#39;</span><span class="p">]</span>
+<span class="go">&#39;dos&#39;</span>
+</pre></div>
+</div>
+<p>Ключу <tt class="docutils literal"><span class="pre">'two'</span></tt> соответствует значение <tt class="docutils literal"><span class="pre">'dos'</span></tt>.</p>
+</div>
+<div class="section" id="index-1">
+<span id="id2"></span><h2>11.2. Словарные операции<a class="headerlink" href="#index-1" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Предложение <tt class="docutils literal"><span class="pre">del</span></tt> удаляет из словаря пару ключ-значение. Например, следующий словарь содержит названия различных фруктов и их количество на складе:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">inventory</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;apples&#39;</span><span class="p">:</span> <span class="mi">430</span><span class="p">,</span> <span class="s">&#39;bananas&#39;</span><span class="p">:</span> <span class="mi">312</span><span class="p">,</span> <span class="s">&#39;oranges&#39;</span><span class="p">:</span> <span class="mi">525</span><span class="p">,</span> <span class="s">&#39;pears&#39;</span><span class="p">:</span> <span class="mi">217</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">inventory</span>
+<span class="go">{&#39;oranges&#39;: 525, &#39;apples&#39;: 430, &#39;pears&#39;: 217, &#39;bananas&#39;: 312}</span>
+</pre></div>
+</div>
+<p>Если кто-то купит все груши (англ.: pears), то можно удалить соответствующую пару из словаря:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">del</span> <span class="n">inventory</span><span class="p">[</span><span class="s">&#39;pears&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">inventory</span>
+<span class="go">{&#39;oranges&#39;: 525, &#39;apples&#39;: 430, &#39;bananas&#39;: 312}</span>
+</pre></div>
+</div>
+<p>А если мы ожидаем, что вскоре запас груш пополнится, можно просто изменить значение для ключа &#8216;pears&#8217;:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">inventory</span><span class="p">[</span><span class="s">&#39;pears&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">inventory</span>
+<span class="go">{&#39;oranges&#39;: 525, &#39;apples&#39;: 430, &#39;pears&#39;: 0, &#39;bananas&#39;: 312}</span>
+</pre></div>
+</div>
+<p>Функция <tt class="docutils literal"><span class="pre">len</span></tt> также работает для словарей; она возвращает количество пар ключ-значение в словаре:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">inventory</span><span class="p">)</span>
+<span class="go">4</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="index-2">
+<span id="id3"></span><h2>11.3. Словарные методы<a class="headerlink" href="#index-2" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Словари имеют много полезных встроенных методов.</p>
+<p>Метод <tt class="docutils literal"><span class="pre">keys</span></tt> (англ.: ключи) возвращает список ключей словаря.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">eng2sp</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="go">[&#39;three&#39;, &#39;two&#39;, &#39;one&#39;]</span>
+</pre></div>
+</div>
+<p>Как и ранее со строками и списками, вызов словарных методов использует точечную нотацию, где слева от точки помещается имя объекта, а справа &#8212; имя метода, вызываемого для этого объекта. Пустые скобки показывают, что этот метод не имеет параметров.</p>
+<p>В данном случае можно сказать, что метод <tt class="docutils literal"><span class="pre">keys</span></tt> вызван для объекта <tt class="docutils literal"><span class="pre">eng2sp</span></tt>. Как мы увидим далее в главах об объектно-ориентированном программировании, объект, для которого вызывается метод, &#8212; на самом деле первый аргумент при вызове этого метода.</p>
+<p>Метод <tt class="docutils literal"><span class="pre">values</span></tt> (англ.: значения) подобен методу <tt class="docutils literal"><span class="pre">keys</span></tt>, он возвращает список значений словаря:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">eng2sp</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+<span class="go">[&#39;tres&#39;, &#39;dos&#39;, &#39;uno&#39;]</span>
+</pre></div>
+</div>
+<p>Метод <tt class="docutils literal"><span class="pre">items</span></tt> (англ.: пункты, статьи) возвращает ключи и значения в виде списка кортежей, по одному кортежу для каждой пары ключ-значение:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">eng2sp</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+<span class="go">[(&#39;three&#39;, &#39;tres&#39;), (&#39;two&#39;, &#39;dos&#39;), (&#39;one&#39;, &#39;uno&#39;)]</span>
+</pre></div>
+</div>
+<p>Метод <tt class="docutils literal"><span class="pre">has_key</span></tt> берет ключ в качестве аргумента и возвращает <tt class="docutils literal"><span class="pre">True</span></tt>, если ключ имеется в словаре, и <tt class="docutils literal"><span class="pre">False</span></tt> в противном случае:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">eng2sp</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&#39;one&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">eng2sp</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&#39;deux&#39;</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>Этот метод может быть очень полезен, так как попытка получить значение из словаря по несуществующему ключу вызывает ошибку выполнения:</p>
+<div class="highlight-python"><pre>&gt;&gt;&gt; eng2esp['dog']
+Traceback (most recent call last):
+  File "", line 1, in
+KeyError: 'dog'
+&gt;&gt;&gt;</pre>
+</div>
+</div>
+<div class="section" id="index-3">
+<span id="id4"></span><h2>11.4. Альтернативные имена и копирование<a class="headerlink" href="#index-3" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Поскольку словари изменяемы, вам следует помнить об альтернативных именах. Когда две переменные ссылаются на один и тот же объект, изменения, сделанные для одной переменной, влияют на другую.</p>
+<p>Если необходимо изменить словарь и при этом сохранить оригинал, воспользуйтесь методом <tt class="docutils literal"><span class="pre">copy</span></tt>. Например, словарь <tt class="docutils literal"><span class="pre">opposites</span></tt> (англ.: противоположности) содержит пары противоположностей:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">opposites</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;up&#39;</span><span class="p">:</span> <span class="s">&#39;down&#39;</span><span class="p">,</span> <span class="s">&#39;right&#39;</span><span class="p">:</span> <span class="s">&#39;wrong&#39;</span><span class="p">,</span> <span class="s">&#39;true&#39;</span><span class="p">:</span> <span class="s">&#39;false&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">alias</span> <span class="o">=</span> <span class="n">opposites</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">copy</span> <span class="o">=</span> <span class="n">opposites</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">alias</span></tt> и <tt class="docutils literal"><span class="pre">opposites</span></tt> указывают на один и тот же объект, тогда как <tt class="docutils literal"><span class="pre">copy</span></tt> указывает на копию словаря. Если изменить <tt class="docutils literal"><span class="pre">alias</span></tt>, то <tt class="docutils literal"><span class="pre">opposites</span></tt> тоже изменится:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">alias</span><span class="p">[</span><span class="s">&#39;right&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;left&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">opposites</span><span class="p">[</span><span class="s">&#39;right&#39;</span><span class="p">]</span>
+<span class="go">&#39;left&#39;</span>
+</pre></div>
+</div>
+<p>Если же изменить <tt class="docutils literal"><span class="pre">copy</span></tt>, <tt class="docutils literal"><span class="pre">opposites</span></tt> не изменится:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">copy</span><span class="p">[</span><span class="s">&#39;right&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;privilege&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">opposites</span><span class="p">[</span><span class="s">&#39;right&#39;</span><span class="p">]</span>
+<span class="go">&#39;left&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="index-4">
+<span id="id5"></span><h2>11.5. Разреженные матрицы<a class="headerlink" href="#index-4" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Ранее мы использовали список списков для того, чтобы представить матрицу. Это хороший подход для матриц, в которых большинство значений ненулевые, но посмотрите на
+<a class="reference external" href="http://ru.wikipedia.org/wiki/%D0%A0%D0%B0%D0%B7%D1%80%D0%B5%D0%B6%D0%B5%D0%BD%D0%BD%D0%B0%D1%8F_%D0%BC%D0%B0%D1%82%D1%80%D0%B8%D1%86%D0%B0">разреженную матрицу</a>, такую как эта:</p>
+<img alt="разреженная матрица" src="_images/ch11-1.png" />
+<p>Списочное представление матрицы хранит много нулей:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+          <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+          <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+          <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+          <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>Альтернативой является использование словаря. В качестве ключа можно использовать кортеж с номерами строки и столбца. Вот словарное представление этой же матрицы:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">matrix</span> <span class="o">=</span> <span class="p">{(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span> <span class="mi">3</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Нам нужны только три пары ключ-значение, одна для каждого ненулевого элемента матрицы. Ключи &#8212; кортежи, а значения &#8212; целые числа.</p>
+<p>Для доступа к элементу матрицы можно использовать оператор <tt class="docutils literal"><span class="pre">[]</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">matrix</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)]</span>
+<span class="mi">1</span>
+</pre></div>
+</div>
+<p>Заметьте, что синтаксис словарного представления не такой, как синтаксис представления с помощью вложенных списков. Вместо двух целочисленных индексов, теперь для доступа к элементу матрицы мы используем один ключ &#8212; кортеж из двух целых чисел.</p>
+<p>Но есть одна проблема. Если мы захотим получить нулевой элемент, то получим ошибку, поскольку в словаре нет пар для нулевых элементов матрицы:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">matrix</span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)]</span>
+<span class="go">KeyError: (1, 3)</span>
+</pre></div>
+</div>
+<p>Эту проблему решает метод <tt class="docutils literal"><span class="pre">get</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">matrix</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+<p>В качестве первого аргумента указывается ключ; второй аргумент &#8212; значение, которое вернет метод <tt class="docutils literal"><span class="pre">get</span></tt> в случае, если ключ отсутствует в словаре:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">matrix</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">0</span>
+</pre></div>
+</div>
+<p>Метод <tt class="docutils literal"><span class="pre">get</span></tt> определенно улучшает доступ к элементам разреженной матрицы.</p>
+</div>
+<div class="section" id="index-5">
+<span id="id6"></span><h2>11.6. Кэш вычисленных значений<a class="headerlink" href="#index-5" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Если вы поиграли с функцией <tt class="docutils literal"><span class="pre">fibonacci</span></tt> из последней главы, то вы, должно быть, заметили, что чем большее число вы указываете в качестве аргумента, тем большее время требуется функции для выполнения. Более того, время выполнения возрастает очень быстро. На одном из наших компьютеров <tt class="docutils literal"><span class="pre">fibonacci(20)</span></tt>
+выполняется мгновенно, <tt class="docutils literal"><span class="pre">fibonacci(30)</span></tt> занимает около секунды, а <tt class="docutils literal"><span class="pre">fibonacci(40)</span></tt> выполняется едва ли не бесконечно.</p>
+<p>Чтобы понять, почему, давайте рассмотрим следующий <strong>граф вызовов</strong> для <tt class="docutils literal"><span class="pre">fibonacci</span></tt> с <tt class="docutils literal"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">4</span></tt>:</p>
+<img alt="дерево Фибоначчи" src="_images/ch11-2.png" />
+<p>Граф вызовов содержит прямоугольники функций и направленные линии, соединяющие каждый прямоугольник с прямоугольниками функций, которые он вызывает. Вверху рисунка, <tt class="docutils literal"><span class="pre">fibonacci</span></tt> с <tt class="docutils literal"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">4</span></tt> вызывает <tt class="docutils literal"><span class="pre">fibonacci</span></tt> с <tt class="docutils literal"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">3</span></tt> и <tt class="docutils literal"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">2</span></tt>. В свою очередь, <tt class="docutils literal"><span class="pre">fibonacci</span></tt> с <tt class="docutils literal"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">3</span></tt> вызывает <tt class="docutils literal"><span class="pre">fibonacci</span></tt> с <tt class="docutils literal"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">2</span></tt> и <tt class="docutils literal"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">1</span></tt>. И так далее.</p>
+<p>Посчитайте, сколько раз вызываются <tt class="docutils literal"><span class="pre">fibonacci(0)</span></tt> и <tt class="docutils literal"><span class="pre">fibonacci(1)</span></tt>. Данное решение неэффективно, и оно работает тем хуже, чем большим становится аргумент.</p>
+<p>Хорошим решением может быть сохранение однажды вычисленных значений в словаре. Прием, предусматривающий сохранение вычисленных или извлеченных данных в месте, откуда их легко получить, называется <strong>кэшированием</strong> данных, а само место хранения этих данных &#8212; <strong>кэшем</strong>. Вот вариант <tt class="docutils literal"><span class="pre">fibonacci</span></tt>, использующий словарь в качестве кэша:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">previous</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">previous</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">previous</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">new_value</span> <span class="o">=</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">previous</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_value</span>
+        <span class="k">return</span> <span class="n">new_value</span>
+</pre></div>
+</div>
+<p>Словарь с именем <tt class="docutils literal"><span class="pre">previous</span></tt> отслеживает числа Фибоначчи, которые мы уже знаем. Начинаем всего с двух пар: 0 отображается на 1; и 1 отображается на 1.</p>
+<p>При каждом вызове <tt class="docutils literal"><span class="pre">fibonacci</span></tt> проверяет, не содержит ли уже словарь нужный результат. Если да, то функция немедленно возвращает результат, не выполняя рекурсивных вызовов. Если нет, то придется вычислить новое значение. Новое значение добавляется в словарь, прежде чем функция возвращает его.</p>
+<p>Эта версия <tt class="docutils literal"><span class="pre">fibonacci</span></tt> на наших компьютерах вычисляет <tt class="docutils literal"><span class="pre">fibonacci(100)</span></tt> в мгновенье ока.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fibonacci</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="go">354224848179261915075L</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">L</span></tt> в конце числа показывает, что это число имеет тип <tt class="docutils literal"><span class="pre">long</span></tt> (англ.: длинный).</p>
+</div>
+<div class="section" id="index-6">
+<span id="id7"></span><h2>11.7. Длинные целые<a class="headerlink" href="#index-6" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Python предоставляет тип <tt class="docutils literal"><span class="pre">long</span></tt>, который может справиться с целым числом любого размера. Ограничением будет только размер памяти вашего компьютера.</p>
+<p>Есть три способа создать значение типа <tt class="docutils literal"><span class="pre">long</span></tt>. Первый &#8212; вычислить арифметическое выражение, результат которого слишком большой, чтобы поместиться в <tt class="docutils literal"><span class="pre">int</span></tt>. Мы уже видели это в примере <tt class="docutils literal"><span class="pre">fibonacci(100)</span></tt> выше. Другой способ &#8212; записать число с большой буквой <tt class="docutils literal"><span class="pre">L</span></tt> в конце:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="il">1L</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Третий &#8212; вызвать <tt class="docutils literal"><span class="pre">long()</span></tt> со значением, которое нужно преобразовать в <tt class="docutils literal"><span class="pre">long</span></tt>. Вызов <tt class="docutils literal"><span class="pre">long</span></tt> может преобразовывать значения <tt class="docutils literal"><span class="pre">int</span></tt>, <tt class="docutils literal"><span class="pre">float</span></tt> и даже строки цифр в длинные целые:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">long</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+<span class="go">7L</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">long</span><span class="p">(</span><span class="mf">3.9</span><span class="p">)</span>
+<span class="go">3L</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">long</span><span class="p">(</span><span class="s">&#39;59&#39;</span><span class="p">)</span>
+<span class="go">59L</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="index-7">
+<span id="id8"></span><h2>11.8. Подсчитываем буквы<a class="headerlink" href="#index-7" title="Ссылка на этот заголовок">¶</a></h2>
+<p>В главе 7 мы написали функцию, подсчитывающую количество вхождений некоторой буквы в строку. Теперь поставим такую задачу: сформировать гистограмму для букв в строке, то есть, показать, сколько раз в строке встречается каждая буква.</p>
+<p>Такая гистограмма может быть полезна для сжатия текстового файла. Поскольку разные буквы встречаются в тексте с разной частотой, можно сжать файл, используя более короткие коды для часто встречающихся букв и более длинные &#8212; для букв, которые встречаются реже.</p>
+<p>Словари позволяют элегантно построить гистограмму:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">letter_counts</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="s">&quot;Mississippi&quot;</span><span class="p">:</span>
+<span class="gp">... </span>  <span class="n">letter_counts</span><span class="p">[</span><span class="n">letter</span><span class="p">]</span> <span class="o">=</span> <span class="n">letter_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">letter</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">letter_counts</span>
+<span class="go">{&#39;M&#39;: 1, &#39;s&#39;: 4, &#39;p&#39;: 2, &#39;i&#39;: 4}</span>
+</pre></div>
+</div>
+<p>Мы начинаем с пустого словаря. Для каждой буквы в строке, мы отыскиваем в словаре, сколько раз эта буква уже нам встретилась (возможно, 0), и увеличиваем это значение на 1. В конце словарь содержит пары буква - количество вхождений.</p>
+<p>Было бы красивее отобразить гистограмму в алфавитном порядке. Можно сделать это с помощью методов <tt class="docutils literal"><span class="pre">items</span></tt> и <tt class="docutils literal"><span class="pre">sort</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">letter_items</span> <span class="o">=</span> <span class="n">letter_counts</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">letter_items</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">letter_items</span>
+<span class="go">[(&#39;M&#39;, 1), (&#39;i&#39;, 4), (&#39;p&#39;, 2), (&#39;s&#39;, 4)]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id9">
+<h2>11.9. Глоссарий<a class="headerlink" href="#id9" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="glossary docutils">
+<dt id="term-">ключ</dt>
+<dd>Элемент данных, который <em>отображается</em> на значение в словаре. Ключи
+используются, чтобы получить значение из словаря.</dd>
+<dt id="term-1">кэш</dt>
+<dd>Временное хранилище для вычисленных или извлеченных данных,
+организованное, чтобы облегчить получение данных в дальнейшем.</dd>
+<dt id="term-2">отображение</dt>
+<dd>Отображение &#8212; это тип данных, в составе которого есть набор
+ключей и соответствующих им значений. Словарь является единственным
+встроенным отображающим типом в Python. Словари реализуют абстрактный
+тип данных <a class="reference external" href="http://ru.wikipedia.org/wiki/%D0%90%D1%81%D1%81%D0%BE%D1%86%D0%B8%D0%B0%D1%82%D0%B8%D0%B2%D0%BD%D1%8B%D0%B9_%D0%BC%D0%B0%D1%81%D1%81%D0%B8%D0%B2">ассоциативный массив</a>.</dd>
+<dt id="term-3">пара ключ-значение</dt>
+<dd>Один из элементов словаря. Значения отыскиваются в словаре по
+ключу.</dd>
+<dt id="term-4">словарь</dt>
+<dd>Коллекция пар ключ-значение, отображающая ключи на значения. Ключи
+могут быть любого неизменяемого типа, а значения могут быть любого типа.</dd>
+</dl>
+</div>
+<div class="section" id="id10">
+<h2>11.10. Упражнения<a class="headerlink" href="#id10" title="Ссылка на этот заголовок">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Напишите программу, которая читает строку из командной строки и возвращает
+таблицу букв алфавита, встречающихся в строке, в алфавитном порядке, вместе с
+количеством вхождений каждой буквы. Регистр букв следует игнорировать. Пробный
+запуск программы выглядит так:</p>
+<div class="highlight-python"><pre>$ python letter_counts.py "ThiS is String with Upper and lower case Letters."
+a  2
+c  1
+d  1
+e  5
+g  1
+h  2
+i  4
+l  2
+n  2
+o  1
+p  2
+r  4
+s  5
+t  5
+u  1
+w  2
+$</pre>
+</div>
+</li>
+<li><p class="first">Посмотрите, как реагирует Python на каждый из следующих фрагментов кода,
+введенных в интерактивном режиме:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;apples&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span> <span class="s">&#39;bananas&#39;</span><span class="p">:</span> <span class="mi">35</span><span class="p">,</span> <span class="s">&#39;grapes&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="p">[</span><span class="s">&#39;banana&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="p">[</span><span class="s">&#39;oranges&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&#39;grapes&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="p">[</span><span class="s">&#39;pears&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;pears&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fruits</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">fruits</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">del</span> <span class="n">d</span><span class="p">[</span><span class="s">&#39;apples&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&#39;apples&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Убедитесь, что вы понимаете, что и почему происходит в каждом случае. После
+этого примените новые знания в теле функции ниже:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">add_fruit</span><span class="p">(</span><span class="n">inventory</span><span class="p">,</span> <span class="n">fruit</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+     <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">     Adds quantity of fruit to inventory.</span>
+
+<span class="sd">       &gt;&gt;&gt; new_inventory = {}</span>
+<span class="sd">       &gt;&gt;&gt; add_fruit(new_inventory, &#39;strawberries&#39;, 10)</span>
+<span class="sd">       &gt;&gt;&gt; new_inventory.has_key(&#39;strawberries&#39;)</span>
+<span class="sd">       True</span>
+<span class="sd">       &gt;&gt;&gt; new_inventory[&#39;strawberries&#39;]</span>
+<span class="sd">       10</span>
+<span class="sd">       &gt;&gt;&gt; add_fruit(new_inventory, &#39;strawberries&#39;, 25)</span>
+<span class="sd">       &gt;&gt;&gt; new_inventory[&#39;strawberries&#39;]</span>
+<span class="sd">     &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Ваше решение должно пройти доктест.</p>
+</li>
+<li><p class="first">Напишите программу <tt class="docutils literal"><span class="pre">alice_words.py</span></tt>, которая создает текстовый файл с
+именем <tt class="docutils literal"><span class="pre">alice_words.txt</span></tt>, содержащий упорядоченный по алфавиту список всех
+слов, найденных в файле <a class="reference external" href="_static/alice_in_wonderland.txt">alice_in_wonderland.txt</a>
+(англ.: Алиса в стране чудес), вместе с количеством вхождений каждого слова.
+Первые десять строк файла должны выглядеть так:</p>
+<div class="highlight-python"><pre>Word              Count
+=======================
+a                 631
+a-piece           1
+abide             1
+able              1
+about             94
+above             3
+absence           1
+absurd            2</pre>
+</div>
+<p>Сколько раз встречается в книге слово <tt class="docutils literal"><span class="pre">alice</span></tt>?</p>
+</li>
+<li><p class="first">Какое слово самое длинное в &#8216;Алисе в стране чудес&#8217;? Сколько в нем букв?</p>
+</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             >словарь</a></li>
+        <li class="right" >
+          <a href="ch12.html" title="12. Классы и объекты"
+             >следующий</a> |</li>
+        <li class="right" >
+          <a href="ch10.html" title="10. Рекурсия и исключения"
+             >предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="copyright.html">Copyright</a> 2009, 2012, Джеффри Элкнер, Аллен Б. Дауни, Крис Мейерс, Андрей Трофимов.
+      При создании использован <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

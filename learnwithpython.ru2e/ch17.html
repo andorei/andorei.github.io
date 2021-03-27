@@ -1,0 +1,273 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>17. Стеки &mdash; Учимся с Python</title>
+    
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2nd Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="Учимся с Python" href="index.html" />
+    <link rel="next" title="18. Очереди" href="ch18.html" />
+    <link rel="prev" title="16. Связные списки" href="ch16.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             accesskey="I">словарь</a></li>
+        <li class="right" >
+          <a href="ch18.html" title="18. Очереди"
+             accesskey="N">следующий</a> |</li>
+        <li class="right" >
+          <a href="ch16.html" title="16. Связные списки"
+             accesskey="P">предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>17. Стеки<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
+<div class="section" id="index-0">
+<span id="id2"></span><h2>17.1. Абстрактные типы данных<a class="headerlink" href="#index-0" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Типы данных, с которыми мы встречались до сих пор, конкретные, в том смысле, что они имеют завершенную реализацию. Например, класс <tt class="docutils literal"><span class="pre">Card</span></tt> представляет игральную карту с помощью двух целых чисел. Как мы обсуждали ранее, это не единственный способ представления игральной карты, могут быть альтернативные реализации.</p>
+<p><strong>Абстрактный тип данных</strong> определяет набор операций (или методов) и семантику операций (что эти операции делают), но не предоставляет реализацию операций. Это и делает его абстрактным.</p>
+<p>Почему <a class="reference external" href="http://ru.wikipedia.org/wiki/%D0%90%D0%B1%D1%81%D1%82%D1%80%D0%B0%D0%BA%D1%82%D0%BD%D1%8B%D0%B9_%D1%82%D0%B8%D0%BF_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85">абстрактные типы данных</a> полезны?</p>
+<ol class="arabic simple">
+<li>Возможность описать необходимые операции, не думая при этом об их реализации, упрощает разработку алгоритмов.</li>
+<li>Обычно существует много способов реализовать абстрактный тип данных, и алгоритм, использующий
+абстрактный тип данных, сможет работать с любой из его реализаций.</li>
+<li>Широко известные абстрактные типы данных, такие как стек, часто реализуются в стандартных библиотеках;
+один раз написанные, они используются многими программистами.</li>
+<li>Операции над абстрактными типами данных представляют собой общепринятый высокоуровневый язык, на котором
+удобно говорить об алгоритмах.</li>
+</ol>
+<p>Когда говорят об абстрактных типах данных, код, который их использует, часто называют <strong>клиентом</strong>, а код, их реализующий, &#8212; <strong>провайдером</strong>.</p>
+</div>
+<div class="section" id="index-1">
+<span id="id3"></span><h2>17.2. Абстрактный стек<a class="headerlink" href="#index-1" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Рассмотрим широко известный абстрактный тип данных <a class="reference external" href="http://ru.wikipedia.org/wiki/%D0%A1%D1%82%D0%B5%D0%BA">cтек</a>. Стек является коллекцией в том смысле, что эта структура данных содержит многочисленные элементы. Другие коллекции, с которыми мы встречались, это словари и списки.</p>
+<p>Абстрактный тип данных определяется операциями, которые можно выполнять над ним, или, другими словами, <strong>интерфейсом</strong>. Интерфейс стека включает следующие операции:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">__init__</span></tt></dt>
+<dd>Инициализировать новый пустой стек.</dd>
+<dt><tt class="docutils literal"><span class="pre">push</span></tt></dt>
+<dd>Добавить новый элемент к стеку.</dd>
+<dt><tt class="docutils literal"><span class="pre">pop</span></tt></dt>
+<dd>Удалить и вернуть элемент из стека. Удаляемый и возвращаемый элемент &#8212; всегда последний добавленный в стек элемент.</dd>
+<dt><tt class="docutils literal"><span class="pre">is_empty</span></tt></dt>
+<dd>Проверить, пуст ли стек.</dd>
+</dl>
+<p>Стек иногда называют структурой данных last in, first out (англ.: последним вошел, первым вышел), или LIFO, потому, что последний добавленный в стек элемент всегда извлекается первым.</p>
+</div>
+<div class="section" id="index-2">
+<span id="id4"></span><h2>17.3. Реализация стека с помощью списка<a class="headerlink" href="#index-2" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Операции над списком, которые предоставляет Python, похожи на операции из интерфейса стека. Напишем код, который реализует операции над стеком с помощью операций над списком.</p>
+<p>Этот код будет <strong>реализацией</strong> абстрактного типа данных стек. Вообще, реализация есть набор методов, которые синтаксически и семантически удовлетворяют требованиям интерфейса.</p>
+<p>Вот реализация стека, использующая список Python:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Stack</span> <span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">is_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">==</span> <span class="p">[])</span>
+</pre></div>
+</div>
+<p>Класс <tt class="docutils literal"><span class="pre">Stack</span></tt> содержит атрибут <tt class="docutils literal"><span class="pre">items</span></tt>, список Python, содержащий элементы стека. Инициализирующий метод присваивает переменной <tt class="docutils literal"><span class="pre">items</span></tt> пустой список.</p>
+<p>Чтобы поместить новый элемент в стек, <tt class="docutils literal"><span class="pre">push</span></tt> добавляет его в конец списка <tt class="docutils literal"><span class="pre">items</span></tt>. Чтобы извлечь элемент из стека, <tt class="docutils literal"><span class="pre">pop</span></tt> использует одноименный метод списка, удаляющий и возвращающий последний элемент списка.</p>
+<p>И, наконец, чтобы проверить, пуст ли стек, <tt class="docutils literal"><span class="pre">is_empty</span></tt> сравнивает <tt class="docutils literal"><span class="pre">items</span></tt> с пустым списком.</p>
+<p>Подобную реализацию, где методы состоят из вызова других существующих методов, иногда называют <strong>фасадом</strong>. Программисты используют эту метафору, чтобы описать код, скрывающий детали реализации и предоставляющий более простой, или более стандартный, интерфейс.</p>
+</div>
+<div class="section" id="index-3">
+<span id="id5"></span><h2>17.4. Помещение в стек и извлечение из стека<a class="headerlink" href="#index-3" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Наш стек является <strong>обобщенной структурой данных</strong>. Это значит, что мы можем поместить в него элемент любого типа. В следующем примере в стек помещаются два целых числа и строка:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Stack</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mi">54</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mi">45</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="s">&quot;+&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>С помощью <tt class="docutils literal"><span class="pre">is_empty</span></tt> и <tt class="docutils literal"><span class="pre">pop</span></tt> мы можем извлечь и вывести на печать все элементы стека:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">while</span> <span class="ow">not</span> <span class="n">s</span><span class="o">.</span><span class="n">is_empty</span><span class="p">():</span>
+    <span class="k">print</span> <span class="n">s</span><span class="o">.</span><span class="n">pop</span><span class="p">(),</span>
+</pre></div>
+</div>
+<p>Получаем <tt class="docutils literal"><span class="pre">+</span> <span class="pre">45</span> <span class="pre">54</span></tt>. Иными словами, мы только что использовали стек, чтобы распечатать элементы в обратном порядке! Хотя это и не стандартный формат вывода списка на печать, однако, с использованием стека вывести список в обратном порядке оказалось очень просто.</p>
+<p>Интересно сравнить этот фрагмент кода с реализацией <tt class="docutils literal"><span class="pre">print_backward</span></tt> из предыдущей главы. Существует естественная аналогия между рекурсивной версией <tt class="docutils literal"><span class="pre">print_backward</span></tt> и данным алгоритмом, использующим стек. Разница в том, что <tt class="docutils literal"><span class="pre">print_backward</span></tt> использует стек среды выполнения для размещения узлов списка, и распечатывает их на выходе из рекурсии. Наш стековый алгоритм делает то же самое, только использует объект <tt class="docutils literal"><span class="pre">Stack</span></tt> вместо стека среды выполнения.</p>
+</div>
+<div class="section" id="index-4">
+<span id="id6"></span><h2>17.5. Использование стека для постфиксных вычислений<a class="headerlink" href="#index-4" title="Ссылка на этот заголовок">¶</a></h2>
+<p>В большинстве языков программирования, математические выражения записываются с операторами между операндов, например, <tt class="docutils literal"><span class="pre">1</span> <span class="pre">+</span> <span class="pre">2</span></tt>. Такая запись называется <strong>инфиксной</strong>. Альтернативной формой записи выражений является <strong>постфиксная</strong>, или <a class="reference external" href="http://ru.wikipedia.org/wiki/%D0%9E%D0%B1%D1%80%D0%B0%D1%82%D0%BD%D0%B0%D1%8F_%D0%BF%D0%BE%D0%BB%D1%8C%D1%81%D0%BA%D0%B0%D1%8F_%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D1%8C">обратная польская запись</a>, в которой оператор следует за операндами: <tt class="docutils literal"><span class="pre">1</span> <span class="pre">2</span> <span class="pre">+</span></tt>.</p>
+<p>Постфиксное выражение естественным образом вычисляется с помощью стека:</p>
+<ol class="arabic simple">
+<li>Начав слева, будем брать один терм (оператор или операнд) за один раз.<ul>
+<li>Если терм операнд, поместим его в стек.</li>
+<li>Если терм оператор, извлечем два операнда из стека, выполним над ними операцию, и поместим результат в стек.</li>
+</ul>
+</li>
+<li>Когда мы доберемся до конца выражения, на стеке останется ровно один операнд. Это и будет результат.</li>
+</ol>
+</div>
+<div class="section" id="index-5">
+<span id="id7"></span><h2>17.6. Лексический анализ<a class="headerlink" href="#index-5" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Для того, чтобы реализовать описанный алгоритм, необходимо пройти по строке и разбить ее на операнды и операторы. Этот процесс есть ни что иное, как <strong>лексический анализ</strong>, а его результат &#8211; отдельные части строки &#8211; называются <strong>лексемами</strong>. Возможно, вы помните эти понятия из главы 1.</p>
+<p>Python предоставляет функции <tt class="docutils literal"><span class="pre">split</span></tt> в модулях <tt class="docutils literal"><span class="pre">string</span></tt> и <tt class="docutils literal"><span class="pre">re</span></tt> (от англ. regular expressions &#8211; регулярные выражения). Функция <tt class="docutils literal"><span class="pre">string.split</span></tt> разбивает строку на части, используя указанный символ в качестве <strong>разделителя</strong>. Например:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">string</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;Now is the time&quot;</span><span class="p">,</span> <span class="s">&quot; &quot;</span><span class="p">)</span>
+<span class="go">[&#39;Now&#39;, &#39;is&#39;, &#39;the&#39;, &#39;time&#39;]</span>
+</pre></div>
+</div>
+<p>В данном случае разделителем является пробел, и строка разбивается по пробелам.</p>
+<p>Более мощная функция <tt class="docutils literal"><span class="pre">re.split</span></tt> позволяет использовать в качестве разделителя регулярное выражение. Регулярное выражение &#8211; это способ описания целого множества строк, удовлетворяющих заданному условию. Например, <tt class="docutils literal"><span class="pre">[A-z]</span></tt> есть множество всех букв латинского алфавита, а <tt class="docutils literal"><span class="pre">[0-9]</span></tt> есть множество всех цифр. Оператор <tt class="docutils literal"><span class="pre">^</span></tt> &#8220;отрицает&#8221; множество, так что <tt class="docutils literal"><span class="pre">[^0-9]</span></tt> означает все символы, кроме цифр. Это именно то, что нам нужно для разбиения на лексемы постфиксного выражения:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">re</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;([^0-9])&quot;</span><span class="p">,</span> <span class="s">&quot;123 456+8/&quot;</span><span class="p">)</span>
+<span class="go">[&#39;123&#39;, &#39; &#39;, &#39;456&#39;, &#39;+&#39;, &#39;8&#39;, &#39;/&#39;, &#39;&#39;]</span>
+</pre></div>
+</div>
+<p>Обратите внимание, что порядок аргументов <tt class="docutils literal"><span class="pre">re.split</span></tt> отличается от порядка аргументов функции <tt class="docutils literal"><span class="pre">string.split</span></tt>, здесь разделитель идет перед анализируемой строкой.</p>
+<p>Результирующий список лексем включает операнды <tt class="docutils literal"><span class="pre">123</span></tt>, <tt class="docutils literal"><span class="pre">456</span></tt>, <tt class="docutils literal"><span class="pre">8</span></tt>, а также операторы <tt class="docutils literal"><span class="pre">+</span></tt> и <tt class="docutils literal"><span class="pre">/</span></tt>. Он также содержит пробел и пустую строку.</p>
+</div>
+<div class="section" id="id8">
+<h2>17.7. Вычисление постфиксного выражения<a class="headerlink" href="#id8" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Для вычисления постфиксного выражения воспользуемся только что рассмотренным лексическим анализатором и алгоритмом из предшествующего раздела. Для простоты начнем с вычислителя, который реализует только операции <tt class="docutils literal"><span class="pre">+</span></tt> и <tt class="docutils literal"><span class="pre">*</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">eval_postfix</span><span class="p">(</span><span class="n">expr</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">re</span>
+    <span class="n">token_list</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;([^0-9])&quot;</span><span class="p">,</span> <span class="n">expr</span><span class="p">)</span>
+    <span class="n">stack</span> <span class="o">=</span> <span class="n">Stack</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">token_list</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s">&#39;&#39;</span> <span class="ow">or</span> <span class="n">token</span> <span class="o">==</span> <span class="s">&#39; &#39;</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s">&#39;+&#39;</span><span class="p">:</span>
+            <span class="nb">sum</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="o">+</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="n">stack</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="nb">sum</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">token</span> <span class="o">==</span> <span class="s">&#39;*&#39;</span><span class="p">:</span>
+            <span class="n">product</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="o">*</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="n">stack</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">product</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">stack</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">token</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Первая из проверок отлавливает пробелы и пустые строки. Следующие два условных предложения обрабатывают операторы.  Примем пока, что все прочее в строке должно быть операндом. Конечно, ошибки ввода необходимо обнаруживать и сообщать о них пользователю, но мы сделаем это немного позже.</p>
+<p>А сейчас протестируем нашу функцию, передав ей постфиксную запись выражения <tt class="docutils literal"><span class="pre">(56+47)*2</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">eval_postfix</span> <span class="p">(</span><span class="s">&quot;56 47 + 2 \*&quot;</span><span class="p">)</span>
+<span class="go">206</span>
+</pre></div>
+</div>
+<p>Результат правильный!</p>
+</div>
+<div class="section" id="index-6">
+<span id="id9"></span><h2>17.8. Клиенты и провайдеры<a class="headerlink" href="#index-6" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Одно из главных предназначений абстрактных типов данных состоит в разделении интересов провайдера, который реализует интерфейс абстрактного типа, и клиента, который пользуется абстрактным типом.</p>
+<p>Провайдер заботится лишь о том, чтобы реализация интерфейса была корректной, то есть, соответствовала спецификации абстрактного типа данных.</p>
+<p>Напротив, клиент предполагает, что реализация абстрактного типа данных корректна и не заботится о ее деталях. Когда вы пользуетесь любым из встроенных типов Python, вы имеете удовольствие думать как клиент.</p>
+<p>Конечно, если вы реализуете абстрактный тип данных, вам придется написать клиентский код для того, чтобы протестировать вашу реализацию. В этом случае, вы играете обе роли.</p>
+</div>
+<div class="section" id="id10">
+<h2>17.9. Глоссарий<a class="headerlink" href="#id10" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="glossary docutils">
+<dt id="term-">абстрактный тип данных</dt>
+<dd>Тип данных, который определяется заданием набора
+операций и их семантики, и может иметь множество реализаций (или ни одной).</dd>
+<dt id="term-1">интерфейс</dt>
+<dd>Набор операций, определяющий абстрактный тип данных.</dd>
+<dt id="term-2">инфиксная запись</dt>
+<dd>Запись математических выражений с операторами между операндами.</dd>
+<dt id="term-3">клиент абстрактного типа данных</dt>
+<dd>Программа (или создающий ее человек), использующая абстрактный тип данных.</dd>
+<dt id="term-4">лексема</dt>
+<dd>Последовательность символов, интерпретируемая как единое целое, в ходе
+лексического анализа. Примером могут послужить слова текста на естественном
+языке или на языке программирования.</dd>
+<dt id="term-5">лексический анализ</dt>
+<dd>Анализ текста с целью выделения из него лексем.</dd>
+<dt id="term-6">обобщенная структура данных</dt>
+<dd>Структура данных, способная содержать данные любого типа.</dd>
+<dt id="term-7">постфиксная запись</dt>
+<dd>Запись математических выражений с операторами после операндов.</dd>
+<dt id="term-8">провайдер реализации абстрактного типа данных</dt>
+<dd>Код (или создающий его человек), который реализует абстрактный тип данных.</dd>
+<dt id="term-9">разделитель</dt>
+<dd>Символ, используемый для разделения лексем. Примерами могут служить
+пробелы и знаки пунктуации в тексте.</dd>
+<dt id="term-10">реализация</dt>
+<dd>Код, удовлетворяющий синтаксическим и семантическим требованиям интерфейса.</dd>
+</dl>
+</div>
+<div class="section" id="id11">
+<h2>17.10. Упражнения<a class="headerlink" href="#id11" title="Ссылка на этот заголовок">¶</a></h2>
+<ol class="arabic simple">
+<li>Воспользуйтесь нашей реализацией стека для того, чтобы распечатать строку
+символов в обратном порядке.</li>
+<li>Примените алгоритм вычисления постфиксного выражения к выражению <tt class="docutils literal"><span class="pre">1</span> <span class="pre">2</span> <span class="pre">+</span> <span class="pre">3</span> <span class="pre">*</span></tt>.
+Этот пример демонстрирует одно из преимуществ постфиксной записи: для
+установления порядка вычислений не нужны скобки.
+Это же выражение в инфиксной записи требует скобок: <tt class="docutils literal"><span class="pre">(1</span> <span class="pre">+</span> <span class="pre">2)</span> <span class="pre">*</span> <span class="pre">3</span></tt>.</li>
+<li>Напишите постфиксное выражение, эквивалентное выражению <tt class="docutils literal"><span class="pre">1</span> <span class="pre">+</span> <span class="pre">2</span> <span class="pre">*</span> <span class="pre">3</span></tt>.</li>
+<li>Напишите и выполните доктесты для постфиксного вычислителя, функции <tt class="docutils literal"><span class="pre">eval_postfix</span></tt>,
+чтобы убедиться, что реализованные операции работают правильно.</li>
+<li>Добавьте в функцию <tt class="docutils literal"><span class="pre">eval_postfix</span></tt> поддержку операторов вычитания <tt class="docutils literal"><span class="pre">-</span></tt> и
+деления <tt class="docutils literal"><span class="pre">/</span></tt>. Начните выполнение упражнения с написания доктестов для
+этих операций.</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             >словарь</a></li>
+        <li class="right" >
+          <a href="ch18.html" title="18. Очереди"
+             >следующий</a> |</li>
+        <li class="right" >
+          <a href="ch16.html" title="16. Связные списки"
+             >предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="copyright.html">Copyright</a> 2009, 2012, Джеффри Элкнер, Аллен Б. Дауни, Крис Мейерс, Андрей Трофимов.
+      При создании использован <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

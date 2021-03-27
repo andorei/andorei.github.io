@@ -1,0 +1,457 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>3. Функции &mdash; Учимся с Python</title>
+    
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2nd Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="Учимся с Python" href="index.html" />
+    <link rel="next" title="4. Условные предложения" href="ch04.html" />
+    <link rel="prev" title="2. Переменные, выражения и предложения" href="ch02.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             accesskey="I">словарь</a></li>
+        <li class="right" >
+          <a href="ch04.html" title="4. Условные предложения"
+             accesskey="N">следующий</a> |</li>
+        <li class="right" >
+          <a href="ch02.html" title="2. Переменные, выражения и предложения"
+             accesskey="P">предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>3. Функции<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
+<div class="section" id="index-0">
+<span id="id2"></span><h2>3.1. Определение и использование<a class="headerlink" href="#index-0" title="Ссылка на этот заголовок">¶</a></h2>
+<p>В программировании <strong>функцией</strong> называют именованную последовательность предложений, которая выполняет некоторые действия. Выполняемые действия описываются в <strong>определении функции</strong>.</p>
+<p>В Python функция определяется так:</p>
+<div class="highlight-python"><pre>def имя(список параметров):
+    предложения</pre>
+</div>
+<p>Можно давать создаваемым функциям любые имена, нужно только помнить, что использовать ключевые слова в качестве имен нельзя. Список параметров указывает, какую информацию, если она вообще нужна, пользователь должен передать функции.</p>
+<p>Внутри функции может быть сколько угодно предложений, причем все они должны иметь отступ вправо относительно <tt class="docutils literal"><span class="pre">def</span></tt>. В примерах в этой книге используется стандартный отступ в 4 пробела. Определение функции &#8212; это первое из нескольких <strong>составных предложений</strong>, которые мы увидим; все они строятся по такой схеме:</p>
+<ol class="arabic simple">
+<li><strong>Заголовок</strong>, который начинается с ключевого слова и заканчивается двоеточием.</li>
+<li><strong>Тело</strong>, состоящее из одного или более предложений Python, имеющих одинаковый
+отступ &#8212; <em>4 пробела по стандарту Python</em> &#8212; относительно заголовка.</li>
+</ol>
+<p>В определении функции ключевое слово в заголовке &#8212; это <tt class="docutils literal"><span class="pre">def</span></tt>. За ним следуют имя функции и список <em>параметров</em>, заключенный в скобки. Список параметров может быть пустым или может содержать любое число параметров. В любом случае скобки необходимы.</p>
+<p>Первые две функции, которые мы напишем, не имеют параметров.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">new_line</span><span class="p">():</span>
+    <span class="k">print</span>
+</pre></div>
+</div>
+<p>Эта функция имеет имя <tt class="docutils literal"><span class="pre">new_line</span></tt>. Пустые скобки показывают, что функция не имеет параметров. Ее тело содержит единственное предложение, которое выводит символ новой строки. (Именно это происходит, когда вы используете <tt class="docutils literal"><span class="pre">print</span></tt> без аргументов.)</p>
+<p>Определение новой функции не приводит автоматически к выполнению этой функции. Чтобы выполнить функцию, нужно сделать <strong>вызов функции</strong>. Для вызова функции записывают имя функции, за которым в скобках следует список <em>аргументов</em>. При вызове функции аргументы присваиваются параметрам из определения функции.</p>
+<p>В наших первых примерах функции имеют пустой список параметров, так что вызов функции не требует аргументов. Заметьте, однако, что <em>в вызове функции скобки необходимы</em>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="s">&quot;First Line.&quot;</span>
+<span class="n">new_line</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&quot;Second Line.&quot;</span>
+</pre></div>
+</div>
+<p>Эта программа выводит:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">First</span> <span class="n">line</span><span class="o">.</span>
+
+<span class="n">Second</span> <span class="n">line</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>Дополнительное пространство между двумя строками &#8212; это результат вызова функции <tt class="docutils literal"><span class="pre">new_line()</span></tt>. А что если нам понадобится больше свободного места между строками? В таком случае мы могли бы вызвать одну и ту же функцию несколько раз:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="s">&quot;First Line.&quot;</span>
+<span class="n">new_line</span><span class="p">()</span>
+<span class="n">new_line</span><span class="p">()</span>
+<span class="n">new_line</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&quot;Second Line.&quot;</span>
+</pre></div>
+</div>
+<p>Или мы могли бы написать новую функцию с именем <tt class="docutils literal"><span class="pre">three_lines</span></tt>, которая выводит три символа новой строки:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">three_lines</span><span class="p">():</span>
+    <span class="n">new_line</span><span class="p">()</span>
+    <span class="n">new_line</span><span class="p">()</span>
+    <span class="n">new_line</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="s">&quot;First Line.&quot;</span>
+<span class="n">three_lines</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&quot;Second Line.&quot;</span>
+</pre></div>
+</div>
+<p>Эта функция содержит три предложения, каждое из которых записано с отступом в 4 пробела. Поскольку следующее предложение не имеет отступа, Python понимает, что оно не является частью определения функции.</p>
+<p>Стоит заметить несколько вещей в связи с этой программой:</p>
+<ul class="simple">
+<li>Одну и ту же функцию можно вызывать многократно. Так обычно и происходит.</li>
+<li>Одна функция может вызывать другую; в нашем примере <tt class="docutils literal"><span class="pre">three_lines</span></tt> вызывает
+<tt class="docutils literal"><span class="pre">new_line</span></tt>.</li>
+</ul>
+<p>Для чего нужно утруждать себя созданием новых функций? Для этого есть много причин, и рассмотренный пример демонстрирует две из них:</p>
+<ol class="arabic simple">
+<li>Создание функции позволяет вам дать имя группе предложений. Функции могут
+упростить программу, скрывая сложные вычисления за единственным вызовом
+функции и предлагая понятные, говорящие сами за себя, имена вместо
+непонятного на первый взгляд кода.</li>
+<li>Создание новой функции может сделать программу меньше за счет исключения
+повторяющегося кода. Например, короткий способ напечатать девять
+последовательных символов новой строки &#8212; это вызвать <tt class="docutils literal"><span class="pre">three_lines</span></tt> три
+раза.</li>
+</ol>
+<p>Соберем вместе фрагменты кода из этого раздела в скрипт <tt class="docutils literal"><span class="pre">tryme1.py</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">new_line</span><span class="p">():</span>
+    <span class="k">print</span>
+
+<span class="k">def</span> <span class="nf">three_lines</span><span class="p">():</span>
+    <span class="n">new_line</span><span class="p">()</span>
+    <span class="n">new_line</span><span class="p">()</span>
+    <span class="n">new_line</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="s">&quot;First Line.&quot;</span>
+<span class="n">three_lines</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&quot;Second Line.&quot;</span>
+</pre></div>
+</div>
+<p>В этой программе определяются две функции: <tt class="docutils literal"><span class="pre">new_line</span></tt> и <tt class="docutils literal"><span class="pre">three_lines</span></tt>. Составное предложение <tt class="docutils literal"><span class="pre">def</span></tt>, определяющее функцию, выполняются так же, как и другие предложения, а его результатом является создание новой функции. Предложения в теле функции не выполняются до тех пор, пока функция не будет вызвана.</p>
+<p>Прежде чем выполнить функцию, ее нужно создать. Другими словами, определение функции должно выполняться прежде, чем в программе встречается первый вызов этой функции.</p>
+</div>
+<div class="section" id="index-1">
+<span id="id3"></span><h2>3.2. Поток выполнения<a class="headerlink" href="#index-1" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Чтобы быть уверенным, что функция определена прежде, чем вызывается, нужно знать порядок, в котором выполняются предложения. Порядок выполнения предложений в программе называется <strong>потоком выполнения</strong>.</p>
+<p>Выполнение всегда начинается с первой строки программы. Предложения выполняются по одному за раз, сверху вниз.</p>
+<p>Определения функций не нарушают поток выполнения программы, но предложения внутри функций не выполняются до тех пор, пока функция не вызвана. Хотя это нечасто используется, но можно определить одну функцию внутри другой. В этом случае, внутреннее определение не выполнится до тех пор, пока не будет вызвана внешняя функция.</p>
+<p>Вызов функции &#8212; как объезд в потоке выполнения. Вместо того, чтобы перейти к следующему предложению, выполняется переход на первое предложение тела функции, выполняются предложения тела функции, и затем выполняется возврат туда, откуда был сделан вызов функции.</p>
+<p>Выглядит достаточно просто, пока вы не вспомните о том, что одна функция может вызывать другую. А эта другая может вызывать третью, и так далее!</p>
+<p>Но Python точно &#8220;знает&#8221;, откуда вызвана текущая выполняемая функция, так что каждый раз, когда функция завершается, программа продолжается с того места, где она была перед вызовом функции. Когда достигнут конец программы, она завершается.</p>
+<p>В чем здесь мораль? Когда читаете программу, не читайте ее просто сверху вниз. Следуйте за потоком выполнения.</p>
+</div>
+<div class="section" id="import">
+<span id="index-2"></span><h2>3.3. Параметры, аргументы и предложение <tt class="docutils literal"><span class="pre">import</span></tt><a class="headerlink" href="#import" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Большинству функций нужны аргументы &#8212; значения, которые используются функцией для ее работы. Например, если вы хотите найти абсолютное значение числа, то нужно указать, какого именно числа. В Python имеется встроенная функция для вычисления абсолютного значения числа:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">abs</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">abs</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">5</span>
+</pre></div>
+</div>
+<p>В этом примере, аргументами функции <tt class="docutils literal"><span class="pre">abs</span></tt> являются 5 и -5.</p>
+<p>Некоторые функции принимают больше одного аргумента. Например, встроенная функция <tt class="docutils literal"><span class="pre">pow</span></tt> берет два аргумента, основание и степень. Внутри функции передаваемые в нее значения присваиваются переменным, которые называются <strong>параметры</strong>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="go">8</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">pow</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="go">2401</span>
+</pre></div>
+</div>
+<p>Другая встроенная функция, принимающая больше одного аргумента, &#8212; функция <tt class="docutils literal"><span class="pre">max</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">max</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+<span class="go">11</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">max</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+<span class="go">17</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">max</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">5</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span> <span class="mi">512</span> <span class="o">-</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">1024</span><span class="o">**</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">503</span>
+</pre></div>
+</div>
+<p>В функцию <tt class="docutils literal"><span class="pre">max</span></tt> можно передать любое число аргументов, разделенных запятыми; функция вернет максимальное из переданных ей значений. Аргументами могут быть как простые значения, так и выражения. В последнем примере функция вернула 503, поскольку 503 больше, чем 33, 125 и 1.</p>
+<p>А вот пример определенной пользователем функции с одним параметром:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">print_twice</span><span class="p">(</span><span class="n">bruce</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">bruce</span><span class="p">,</span> <span class="n">bruce</span>
+</pre></div>
+</div>
+<p>Эта функция принимает единственный <strong>аргумент</strong> и присваивает его значение параметру с именем <tt class="docutils literal"><span class="pre">bruce</span></tt>. Значение параметра (определяя функцию, мы понятия не имеем, какое именно это значение) выводится дважды, после чего выводится символ новой строки. Имя <tt class="docutils literal"><span class="pre">bruce</span></tt> здесь просто демонстрирует, что вы можете дать параметру какое угодно имя. Но будет правильным давать параметрам более информативные имена, чем <tt class="docutils literal"><span class="pre">bruce</span></tt>.</p>
+<p>Интерактивный режим интерпретатора Python предоставляет удобную среду для тестирования ваших функций. Можно воспользоваться <strong>предложением import</strong> чтобы загрузить функции, определенные в скрипте, в сеанс интерпретатора.</p>
+<p>Предположим, что функция <tt class="docutils literal"><span class="pre">print_twice</span></tt> определена в скрипте с именем <tt class="docutils literal"><span class="pre">chap03.py</span></tt>. Тогда мы сможем работать с ней в интерактивном режиме, <em>импортировав</em> ее в сеанс Python:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">chap03</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print_twice</span><span class="p">(</span><span class="s">&#39;Spam&#39;</span><span class="p">)</span>
+<span class="go">Spam Spam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print_twice</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">5 5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print_twice</span><span class="p">(</span><span class="mf">3.14159</span><span class="p">)</span>
+<span class="go">3.14159 3.14159</span>
+</pre></div>
+</div>
+<p>При вызове функции значение аргумента присваивается соответствующему параметру из определения функции. Все выглядит так, как будто при вызове <tt class="docutils literal"><span class="pre">print_twice('Spam')</span></tt> выполняется <tt class="docutils literal"><span class="pre">bruce</span> <span class="pre">=</span> <span class="pre">'Spam'</span></tt>, при вызове <tt class="docutils literal"><span class="pre">print_twice(5)</span></tt> выполняется <tt class="docutils literal"><span class="pre">bruce</span> <span class="pre">=</span> <span class="pre">5</span></tt>, а при вызове <tt class="docutils literal"><span class="pre">print_twice(3.14159)</span></tt> выполняется <tt class="docutils literal"><span class="pre">bruce</span> <span class="pre">=</span> <span class="pre">3.14159</span></tt>.</p>
+<p>Значение любого типа, которое может быть напечатано, можно передать в функцию <tt class="docutils literal"><span class="pre">print_twice</span></tt>. В первом вызове функции в приведенном примере аргумент является строкой. Во втором &#8212; целым числом. А в третьем &#8212; числом с плавающей точкой.</p>
+<p>Как и в случае со встроенными функциями, в качестве аргумента для <tt class="docutils literal"><span class="pre">print_twice</span></tt> можно использовать выражение:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">print_twice</span><span class="p">(</span><span class="s">&#39;Spam&#39;</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
+<span class="go">SpamSpamSpamSpam SpamSpamSpamSpam</span>
+</pre></div>
+</div>
+<p>Вначале вычисляется выражение <tt class="docutils literal"><span class="pre">'Spam'*4</span></tt>, что дает значение <tt class="docutils literal"><span class="pre">'SpamSpamSpamSpam'</span></tt>, а затем это значение передается в функцию <tt class="docutils literal"><span class="pre">print_twice</span></tt> как аргумент.</p>
+</div>
+<div class="section" id="index-3">
+<span id="id4"></span><h2>3.4. Композиция<a class="headerlink" href="#index-3" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Как и в математике, функции в Python можно <strong>комбинировать</strong>, то есть, использовать результат одной функции в качестве аргумента при вызове другой.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">print_twice</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="o">-</span><span class="mi">7</span><span class="p">))</span>
+<span class="go">7 7</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print_twice</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="o">-</span><span class="mi">11</span><span class="p">),</span> <span class="mi">7</span><span class="p">))</span>
+<span class="go">11 11</span>
+</pre></div>
+</div>
+<p>В первом случае <tt class="docutils literal"><span class="pre">abs(-7)</span></tt> дает значение 7, которое становится аргументом для <tt class="docutils literal"><span class="pre">print_twice</span></tt>. Во втором случае у нас двухуровневая композиция, так как сначала вычисляется <tt class="docutils literal"><span class="pre">abs(-11)</span></tt>, что дает 11, затем вычисление <tt class="docutils literal"><span class="pre">max(3,</span> <span class="pre">1,</span> <span class="pre">11,</span> <span class="pre">7)</span></tt> дает 11 и, наконец, <tt class="docutils literal"><span class="pre">print_twice(11)</span></tt> отображает результат.</p>
+<p>В качестве аргумента можно использовать переменную:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">michael</span> <span class="o">=</span> <span class="s">&#39;Eric, the half a bee.&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print_twice</span><span class="p">(</span><span class="n">michael</span><span class="p">)</span>
+<span class="go">Eric, the half a bee. Eric, the half a bee.</span>
+</pre></div>
+</div>
+<p>Сделаем важное замечание. Имя переменной, которое мы указываем в качестве аргумента (<tt class="docutils literal"><span class="pre">michael</span></tt>) не имеет никакого отношения к имени параметра (<tt class="docutils literal"><span class="pre">bruce</span></tt>). Абсолютно все равно, с каким именем связано значение в том месте программы, откуда оно передается в функцию; внутри функции <tt class="docutils literal"><span class="pre">print_twice</span></tt> мы зовем его <tt class="docutils literal"><span class="pre">bruce</span></tt>.</p>
+</div>
+<div class="section" id="index-4">
+<span id="id5"></span><h2>3.5. Переменные и параметры являются локальными<a class="headerlink" href="#index-4" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Когда вы создаете <strong>локальную переменную</strong> внутри функции, она существует только внутри функции, и её невозможно использовать снаружи. Например:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">cat_twice</span><span class="p">(</span><span class="n">part1</span><span class="p">,</span> <span class="n">part2</span><span class="p">):</span>
+    <span class="n">cat</span> <span class="o">=</span> <span class="n">part1</span> <span class="o">+</span> <span class="n">part2</span>
+    <span class="n">print_twice</span><span class="p">(</span><span class="n">cat</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Эта функция принимает два аргумента, конкатенирует их и затем дважды печатает результат. Можно вызвать эту функцию с двумя строками:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">chant1</span> <span class="o">=</span> <span class="s">&quot;Pie Jesu domine, &quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chant2</span> <span class="o">=</span> <span class="s">&quot;Dona eis requiem.&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cat_twice</span><span class="p">(</span><span class="n">chant1</span><span class="p">,</span> <span class="n">chant2</span><span class="p">)</span>
+<span class="go">Pie Jesu domine, Dona eis requiem. Pie Jesu domine, Dona eis requiem.</span>
+</pre></div>
+</div>
+<p>Когда завершается <tt class="docutils literal"><span class="pre">cat_twice</span></tt>, переменная <tt class="docutils literal"><span class="pre">cat</span></tt> уничтожается. Если попробовать вывести ее, то получим ошибку:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">cat</span>
+<span class="go">NameError: name &#39;cat&#39; is not defined</span>
+</pre></div>
+</div>
+<p>Параметры также являются локальными. Например, снаружи функции <tt class="docutils literal"><span class="pre">print_twice</span></tt> не существует такой вещи, как <tt class="docutils literal"><span class="pre">bruce</span></tt>. Если попробовать её использовать, Python выдаст сообщение об ошибке.</p>
+</div>
+<div class="section" id="index-5">
+<span id="id6"></span><h2>3.6. Стековые диаграммы<a class="headerlink" href="#index-5" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Для того, чтобы отследить, какую переменную где можно использовать, иногда полезно нарисовать <strong>стековую диаграмму</strong>. (По-английски <em>стек</em> означает кипу или штабель, то есть, некоторое количество однородных предметов, положенных один на другой.) Как и диаграмма из предыдущей главы, стековые диаграммы показывают значение каждой переменной, но, кроме того, они показывают функцию, которой принадлежит каждая переменная.</p>
+<p>Каждая функция представлена прямоугольником, возле которого записано имя функции, а внутри записаны имена ее параметров и переменных. Стековая диаграмма для предыдущего примера выглядит так:</p>
+<img alt="Стековая диаграмма" src="_images/ch3-1.png" />
+<p>Порядок размещения функций в стеке показывает поток выполнения. <tt class="docutils literal"><span class="pre">print_twice</span></tt> вызывается функцией <tt class="docutils literal"><span class="pre">cat_twice</span></tt>, а <tt class="docutils literal"><span class="pre">cat_twice</span></tt> вызывается из <tt class="docutils literal"><span class="pre">__main__</span></tt>. Это специальное имя для функции самого верхнего уровня. Когда создается переменная вне каких-либо функций, она принадлежит <tt class="docutils literal"><span class="pre">__main__</span></tt>.</p>
+<p>Каждый параметр функции имеет то же значение, что и соответствующий ему аргумент. Так, значение <tt class="docutils literal"><span class="pre">part1</span></tt> то же, что у <tt class="docutils literal"><span class="pre">chant1</span></tt>, <tt class="docutils literal"><span class="pre">part2</span></tt> &#8212; то же, что у <tt class="docutils literal"><span class="pre">chant2</span></tt> и <tt class="docutils literal"><span class="pre">bruce</span></tt> &#8212; то же, что у <tt class="docutils literal"><span class="pre">cat</span></tt>.</p>
+<p>Если во время выполнения функции происходит ошибка, Python печатает имя выполнявшейся функции, а также имя функции, которая ее вызвала, а также имя функции, которая вызвала эту функцию, и так далее, до функции самого верхнего уровня.</p>
+<p>Чтобы посмотреть, как это работает, создайте скрипт Python с именем <tt class="docutils literal"><span class="pre">tryme2.py</span></tt> и следующим содержанием:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">print_twice</span><span class="p">(</span><span class="n">bruce</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">bruce</span><span class="p">,</span> <span class="n">bruce</span>
+    <span class="k">print</span> <span class="n">cat</span>
+
+<span class="k">def</span> <span class="nf">cat_twice</span><span class="p">(</span><span class="n">part1</span><span class="p">,</span> <span class="n">part2</span><span class="p">):</span>
+    <span class="n">cat</span> <span class="o">=</span> <span class="n">part1</span> <span class="o">+</span> <span class="n">part2</span>
+    <span class="n">print_twice</span><span class="p">(</span><span class="n">cat</span><span class="p">)</span>
+
+<span class="n">chant1</span> <span class="o">=</span> <span class="s">&quot;Pie Jesu domine, &quot;</span>
+<span class="n">chant2</span> <span class="o">=</span> <span class="s">&quot;Dona eis requim.&quot;</span>
+<span class="n">cat_twice</span><span class="p">(</span><span class="n">chant1</span><span class="p">,</span> <span class="n">chant2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Мы добавили предложение <tt class="docutils literal"><span class="pre">print</span> <span class="pre">cat</span></tt> в функцию <tt class="docutils literal"><span class="pre">print_twice</span></tt>, но переменная <tt class="docutils literal"><span class="pre">cat</span></tt> там не определена. Выполнение этого скрипта приведет к сообщению об ошибке, похожему на это:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Traceback</span> <span class="p">(</span><span class="n">innermost</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s">&quot;tryme2.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">11</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+    <span class="n">cat_twice</span><span class="p">(</span><span class="n">chant1</span><span class="p">,</span> <span class="n">chant2</span><span class="p">)</span>
+  <span class="n">File</span> <span class="s">&quot;tryme2.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">7</span><span class="p">,</span> <span class="ow">in</span> <span class="n">cat_twice</span>
+    <span class="n">print_twice</span><span class="p">(</span><span class="n">cat</span><span class="p">)</span>
+  <span class="n">File</span> <span class="s">&quot;tryme2.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">3</span><span class="p">,</span> <span class="ow">in</span> <span class="n">print_twice</span>
+    <span class="k">print</span> <span class="n">cat</span>
+<span class="ne">NameError</span><span class="p">:</span> <span class="k">global</span> <span class="n">name</span> <span class="s">&#39;cat&#39;</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">defined</span>
+</pre></div>
+</div>
+<p>Этот список называется <strong>трассировкой стека</strong>. Он содержит информацию о том, в каком файле произошла ошибка, и какая строка какой функции выполнялась в это время. Он также показывает строку кода, вызвавшую ошибку.</p>
+<p>Обратите внимание на сходство между трассировкой стека и стековой диаграммой. Это не случайное совпадение, так как в основе обеих лежит один и тот же механизм.</p>
+</div>
+<div class="section" id="id7">
+<h2>3.7. Глоссарий<a class="headerlink" href="#id7" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="glossary docutils">
+<dt id="term-import">import</dt>
+<dd><p class="first">Предложение, позволяющее сделать функции и переменные, определенные в
+скрипте Python, доступными при выполнении другого скрипта или в
+интерактивном режиме Python. Например, пусть имеется скрипт с именем
+<tt class="docutils literal"><span class="pre">tryme.py</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">print_thrice</span><span class="p">(</span><span class="n">thing</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">thing</span><span class="p">,</span> <span class="n">thing</span><span class="p">,</span> <span class="n">thing</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="n">s</span> <span class="o">=</span> <span class="s">&quot;And now for something completely different...&quot;</span>
+</pre></div>
+</div>
+<p>Теперь запустим интерпретатор в той директории, где размещается
+<tt class="docutils literal"><span class="pre">tryme.py</span></tt>:</p>
+<div class="highlight-python"><pre>$ ls
+tryme.py
+$ python
+&gt;&gt;&gt;</pre>
+</div>
+<p>В <tt class="docutils literal"><span class="pre">tryme.py</span></tt> определены три имени: <tt class="docutils literal"><span class="pre">print_thrice</span></tt>, <tt class="docutils literal"><span class="pre">n</span></tt>, и <tt class="docutils literal"><span class="pre">s</span></tt>.
+Если попробовать использовать их, не выполнив импорт, то получим ошибку:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">n</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">NameError</span>: <span class="n">name &#39;n&#39; is not defined</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print_thrice</span><span class="p">(</span><span class="s">&quot;ouch!&quot;</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+<span class="gr">NameError</span>: <span class="n">name &#39;print_thrice&#39; is not defined</span>
+</pre></div>
+</div>
+<p>Если, однако, импортировать всё из <tt class="docutils literal"><span class="pre">tryme.py</span></tt>, то можно будет
+использовать всё, что в нем определено:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">tryme</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n</span>
+<span class="go">42</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
+<span class="go">&#39;And now for something completely different...&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print_thrice</span><span class="p">(</span><span class="s">&quot;Yipee!&quot;</span><span class="p">)</span>
+<span class="go">Yipee! Yipee! Yipee!</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p class="last">Заметьте, что не нужно включать <tt class="docutils literal"><span class="pre">.py</span></tt> в имя скрипта в предложении
+import.</p>
+</dd>
+<dt id="term-">аргумент</dt>
+<dd>Значение, передаваемое функции при ее вызове. Это значение присваивается
+соответствующему параметру функции.</dd>
+<dt id="term-2">вызов функции</dt>
+<dd>Предложение, выполняющее функцию. Оно состоит из имени функции, за
+которым следует список аргументов в скобках.</dd>
+<dt id="term-3">заголовок составного предложения</dt>
+<dd>Первая часть составного предложения. Заголовки начинаются с ключевого
+слова и заканчиваются двоеточием.</dd>
+<dt id="term-4">композиция функций</dt>
+<dd>Использование вызова функции в качестве аргумента при вызове другой
+функции.</dd>
+<dt id="term-5">локальная переменная</dt>
+<dd>Переменная, определенная внутри функции. Локальная переменная может
+использоваться только внутри функции.</dd>
+<dt id="term-6">определение функции</dt>
+<dd>Составное предложение, которое создает новую функцию, указывая ее имя,
+параметры и выполняемые предложения.</dd>
+<dt id="term-7">параметр</dt>
+<dd>Имя, используемое внутри функции для доступа к значению, переданному в
+качестве аргумента.</dd>
+<dt id="term-8">поток выполнения</dt>
+<dd>Порядок, в котором выполняются предложения во время выполнения
+программы.</dd>
+<dt id="term-9">составное предложение</dt>
+<dd><p class="first">Предложение, состоящее из двух частей:</p>
+<ol class="arabic simple">
+<li>заголовок &#8212; начинается с ключевого слова, задающего тип составного
+предложения, и заканчивается двоеточием.</li>
+<li>тело &#8212; содержит одно или более предложений, имеющих одинаковый
+отступ относительно заголовка.</li>
+</ol>
+<p>Составное предложение строится так:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="n">keyword</span> <span class="n">expression</span><span class="p">:</span>
+    <span class="n">statement</span>
+    <span class="n">statement</span> <span class="o">...</span>
+</pre></div>
+</div>
+</dd>
+<dt id="term-10">стековая диаграмма</dt>
+<dd>Графическое представление стека (кипы, стопки) вызываемых функций, их
+переменных и параметров.</dd>
+<dt id="term-11">тело составного предложения</dt>
+<dd>Вторая часть составного предложения. Тело состоит из последовательности
+предложений, имеющих одинаковый отступ относительно заголовка.
+Стандартный отступ для программ на Python составляет 4 пробела.</dd>
+<dt id="term-12">трассировка стека</dt>
+<dd>Список выполняющихся функций, печатаемый при возникновении ошибки
+выполнения. Трассировка стека перечисляет функции в порядке, в
+котором они вызывались.</dd>
+<dt id="term-13">функция</dt>
+<dd>Именованная последовательность предложений, которая выполняет некоторые
+полезные действия. Функции могут иметь или не иметь параметры, могут
+возвращать или не возвращать результат.</dd>
+</dl>
+</div>
+<div class="section" id="id8">
+<h2>3.8. Упражнения<a class="headerlink" href="#id8" title="Ссылка на этот заголовок">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">С помощью текстового редактора создайте скрипт Python с именем
+<tt class="docutils literal"><span class="pre">tryme3.py</span></tt>. Поместите в него функцию <tt class="docutils literal"><span class="pre">nine_lines</span></tt>, которая использует
+<tt class="docutils literal"><span class="pre">three_lines</span></tt> чтобы выводить девять пустых строк. Теперь добавьте функцию
+<tt class="docutils literal"><span class="pre">clear_screen</span></tt>, которая выводит 25 пустых строк. В последней строке вашей
+программы напишите <em>вызов</em> <tt class="docutils literal"><span class="pre">clear_screen</span></tt>.</p>
+</li>
+<li><p class="first">Переместите последнюю строку в <tt class="docutils literal"><span class="pre">tryme3.py</span></tt> в начало программы, так, чтобы
+<em>вызов функции</em> <tt class="docutils literal"><span class="pre">clear_screen</span></tt> находился перед <em>определением функции</em>.
+Запустите программу и заметьте, какое сообщение об ошибке вы получили. Можете
+сформулировать правило о том, как должны располагаться в программе
+<em>определения функций</em> и <em>вызовы функций</em> относительно друг друга?</p>
+</li>
+<li><p class="first">Вернувшись к рабочей версии <tt class="docutils literal"><span class="pre">tryme3.py</span></tt>, поместите определение функции
+<tt class="docutils literal"><span class="pre">new_line</span></tt> после определения функции <tt class="docutils literal"><span class="pre">three_lines</span></tt>. Посмотрите, что
+произойдет, когда вы запустите эту программу. Теперь поместите определение
+<tt class="docutils literal"><span class="pre">new_line</span></tt> ниже вызова <tt class="docutils literal"><span class="pre">three_lines()</span></tt>. Объясните, как поведение
+программы иллюстрирует правило, сформулированное в предыдущем примере.</p>
+</li>
+<li><p class="first">Напишите <em>тело</em> в <em>определении функции</em> <tt class="docutils literal"><span class="pre">cat_n_times</span></tt> так, чтобы строка s
+печаталась n раз:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">cat_n_times</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="o">&lt;</span><span class="n">fill</span> <span class="ow">in</span> <span class="n">your</span> <span class="n">code</span> <span class="n">here</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Сохраните эту функцию в скрипте с именем <tt class="docutils literal"><span class="pre">import_test.py</span></tt>. Находясь в той
+директории, в которой сохранен файл (команда <tt class="docutils literal"><span class="pre">ls</span></tt> в Unix должна показать
+<tt class="docutils literal"><span class="pre">import_test.py</span></tt>), запустите интерпретатор Python в интерактивном режиме и
+попробуйте выполнить следующее:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">import_test</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cat_n_times</span><span class="p">(</span><span class="s">&#39;Spam&#39;</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+<span class="go">SpamSpamSpamSpamSpamSpamSpam</span>
+</pre></div>
+</div>
+<p>Если вы сделали все правильно, то у вас должен получиться такой же результат.
+Поэкспериментируйте, вызывая <tt class="docutils literal"><span class="pre">cat_n_times</span></tt> с разными аргументами.</p>
+</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Просмотр</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Словарь-указатель"
+             >словарь</a></li>
+        <li class="right" >
+          <a href="ch04.html" title="4. Условные предложения"
+             >следующий</a> |</li>
+        <li class="right" >
+          <a href="ch02.html" title="2. Переменные, выражения и предложения"
+             >предыдущий</a> |</li>
+        <li><a href="index.html">Учимся с Python</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="copyright.html">Copyright</a> 2009, 2012, Джеффри Элкнер, Аллен Б. Дауни, Крис Мейерс, Андрей Трофимов.
+      При создании использован <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

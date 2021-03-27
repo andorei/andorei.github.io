@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" type="text/css" href="static/style.css" />
+        <title>andorei.github.io</title>
+    </head>
+    <body>
+    <div id="container">
+
+        <div id="header">
+        <div id="site">
+            <a href="index.html">andorei.github.io</a>
+        </div>
+        </div>
+
+        <div id="center">
+        <ul>
+        <li style="margin-bottom:20px">
+        Мой (полузабытый) блог<a target="_blank" href="http://torofimofu.blogspot.ru">/привет/мир/etc</a>
+        </li>
+        <li style="margin-bottom:20px">
+        Книга <a target="_blank" href="learnwithpython.ru2e/index.html">"Мыслить как программист"</a>
+        </li>
+        </ul>
+        </div>
+
+
+    <!-- fefteen begin -->
+    <style type="text/css">
+        .btn {border: 3px solid green;background-color:#cceecc; position:absolute; width:45px; height:45px;}
+        .blank {border:1px solid green; position:absolute; width:43px; height:43px;}
+    </style>
+
+    <div style="position:relative;">
+
+    <div style="position:absolute;left:50px; width:200px;font-weight:bold;font-size:27pt;text-align:center;">Fifteen</div>
+
+    <button id="b1" class="btn" onclick="move(this);" style="top:50px;left:50px;">1</button>
+    <button id="b2" class="btn" onclick="move(this);" style="top:50px;left:100px;">2</button>
+    <button id="b3" class="btn" onclick="move(this);" style="top:50px;left:150px;">3</button>
+    <button id="b4" class="btn" onclick="move(this);" style="top:50px;left:200px;">4</button>
+    <button id="b5" class="btn" onclick="move(this);" style="top:100px;left:50px;">5</button>
+    <button id="b6" class="btn" onclick="move(this);" style="top:100px;left:100px;">6</button>
+    <button id="b7" class="btn" onclick="move(this);" style="top:100px;left:150px;">7</button>
+    <button id="b8" class="btn" onclick="move(this);" style="top:100px;left:200px;">8</button>
+    <button id="b9" class="btn" onclick="move(this);" style="top:150px;left:50px;">9</button>
+    <button id="b10" class="btn" onclick="move(this);" style="top:150px;left:100px;">10</button>
+    <button id="b11" class="btn" onclick="move(this);" style="top:150px;left:150px;">11</button>
+    <button id="b12" class="btn" onclick="move(this);" style="top:150px;left:200px;">12</button>
+    <button id="b13" class="btn" onclick="move(this);" style="top:200px;left:50px;">13</button>
+    <button id="b14" class="btn" onclick="move(this);" style="top:200px;left:100px;">14</button>
+    <button id="b15" class="btn" onclick="move(this);" style="top:200px;left:150px;">15</button>
+    <div id="b16" class="blank" style="top:200px;left:200px;">&nbsp;</div>
+
+    <div id="result" style="position:absolute;top:250px;left:50px;width:200px;font-weight:bold;font-size:27pt;text-align:center;"><a href="javascript:shuffle();">Shuffle</a></div>
+
+    </div>
+
+    <script type="text/javascript">
+    var blank = document.getElementById("b16");
+    var xy = [
+        [50, 50], [100, 50], [150, 50], [200, 50],
+        [50, 100], [100, 100], [150, 100], [200, 100],
+        [50, 150], [100, 150], [150, 150], [200, 150],
+        [50, 200], [100, 200], [150, 200], [200, 200],
+    ]; 
+    function move(el) {
+        var blank_x = parseInt(blank.offsetLeft);
+        var blank_y = parseInt(blank.offsetTop);
+        var el_x = parseInt(el.offsetLeft);
+        var el_y = parseInt(el.offsetTop);
+        var dx = Math.abs(el_x - blank_x);
+        var dy = Math.abs(el_y - blank_y);
+        if ((dx == 50 && dy == 0) || (dx == 0 && dy == 50)) {
+            el.style.left = blank_x + "px"; 
+            el.style.top = blank_y + "px";
+            blank.style.left = el_x + "px";
+            blank.style.top = el_y + "px";
+        }
+    }
+    function shuffle() {
+        var all = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
+        var rnd = [];
+        while (all.length) {
+            var next = (Math.random()*10)%all.length;
+            rnd.push(all.splice(next, 1));
+        }
+        for (var i=0; i < rnd.length; i++) {
+            var el = document.getElementById("b"+rnd[i]);
+            el.style.left = xy[i][0] + "px";
+            el.style.top = xy[i][1] + "px";
+        }
+    }
+    </script>
+    <!-- fefteen end -->
+
+
+        <div id="footer">
+        <a href="who.html">Andrei Trofimov, Vladivostok, Russia</a>
+        </div>
+
+    </div>
+
+  </body>
+</html>

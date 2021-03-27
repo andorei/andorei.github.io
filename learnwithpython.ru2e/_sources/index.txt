@@ -1,0 +1,87 @@
+Мыслить как программист. Учимся с Python
+========================================
+
+.. image:: _static/gasp_lessons.png
+    :alt: GASP Logo
+
+Мыслить как программист. Учимся с Python
+----------------------------------------
+
+2-е издание (версия Python 2.х)
+
+Джеффри Элкнер, Аллен Б. Дауни, Крис Мейерс и Андрей Трофимов
+
+* `О правах на эту книгу <copyright.html>`__ 
+* `Предисловие Дэвида Бизли <foreword.html>`__
+* `Предисловие Джеффри Элкнера <preface.html>`__
+* `Предисловие к русскому изданию <russian.html>`__
+* `Благодарности <contrib.html>`__
+* `Глава 1 <ch01.html>`__ *Путь программирования*
+* `Глава 2 <ch02.html>`__ *Переменные, выражения и предложения*
+* `Глава 3 <ch03.html>`__ *Функции*
+* `Глава 4 <ch04.html>`__ *Условные предложения*
+* `Глава 5 <ch05.html>`__ *Функции, возвращающие значения*
+* `Глава 6 <ch06.html>`__ *Итерации*
+* `Глава 7 <ch07.html>`__ *Строки*
+* `Глава 8 <ch08.html>`__ *Списки*
+* `Глава 9 <ch09.html>`__ *Модули и файлы*
+* `Глава 10 <ch10.html>`__ *Рекурсия и исключения*
+* `Глава 11 <ch11.html>`__ *Словари*
+* `Глава 12 <ch12.html>`__ *Классы и объекты*
+* `Глава 13 <ch13.html>`__ *Методы*
+* `Глава 14 <ch14.html>`__ *Коллекции объектов*
+* `Глава 15 <ch15.html>`__ *Наследование*
+* `Глава 16 <ch16.html>`__ *Связные списки*
+* `Глава 17 <ch17.html>`__ *Стеки*
+* `Глава 18 <ch18.html>`__ *Очереди*
+* `Глава 19 <ch19.html>`__ *Деревья*
+* `Приложение A <app_a_russian.html>`__ *Как научить Python русскому языку*
+* `Приложение B <app_b_debug.html>`__ *Отладка программ*
+* `Приложение C <app_c_resources.html>`__ *Что дальше?*
+* `GNU Free Document License <fdl-1.3.html>`__ 
+
+.. toctree::
+    :maxdepth: 1
+    :hidden:
+
+    copyright.rst
+    foreword.rst
+    preface.rst
+    russian.rst
+    contrib.rst
+
+.. toctree::
+    :maxdepth: 1
+    :numbered:
+    :hidden:
+
+    ch01.rst
+    ch02.rst
+    ch03.rst
+    ch04.rst
+    ch05.rst
+    ch06.rst
+    ch07.rst
+    ch08.rst
+    ch09.rst
+    ch10.rst
+    ch11.rst
+    ch12.rst
+    ch13.rst
+    ch14.rst
+    ch15.rst
+    ch16.rst
+    ch17.rst
+    ch18.rst
+    ch19.rst
+
+.. toctree::
+    :maxdepth: 1
+    :hidden:
+
+    app_a_russian.rst
+    app_b_debug.rst
+    app_c_resources.rst
+    fdl-1.3.rst
+
+* :ref:`search`
